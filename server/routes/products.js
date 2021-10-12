@@ -4,7 +4,7 @@ const Product = require('../models/Product');
 const router = express.Router();
 
 /* GET home page. */
-router.post('/products', async (req, res) => {
+router.post('/', async (req, res) => {
   const {
     title, price, description, brand, category, img,
   } = req.body;
