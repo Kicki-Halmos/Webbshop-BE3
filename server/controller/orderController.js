@@ -24,3 +24,15 @@ exports.addNewOrder = async (req, res) => {
   res.json({ data: order });
   console.log(order);
 };
+// update order
+exports.uppdateOrder = async (req, res) => {
+  console.log(req.body);
+  const { product, sent } = req.body;
+
+  const updatedOrder = await Order.findByIdAndUpdate(req.params.id, { product, sent },
+    { new: true });
+
+  res.status(200);
+  res.json({ data: updatedOrder });
+  console.log(updatedOrder);
+};
