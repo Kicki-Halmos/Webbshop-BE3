@@ -15,7 +15,7 @@ exports.addNewProduct = async (req, res) => {
       img,
     });
 
-    await product.save().then(res.send('product saved')).catch((error) => { console.log(error); });
+    await product.save().then(res.status(200).json({ message: 'Product saved', data: product })).catch((error) => { console.log(error); });
   } catch (error) {
     console.log(error);
   }
@@ -39,14 +39,23 @@ exports.allProducts = async (req, res) => {
   }
 };
 
-// work on this
 exports.updateProduct = async (req, res) => {
-  res.status(200).json({ message: 'updated' });
+  try {
+    const {
+      title, price, description, brand, category, img,
+    } = req.body;
+    const updatedProduct = await Product.findByIdAndUpdate(req.params.id, {
+      title, price, description, brand, category, img,
+    }, { new: true });
+    res.status(200).json({ message: 'updated', data: updatedProduct });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 exports.deleteProduct = async (req, res) => {
   try {
-    await Product.deleteOne({ id: req.params.id });
+    await Product.findOneAndDelete({ id: req.params.id });
     res.status(200).json({ message: 'deleted' });
   } catch (error) {
     console.log(error);

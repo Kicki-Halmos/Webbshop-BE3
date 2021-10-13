@@ -5,10 +5,10 @@ const {
 
 const router = express.Router();
 
-router.get('/all', allProducts);
-router.get('/one', findProduct);
-router.post('/new', addNewProduct);
-router.post('/update', updateProduct);
-router.delete('/delete', deleteProduct);
+router.get('/', allProducts);
+router.get('/:id', findProduct);
+router.post('/', addNewProduct);
+router.put('/:id', updateProduct);
+router.delete('/:id', deleteProduct);
 
 module.exports = router;
