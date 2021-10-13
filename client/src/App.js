@@ -7,9 +7,11 @@ import Register from './pages/Register';
 import Cart from './pages/Cart';
 import Orders from './pages/Orders';
 import Account from './pages/Account';
+import ProductProvider from './providers/product-provider'
 
 function App() {
   return (
+    <ProductProvider>
     <Fragment>
       <div className="container">
         <Switch>
@@ -40,6 +42,7 @@ function App() {
         </Switch>
       </div>
     </Fragment>
+    </ProductProvider>
   );
 }
 
