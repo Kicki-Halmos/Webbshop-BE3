@@ -22,7 +22,6 @@ exports.getSingleOrder = async (req, res) => {
 
 // add new order
 exports.addNewOrder = async (req, res) => {
-  console.log(req.body);
   const { product, sent } = req.body;
 
   const order = new Order({
@@ -37,7 +36,6 @@ exports.addNewOrder = async (req, res) => {
 };
 // update order
 exports.uppdateOrder = async (req, res) => {
-  console.log(req.body);
   const { id } = req.params;
   const { product, sent } = req.body;
 
@@ -47,4 +45,14 @@ exports.uppdateOrder = async (req, res) => {
   res.status(200);
   res.json({ data: updatedOrder });
   console.log(updatedOrder);
+};
+// delete order
+exports.deleteOrder = async (req, res) => {
+  const { id } = req.params;
+
+  const deleteddOrder = await Order.findByIdAndDelete(id);
+
+  res.status(204);
+  res.json({ data: deleteddOrder });
+  console.log(deleteddOrder);
 };
