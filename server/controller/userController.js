@@ -1,16 +1,17 @@
 const User = require('../models/UserModel');
+const AppError = require('../utils/AppError');
 
-exports.getUser = async (req, res) => {
+exports.getUser = async (req, res, next) => {
   try {
     const { email } = req.body;
     const user = await User.findOne({ email });
     return res.status(200).json({ data: user });
   } catch (error) {
-    return console.log(error);
+    return next(error);
   }
 };
 
-exports.update = async (req, res) => {
+exports.update = async (req, res, next) => {
   try {
     const {
       fullName, email, password, phoneNumber, address,
@@ -20,11 +21,11 @@ exports.update = async (req, res) => {
     }, { new: true });
     return res.status(200).json({ data: user });
   } catch (error) {
-    return console.log(error);
+    return next(error);
   }
 };
 
-exports.register = async (req, res) => {
+exports.register = async (req, res, next) => {
   try {
     const {
       fullName, email, password, phoneNumber, address,
@@ -35,22 +36,22 @@ exports.register = async (req, res) => {
     await newUser.save();
     return res.status(200).json({ data: newUser });
   } catch (error) {
-    return console.log(error);
+    return next(error);
   }
 };
 
-exports.login = async (req, res) => {
+exports.login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
-      return res.json('need to fill in email and password');
+      return next(new AppError('need to fill in email and password', 400));
     }
     const user = await User.findOne({ email });
     if (!user || user.password !== password) {
-      return res.json('email or password incorrect');
+      return next(new AppError('email or password incorrect', 401));
     }
     return res.status(200).json({ data: user });
   } catch (error) {
-    return console.log(error);
+    return next(error);
   }
 };
