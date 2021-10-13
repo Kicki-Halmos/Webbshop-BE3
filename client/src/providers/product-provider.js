@@ -29,6 +29,7 @@ const ProductProvider = (props) => {
         try {
             const products = await getProducts();
             dispatchProductAction({ type: 'get_products',products: products })
+            return products;
         } catch (error) {
             console.log(error);
         }
