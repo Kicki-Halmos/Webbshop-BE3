@@ -15,7 +15,8 @@ exports.addNewProduct = async (req, res) => {
       img,
     });
 
-    await product.save().then(res.status(201).json({ data: product }).catch((error) => { console.log(error); });
+    await product.save();
+    res.status(201).json({ data: product });
   } catch (error) {
     console.log(error);
   }
