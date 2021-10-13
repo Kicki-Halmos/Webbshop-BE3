@@ -15,8 +15,8 @@ mongoose
   .then(() => console.log('connected to db'))
   .catch((error) => console.log(error));
 
-const productRouter = require('./routes/products');
-// const userRouter = require('./routes/users');
+const productRouter = require('./routes/productRoutes');
+const userRouter = require('./routes/userRoutes');
 
 const app = express();
 
@@ -27,6 +27,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/products', productRouter);
-// app.use('/api/users', userRouter);
+app.use('/api/users', userRouter);
 
 module.exports = app;
