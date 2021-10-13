@@ -5,6 +5,7 @@ const logger = require('morgan');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const AppError = require('./utils/AppError');
 
 dotenv.config({ path: './config.env' });
 const database = process.env.DATABASE.replace(
