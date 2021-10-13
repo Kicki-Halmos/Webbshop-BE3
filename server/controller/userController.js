@@ -4,7 +4,7 @@ exports.getUser = async (req, res) => {
   try {
     const { email } = req.body;
     const user = await User.findOne({ email });
-    return res.json({ user });
+    return res.status(200).json({ data: user });
   } catch (error) {
     return console.log(error);
   }
@@ -18,7 +18,7 @@ exports.update = async (req, res) => {
     const user = await User.findOneAndUpdate(req.params.id, {
       fullName, email, password, phoneNumber, address,
     }, { new: true });
-    return res.json({ user });
+    return res.status(200).json({ data: user });
   } catch (error) {
     return console.log(error);
   }
@@ -33,7 +33,7 @@ exports.register = async (req, res) => {
       fullName, email, password, phoneNumber, address,
     });
     await newUser.save();
-    return res.json({ newUser });
+    return res.status(200).json({ data: newUser });
   } catch (error) {
     return console.log(error);
   }
@@ -49,7 +49,7 @@ exports.login = async (req, res) => {
     if (!user || user.password !== password) {
       return res.json('email or password incorrect');
     }
-    return res.json({ user });
+    return res.status(200).json({ data: user });
   } catch (error) {
     return console.log(error);
   }
