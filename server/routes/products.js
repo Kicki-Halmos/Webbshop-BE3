@@ -1,24 +1,14 @@
 const express = require('express');
-const Product = require('../models/Product');
+const {
+  allProducts, findProduct, addNewProduct, updateProduct, deleteProduct,
+} = require('../controller/products');
 
 const router = express.Router();
 
-/* GET home page. */
-router.post('/', async (req, res) => {
-  const {
-    title, price, description, brand, category, img,
-  } = req.body;
-
-  const product = new Product({
-    title,
-    price,
-    description,
-    brand,
-    category,
-    img,
-  });
-
-  await product.save().then(res.send('product saved')).catch((error) => { console.log(error); });
-});
+router.get('/', allProducts);
+router.get('/:id', findProduct);
+router.post('/', addNewProduct);
+router.put('/:id', updateProduct);
+router.delete('/:id', deleteProduct);
 
 module.exports = router;

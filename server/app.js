@@ -16,7 +16,7 @@ mongoose
   .catch((error) => console.log(error));
 
 const productRouter = require('./routes/products');
-const userRouter = require('./routes/users');
+// const userRouter = require('./routes/users');
 
 const app = express();
 
@@ -27,6 +27,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/products', productRouter);
-app.use('/api/users', userRouter);
+// app.use('/api/users', userRouter);
 
 module.exports = app;
