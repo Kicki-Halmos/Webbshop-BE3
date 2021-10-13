@@ -9,6 +9,17 @@ exports.getAllOrders = async (req, res) => {
   console.log(allOrders);
 };
 
+// get one order
+exports.getSingleOrder = async (req, res) => {
+  const { id } = req.params;
+
+  const singleOrder = await Order.findOne({ id });
+
+  res.status(200);
+  res.json({ data: singleOrder });
+  console.log(singleOrder);
+};
+
 // add new order
 exports.addNewOrder = async (req, res) => {
   console.log(req.body);
@@ -27,9 +38,10 @@ exports.addNewOrder = async (req, res) => {
 // update order
 exports.uppdateOrder = async (req, res) => {
   console.log(req.body);
+  const { id } = req.params;
   const { product, sent } = req.body;
 
-  const updatedOrder = await Order.findByIdAndUpdate(req.params.id, { product, sent },
+  const updatedOrder = await Order.findByIdAndUpdate(id, { product, sent },
     { new: true });
 
   res.status(200);
