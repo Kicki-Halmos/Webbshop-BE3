@@ -1,21 +1,27 @@
 const jwt = require('jsonwebtoken');
+const User = require('../models/UserModel');
 
-const checkToken = (req, res, next) => {
-  let token = req.headers['x-access-token'] || req.headers.authorization;
+module.exports = (req, res, next) => {
+  let token = req.headers.authorization;
   if (token.startsWith('Bearer ')) {
     // Remove Bearer from string
     token = token.slice(7, token.length);
   }
 
   if (token) {
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
       if (err) {
         res.json({
           success: false,
           message: 'Token is not valid',
         });
       }
-      req.decoded = decoded;
+      const { userId } = decoded;
+
+      const user = await User.findById(userId);
+
+      req.user = user;
+
       next();
     });
   } else {
@@ -25,5 +31,3 @@ const checkToken = (req, res, next) => {
     });
   }
 };
-
-module.exports = { checkToken };
