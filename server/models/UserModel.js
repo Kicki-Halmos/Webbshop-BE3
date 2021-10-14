@@ -35,4 +35,3 @@ userSchema.virtual('cart', {
 });
 
 module.exports = mongoose.model('User', userSchema);
-git 
