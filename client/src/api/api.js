@@ -25,6 +25,10 @@ const updateProductItem = (id,title,description,price,brand,category,img) => api
 const getProductItem = (id) => api.get(`/api/products/${id}`);
 const deleteProductItem = (id) => api.delete(`/api/products/${id}`);
 
+const login = (email, password) => api.post('/api/users/login', {email, password});
+
 export const productApis = { getProducts,createProductItem,updateProductItem,getProductItem,deleteProductItem };
+export const userApis = { login };
+
 
 export default api;
