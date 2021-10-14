@@ -46,17 +46,17 @@ exports.login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
-      return next(new AppError('need to fill in email and password', 400));
+      next(new AppError('need to fill in email and password', 400));
     }
     const user = await User.findOne({ email });
     if (!user) {
-      return next(new AppError('email or password incorrect', 401));
+      next(new AppError('email or password incorrect', 401));
     }
     if (await bcrypt.compare(password, user.password)) {
       const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
-      res.status(200).json({ message: 'Succesfully loged in', data: token });
+      res.status(200).json({ data: token });
     }
   } catch (error) {
-    return next(error);
+    next(error);
   }
 };
