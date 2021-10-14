@@ -1,4 +1,4 @@
-import React,{ Fragment } from 'react';
+import React from 'react';
 import { Switch,Route,Redirect } from 'react-router-dom';
 import ProductDetail from './pages/ProductDetail';
 import ProductList from './pages/ProductList';
@@ -12,7 +12,7 @@ import ProductProvider from './providers/product-provider'
 function App() {
   return (
     <ProductProvider>
-    <Fragment>
+
       <div className="container">
         <Switch>
           <Route path="/" exact>
@@ -25,7 +25,7 @@ function App() {
             <ProductDetail />
           </Route>
           <Route path="/login">
-           <Login /> 
+            <Login />
           </Route>
           <Route path="/register">
             <Register />
@@ -41,7 +41,6 @@ function App() {
           </Route>
         </Switch>
       </div>
-    </Fragment>
     </ProductProvider>
   );
 }
