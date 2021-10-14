@@ -28,7 +28,7 @@ const ProductProvider = (props) => {
     const getProductsHandler = async () => {
         try {
             const products = await getProducts();
-            dispatchProductAction({ type: 'get_products',products: products })
+            dispatchProductAction({ type: 'get_products',products: products.data.data })
             return products;
         } catch (error) {
             console.log(error);

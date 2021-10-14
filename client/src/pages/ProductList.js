@@ -1,20 +1,15 @@
-import React, {useEffect, useContext, useState} from "react";
+import React, {useEffect, useContext} from "react";
 import ProductContext from "../contexts/product-context";
 const ProductList = ()=> {
 
 const productCtx = useContext(ProductContext);
-const [productList, setProductList] = useState([]);
+const productList = productCtx.products;
 
 useEffect(()=>{
-   const getProductList = async () => {
-    const products = await productCtx.getProducts();
-    setProductList(products.data.data);
-    
-   }
-
-   getProductList();
-    
+   productCtx.getProducts();
+        
 },[])
+
 return (<div>
     {!productList ? <div>Loading</div> : productList.map(product=> {
         return <div key={product._id}>{product.title}</div>
