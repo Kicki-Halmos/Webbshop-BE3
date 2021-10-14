@@ -4,6 +4,21 @@ const api = axios.create({
     baseURL: "http://localhost:3000",
 });
 
+
+axios.interceptors.request.use((config) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+        config.headers = { 'Bearer ': token }
+    }
+    return config;
+},
+(err) => {
+    return Promise.reject(err);
+  }
+);
+
+
+
 const getProducts = () => api.get('/api/products');
 const createProductItem = (title,description,price,brand,category,img) => api.post('/api/products',{ title,description,price,brand,category,img });
 const updateProductItem = (id,title,description,price,brand,category,img) => api.put(`/api/products/${id}`,{ title,description,price,brand,category,img })
