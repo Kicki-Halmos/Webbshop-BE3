@@ -5,6 +5,7 @@ const logger = require('morgan');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const sendError = require('./utils/errorHandler');
 
 dotenv.config({ path: './config.env' });
 const database = process.env.DATABASE.replace(
@@ -32,14 +33,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/products', productRouter);
 app.use('/api/users', userRouter);
 
-app.use((err, req, res, next) => {
-  const { statusCode = 500 } = err;
-  const { message = 'something went wrong!' } = err;
-  res.status(statusCode).json({
-    data: {
-      message, statusCode,
-    },
-  });
-});
+app.use(sendError);
 
 module.exports = app;
