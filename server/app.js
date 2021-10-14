@@ -12,6 +12,7 @@ const database = process.env.DATABASE.replace(
   '<PASSWORD>',
   process.env.DATABASE_PASSWORD,
 );
+
 mongoose
   .connect(database)
   .then(() => console.log('connected to db'))
