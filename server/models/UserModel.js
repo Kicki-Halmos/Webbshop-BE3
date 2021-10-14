@@ -22,6 +22,17 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+},
+{
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true },
+});
+
+userSchema.virtual('cart', {
+  ref: 'Cart',
+  foreignField: 'userId',
+  localField: '_id',
 });
 
 module.exports = mongoose.model('User', userSchema);
+git 
