@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { userApis } from '../api/api'
-
-const {login} = userApis;
-
+import { useHistory } from 'react-router-dom';
 
 export default function LoginForm() {
+
+    const {login} = userApis;
+    const history = useHistory();
 
     const [formData, setFormData] = useState({
         email: '',
@@ -20,9 +21,12 @@ export default function LoginForm() {
         e.preventDefault();
         login(formData.email, formData.password)
         .then((res) => {
-            localStorage.setItem('jwt', res.data.token);   
+            localStorage.setItem('jwt', res.data.token);
+            history.push('/products');
         })
-        .catch(err => console.log(err.response.data.data.message))
+        .catch((err) => {
+            alert(err.response.data.data.message);
+        })
     }
 
     return ( 
