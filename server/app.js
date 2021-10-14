@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 dotenv.config({ path: './config.env' });
 const database = process.env.DATABASE.replace(
