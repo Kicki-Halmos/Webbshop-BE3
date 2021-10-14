@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+import { userApis } from '../api/api'
+
+const {login} = userApis;
+
 
 export default function LoginForm() {
 
@@ -12,10 +16,19 @@ export default function LoginForm() {
         setFormData({ ...formData, [e.target.name]: e.target.value });
       };
 
+    const handleOnSubmit =  (e) => {
+        e.preventDefault();
+        login(formData.email, formData.password)
+        .then((res) => {
+            localStorage.setItem('jwt', res.data.token);   
+        })
+        .catch(err => console.log(err.response.data.data.message))
+    }
+
     return ( 
         <div>
             <h1>Login</h1>
-            <form>
+            <form onSubmit={handleOnSubmit}>
                 <div className="mb-3">
                     <label htmlFor="loginEmail" className="htmlF-label">Email address</label>
                     <input name="email" value={formData.email} onChange={handleOnChange} type="email" className="form-control" id="loginEmail" aria-describedby="emailHelp"></input>
