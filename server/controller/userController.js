@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const User = require('../models/UserModel');
 const AppError = require('../utils/AppError');
 
@@ -47,10 +49,13 @@ exports.login = async (req, res, next) => {
       return next(new AppError('need to fill in email and password', 400));
     }
     const user = await User.findOne({ email });
-    if (!user || user.password !== password) {
+    if (!user) {
       return next(new AppError('email or password incorrect', 401));
     }
-    return res.status(200).json({ data: user });
+    if (await bcrypt.compare(password, user.password)) {
+      const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
+      res.status(200).json({ message: 'Succesfully loged in', data: token });
+    }
   } catch (error) {
     return next(error);
   }
