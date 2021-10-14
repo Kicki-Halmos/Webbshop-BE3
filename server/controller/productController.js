@@ -1,64 +1,45 @@
 const Product = require('../models/ProductModel');
+const wrapAsync = require('../utils/wrapAsync');
 
-exports.addNewProduct = async (req, res) => {
-  try {
-    const {
-      title, price, description, brand, category, img,
-    } = req.body;
+exports.addNewProduct = wrapAsync(async (req, res) => {
+  const {
+    title, price, description, brand, category, img,
+  } = req.body;
 
-    const product = new Product({
-      title,
-      price,
-      description,
-      brand,
-      category,
-      img,
-    });
+  const product = new Product({
+    title,
+    price,
+    description,
+    brand,
+    category,
+    img,
+  });
 
-    await product.save();
-    res.status(201).json({ data: product });
-  } catch (error) {
-    console.log(error);
-  }
-};
+  await product.save();
+  res.status(201).json({ data: product });
+});
 
-exports.findProduct = async (req, res) => {
-  try {
-    const oneProduct = await Product.findOne({ id: req.params.id });
-    res.status(200).json({ data: oneProduct });
-  } catch (error) {
-    console.log(error);
-  }
-};
+exports.findProduct = wrapAsync(async (req, res) => {
+  const oneProduct = await Product.findOne({ _id: req.params.id });
+  res.status(200).json({ data: oneProduct });
+});
 
-exports.allProducts = async (req, res) => {
-  try {
-    const allProducts = await Product.find({});
-    res.status(200).json({ data: allProducts });
-  } catch (error) {
-    console.log(error);
-  }
-};
+exports.allProducts = wrapAsync(async (req, res) => {
+  const allProducts = await Product.find({});
+  res.status(200).json({ data: allProducts });
+});
 
-exports.updateProduct = async (req, res) => {
-  try {
-    const {
-      title, price, description, brand, category, img,
-    } = req.body;
-    const updatedProduct = await Product.findByIdAndUpdate(req.params.id, {
-      title, price, description, brand, category, img,
-    }, { new: true });
-    res.status(200).json({ data: updatedProduct });
-  } catch (error) {
-    console.log(error);
-  }
-};
+exports.updateProduct = wrapAsync(async (req, res) => {
+  const {
+    title, price, description, brand, category, img,
+  } = req.body;
+  const updatedProduct = await Product.findByIdAndUpdate(req.params.id, {
+    title, price, description, brand, category, img,
+  }, { new: true });
+  res.status(200).json({ data: updatedProduct });
+});
 
-exports.deleteProduct = async (req, res) => {
-  try {
-    await Product.findOneAndDelete({ id: req.params.id });
-    res.status(204);
-  } catch (error) {
-    console.log(error);
-  }
-};
+exports.deleteProduct = wrapAsync(async (req, res) => {
+  await Product.findOneAndDelete({ id: req.params.id });
+  res.status(204);
+});
