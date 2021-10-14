@@ -52,9 +52,13 @@ exports.login = async (req, res, next) => {
     if (!user) {
       next(new AppError('email or password incorrect', 401));
     }
+
     if (await bcrypt.compare(password, user.password)) {
       const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
-      res.status(200).json({ data: token });
+      user.password = undefined;
+      res.status(200).json({ token, data: { user } });
+    } else {
+      next(new AppError('email or password incorrect', 401));
     }
   } catch (error) {
     next(error);
