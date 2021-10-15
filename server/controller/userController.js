@@ -5,9 +5,8 @@ const AppError = require('../utils/AppError');
 const wrapAsync = require('../utils/wrapAsync');
 
 exports.getUser = wrapAsync(async (req, res) => {
-  const { email } = req.body;
-  const user = await User.findOne({ email });
-  return res.status(200).json({ data: user });
+  req.user.password = undefined;
+  res.status(200).json({ data: req.user });
 });
 
 exports.update = wrapAsync(async (req, res) => {
