@@ -1,24 +1,66 @@
-import logo from './logo.svg';
-import './App.css';
+import React,{ useState } from 'react';
+import { Switch,Route,Redirect } from 'react-router-dom';
+import ProductDetail from './pages/ProductDetail';
+import ProductList from './pages/ProductList';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Cart from './pages/Cart';
+import Orders from './pages/Orders';
+import Account from './pages/Account';
+import ProductProvider from './providers/product-provider';
+import { UserContext } from './contexts/UserContext';
+import { userApis } from './api/api';
 
 function App() {
+
+  const {getUser} = userApis;
+
+  const [user, setUser] = useState(null);
+
+  const getUserData = () => {
+    const token = localStorage.getItem('jwt');
+    if(token){
+      getUser(token)
+    .then(res => {
+      setUser(res.data.data);
+    });
+    } 
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UserContext.Provider value={{getUserData, user, setUser}}>
+    <ProductProvider>
+
+      <div className="container">
+        <Switch>
+          <Route path="/" exact>
+            <Redirect to="/products" />
+          </Route>
+          <Route path="/products" exact>
+            <ProductList />
+          </Route>
+          <Route path='/products/:id'>
+            <ProductDetail />
+          </Route>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/register">
+            <Register />
+          </Route>
+          <Route path="/cart">
+            <Cart />
+          </Route>
+          <Route path="/orders">
+            <Orders />
+          </Route>
+          <Route path="/account">
+            <Account />
+          </Route>
+        </Switch>
+      </div>
+    </ProductProvider>
+    </UserContext.Provider>
   );
 }
 
