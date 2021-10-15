@@ -3,9 +3,9 @@ import { useReducer } from "react";
 import ProductContext from '../contexts/product-context';
 import { productApis } from '../api/api';
 
-const { getProducts } = productApis;
+const { getProducts,createProductItem,updateProductItem,getProductItem, deleteProductItem  } = productApis;
 
-const defaultProductState = { products: [] };
+const defaultProductState = { products: [],oneProduct: {} };
 
 const productReducer = (state,action) => {
     switch (action.type) {
@@ -16,6 +16,7 @@ const productReducer = (state,action) => {
                 return product._id === action.product.id ? action.product : product
             })
         };
+        case 'get_one_product': return { oneProduct: action.product }
         case 'delete_product': return { products: state.products.filter((product) => product._id !== action.id) };
         default: return defaultProductState;
     }
@@ -29,25 +30,68 @@ const ProductProvider = (props) => {
         try {
             const products = await getProducts();
             dispatchProductAction({ type: 'get_products',products: products.data.data })
-            return products;
+
         } catch (error) {
             console.log(error);
         }
     }
 
-    const productContext= {
-        products: productState.products,
-        getProducts: getProductsHandler
+    const addProductHandler = async () => {
+        try {
+            const product = await createProductItem();
+            dispatchProductAction({ type: 'add_product',product: product.data.data })
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const updateProductHandler = async (id) => {
+        try {
+            const product = await updateProductItem(id);
+            dispatchProductAction({ type: 'update_product',product: product.data.data })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const getProductItemHandler = async (id) => {
+        try {
+            const product = await getProductItem(id);
+            dispatchProductAction({ type: 'get_one_product',product: product.data.data })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const deleteProductItemHandler = async (id) => {
+        try {
+            await deleteProductItem(id);
+            dispatchProductAction({type: 'delete_product', id: id})
+        } catch (error) {
+            console.log(error);
+        }
     };
 
-    return (
-        <ProductContext.Provider value={productContext}>
-            {props.children}
-        </ProductContext.Provider>
-    );
-};
+        const productContext = {
+            products: productState.products,
+            oneProduct: productState.oneProduct,
+            getProducts: getProductsHandler,
+            addProduct: addProductHandler,
+            updateProduct: updateProductHandler,
+            getOneProduct: getProductItemHandler,
+            deleteProduct: deleteProductItemHandler
 
-export default ProductProvider;
+        };
+
+        return (
+            <ProductContext.Provider value={productContext}>
+                {props.children}
+            </ProductContext.Provider>
+        );
+    };
+
+    export default ProductProvider;
 
 
 

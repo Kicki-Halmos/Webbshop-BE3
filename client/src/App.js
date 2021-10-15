@@ -1,4 +1,4 @@
-import React,{ Fragment, useState } from 'react';
+import React,{ useState } from 'react';
 import { Switch,Route,Redirect } from 'react-router-dom';
 import ProductDetail from './pages/ProductDetail';
 import ProductList from './pages/ProductList';
@@ -30,7 +30,7 @@ function App() {
   return (
     <UserContext.Provider value={{getUserData, user, setUser}}>
     <ProductProvider>
-    <Fragment>
+
       <div className="container">
         <Switch>
           <Route path="/" exact>
@@ -43,7 +43,7 @@ function App() {
             <ProductDetail />
           </Route>
           <Route path="/login">
-           <Login /> 
+            <Login />
           </Route>
           <Route path="/register">
             <Register />
@@ -59,7 +59,6 @@ function App() {
           </Route>
         </Switch>
       </div>
-    </Fragment>
     </ProductProvider>
     </UserContext.Provider>
   );
