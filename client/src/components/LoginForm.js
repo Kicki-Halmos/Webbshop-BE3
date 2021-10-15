@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
-import { userApis } from '../api/api'
-import { useHistory } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import UserContext from '../contexts/user-context';
 
 export default function LoginForm() {
 
-    const {login} = userApis;
-    const history = useHistory();
+    const userCtx = useContext(UserContext);
 
     const [formData, setFormData] = useState({
         email: '',
@@ -19,14 +17,7 @@ export default function LoginForm() {
 
     const handleOnSubmit =  (e) => {
         e.preventDefault();
-        login(formData.email, formData.password)
-        .then((res) => {
-            localStorage.setItem('jwt', res.data.token);
-            history.push('/products');
-        })
-        .catch((err) => {
-            alert(err.response.data.data.message);
-        })
+        userCtx.loginUser(formData.email, formData.password);
     }
 
     return ( 
