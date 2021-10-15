@@ -4,7 +4,6 @@ const api = axios.create({
     baseURL: "http://localhost:3000",
 });
 
-
 axios.interceptors.request.use((config) => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -17,8 +16,6 @@ axios.interceptors.request.use((config) => {
   }
 );
 
-
-
 const getProducts = () => api.get('/api/products');
 const createProductItem = (title,description,price,brand,category,img) => api.post('/api/products',{ title,description,price,brand,category,img });
 const updateProductItem = (id,title,description,price,brand,category,img) => api.put(`/api/products/${id}`,{ title,description,price,brand,category,img })
@@ -27,10 +24,8 @@ const deleteProductItem = (id) => api.delete(`/api/products/${id}`);
 
 const login = (email, password) => api.post('/api/users/login', {email, password});
 const register = (fullName, email, password, phoneNumber, address) => api.post('/api/users/register', {fullName, email, password, phoneNumber, address });
-const getUser = (token) => api.get('/api/users', {headers: {
-    Authorization: `Bearer ${token}`,
-  },});
-
+const getUser = () => api.get('/api/users');
+  
 export const productApis = { getProducts,createProductItem,updateProductItem,getProductItem,deleteProductItem };
 export const userApis = { login, register, getUser };
 
