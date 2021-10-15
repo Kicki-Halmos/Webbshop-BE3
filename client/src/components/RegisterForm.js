@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
+import { userApis } from '../api/api';
+import { useHistory } from 'react-router-dom';
+
 
 export default function RegisterForm() {
+
+    const {register} = userApis;
+    const history = useHistory();
+
 
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
         password: '',
-        phone: '',
+        phoneNumber: '',
         address: ''
     })
 
@@ -15,8 +22,15 @@ export default function RegisterForm() {
         setFormData({ ...formData, [e.target.name]: e.target.value });
       };
 
-    const handleOnSubmit =  (e) => {
+    const handleOnSubmit = (e) => {
         e.preventDefault();
+        register(formData.fullName, formData.email, formData.password, formData.phoneNumber, formData.address)
+        .then(() => {
+                history.push('/login');
+        })
+        .catch((err) => {
+            alert(err.response.data.data.message);
+        })
     }
 
     return ( 
@@ -36,8 +50,8 @@ export default function RegisterForm() {
                     <input name="password" value={formData.password} onChange={handleOnChange} type="password" className="form-control" id="registerPassword"></input>
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="registerPhone" className="form-label">Phone</label>
-                    <input name="phone" value={formData.phone} onChange={handleOnChange} type="text" className="form-control" id="registerPhone"></input>
+                    <label htmlFor="registerPhone" className="form-label">Phone number</label>
+                    <input name="phoneNumber" value={formData.phoneNumber} onChange={handleOnChange} type="text" className="form-control" id="registerPhone"></input>
                 </div>
                 <div className="mb-3">
                     <label htmlFor="registerAddress" className="form-label">Address</label>
