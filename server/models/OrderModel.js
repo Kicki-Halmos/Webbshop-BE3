@@ -5,12 +5,18 @@ const { Schema } = mongoose;
 const OrderSchema = new mongoose.Schema({
   product: {
     type: Schema.Types.ObjectId,
-    ref: 'Product',
+    ref: 'Cart',
     required: true,
 
   },
   sent: {
     type: Boolean,
+  },
+  totalCost: {
+    type: Number,
+  },
+  deliveryCost: {
+    type: Number,
   },
 
 });
