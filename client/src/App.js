@@ -1,4 +1,4 @@
-import React,{ Fragment } from 'react';
+import React,{ Fragment, useState } from 'react';
 import { Switch,Route,Redirect } from 'react-router-dom';
 import ProductDetail from './pages/ProductDetail';
 import ProductList from './pages/ProductList';
@@ -7,10 +7,28 @@ import Register from './pages/Register';
 import Cart from './pages/Cart';
 import Orders from './pages/Orders';
 import Account from './pages/Account';
-import ProductProvider from './providers/product-provider'
+import ProductProvider from './providers/product-provider';
+import { UserContext } from './contexts/UserContext';
+import { userApis } from './api/api';
 
 function App() {
+
+  const {getUser} = userApis;
+
+  const [user, setUser] = useState(null);
+
+  const getUserData = () => {
+    const token = localStorage.getItem('jwt');
+    if(token){
+      getUser(token)
+    .then(res => {
+      setUser(res.data.data);
+    });
+    } 
+  }
+
   return (
+    <UserContext.Provider value={{getUserData, user, setUser}}>
     <ProductProvider>
     <Fragment>
       <div className="container">
@@ -43,6 +61,7 @@ function App() {
       </div>
     </Fragment>
     </ProductProvider>
+    </UserContext.Provider>
   );
 }
 
