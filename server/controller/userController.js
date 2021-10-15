@@ -1,56 +1,48 @@
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const User = require('../models/UserModel');
+const AppError = require('../utils/AppError');
+const wrapAsync = require('../utils/wrapAsync');
 
-exports.getUser = async (req, res) => {
-  try {
-    const { email } = req.body;
-    const user = await User.findOne({ email });
-    return res.status(200).json({ data: user });
-  } catch (error) {
-    return console.log(error);
-  }
-};
+exports.getUser = wrapAsync(async (req, res) => {
+  req.user.password = undefined;
+  res.status(200).json({ data: req.user });
+});
 
-exports.update = async (req, res) => {
-  try {
-    const {
-      fullName, email, password, phoneNumber, address,
-    } = req.body;
-    const user = await User.findOneAndUpdate(req.params.id, {
-      fullName, email, password, phoneNumber, address,
-    }, { new: true });
-    return res.status(200).json({ data: user });
-  } catch (error) {
-    return console.log(error);
-  }
-};
+exports.update = wrapAsync(async (req, res) => {
+  const {
+    fullName, email, password, phoneNumber, address,
+  } = req.body;
+  const user = await User.findOneAndUpdate(req.params.id, {
+    fullName, email, password, phoneNumber, address,
+  }, { new: true });
+  return res.status(200).json({ data: user });
+});
 
-exports.register = async (req, res) => {
-  try {
-    const {
-      fullName, email, password, phoneNumber, address,
-    } = req.body;
-    const newUser = new User({
-      fullName, email, password, phoneNumber, address,
-    });
-    await newUser.save();
-    return res.status(200).json({ data: newUser });
-  } catch (error) {
-    return console.log(error);
-  }
-};
+exports.register = wrapAsync(async (req, res) => {
+  const {
+    fullName, email, password, phoneNumber, address,
+  } = req.body;
+  const newUser = new User({
+    fullName, email, password, phoneNumber, address,
+  });
+  await newUser.save();
+  res.status(200).json({ data: newUser });
+});
 
-exports.login = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    if (!email || !password) {
-      return res.json('need to fill in email and password');
-    }
-    const user = await User.findOne({ email });
-    if (!user || user.password !== password) {
-      return res.json('email or password incorrect');
-    }
-    return res.status(200).json({ data: user });
-  } catch (error) {
-    return console.log(error);
+exports.login = wrapAsync(async (req, res, next) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    return next(new AppError('need to fill in email and password', 400));
   }
-};
+  const user = await User.findOne({ email });
+  if (!user) {
+    return next(new AppError('email or password incorrect', 401));
+  }
+  if (await bcrypt.compare(password, user.password)) {
+    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
+    user.password = undefined;
+    return res.status(200).json({ token, data: { user } });
+  }
+  return next(new AppError('email or password incorrect', 401));
+});
