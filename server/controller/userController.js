@@ -4,11 +4,7 @@ const User = require('../models/UserModel');
 const AppError = require('../utils/AppError');
 const wrapAsync = require('../utils/wrapAsync');
 
-exports.getUser = wrapAsync(async (req, res) => {
-  const { email } = req.body;
-  const user = await User.findOne({ email });
-  return res.status(200).json({ data: user });
-});
+exports.getUser = wrapAsync(async (req, res) => res.status(200).json({ data: req.user }));
 
 exports.update = wrapAsync(async (req, res) => {
   const {
