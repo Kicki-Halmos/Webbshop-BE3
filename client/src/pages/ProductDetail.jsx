@@ -35,20 +35,20 @@ const ProductDetail = () => {
         </div>
         <div className="col m-4">
           <h1>{product.title}</h1>
-          <h5>
+          <p className="fs-5">
             Författare:
             {' '}
             {product.author}
-          </h5>
-          <h2 className="fw-bold text-danger">
+          </p>
+          <p className="fs-2 fw-bold text-danger">
             {product.price}
             {' '}
             kr
-          </h2>
-          <div className="d-flex border-top border-bottom p-2">
-            <p className="fw-bold m-2 align-self-center">Välj antal</p>
-            <input onChange={inputChangeHandler} type="number" className="col-1 rounded p-1 m-2" min="1" value={inputValue} />
-            <button onClick={saveToCart} type="button" className="btn btn-danger m-2 fw-bold">Lägg i varukorg</button>
+          </p>
+          <div className="d-flex border-top border-bottom p-2 my-4">
+            <p className="fw-bold fs-4 m-2 align-self-center">Välj antal</p>
+            <input onChange={inputChangeHandler} type="number" className="col-1 fw-bold rounded p-1 m-2" min="1" value={inputValue} />
+            <button onClick={saveToCart} type="button" className="btn btn-danger m-2 fw-bold fs-4 col-8">Lägg i varukorg</button>
           </div>
           <p className="m-2">{product.description}</p>
         </div>
