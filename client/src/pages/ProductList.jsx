@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import ProductItem from '../components/ProductItem';
 import ProductContext from '../contexts/product-context';
 
 const ProductList = () => {
@@ -12,11 +12,18 @@ const ProductList = () => {
   }, []);
 
   return (
-    <div>
+    <div className="m-4 row">
       {!productList ? <div>Loading</div> : productList.map((product) => (
-        <Link key={product._id} to={`/products/${product._id}`}>
-          <div>{product.title}</div>
-        </Link>
+        <div className="col">
+          <ProductItem
+            key={product._id}
+            id={product._id}
+            title={product.title}
+            price={product.price}
+            img={product.img}
+            author={product.author}
+          />
+        </div>
       )) }
     </div>
   );
