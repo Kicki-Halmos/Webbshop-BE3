@@ -17,7 +17,7 @@ const UserProvider = (props) => {
 
     const getMeHandler = async() => {
         try {
-            const token = localStorage.getItem('jwt');
+            const token = localStorage.getItem('token');
         if(token){
           const user = await getUser(token);
           dispatchUserAction({ type: "get_me", user: user.data.data})  
@@ -25,7 +25,6 @@ const UserProvider = (props) => {
         } catch(error){
             console.log(error);
         }
-        
       }
 
       const loginHandler = async(email, password) =>{
