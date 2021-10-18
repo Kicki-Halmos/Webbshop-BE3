@@ -1,13 +1,9 @@
-import React, { useState } from 'react';
-import { userApis } from '../api/api';
-import { useHistory } from 'react-router-dom';
-
+import React, { useState, useContext } from 'react';
+import UserContext from '../contexts/user-context';
 
 export default function RegisterForm() {
 
-    const {register} = userApis;
-    const history = useHistory();
-
+    const userCtx = useContext(UserContext);
 
     const [formData, setFormData] = useState({
         fullName: '',
@@ -24,13 +20,7 @@ export default function RegisterForm() {
 
     const handleOnSubmit = (e) => {
         e.preventDefault();
-        register(formData.fullName, formData.email, formData.password, formData.phoneNumber, formData.address)
-        .then(() => {
-                history.push('/login');
-        })
-        .catch((err) => {
-            alert(err.response.data.data.message);
-        })
+        userCtx.registerUser(formData.fullName, formData.email, formData.password, formData.phoneNumber, formData.address);
     }
 
     return ( 
