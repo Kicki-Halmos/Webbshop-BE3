@@ -18,7 +18,8 @@ export default function EditUserForm({user}) {
 
     const handleOnSubmit = (e) => {
         e.preventDefault();
-        updateUser(user._id, formData.fullName, formData.email, formData.phoneNumber, formData.address);
+        const token = localStorage.getItem('token');
+        updateUser(token, user._id, formData.fullName, formData.email, formData.phoneNumber, formData.address);
     }
     return (
         <div>

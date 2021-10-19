@@ -10,7 +10,8 @@ exports.getUser = wrapAsync(async (req, res) => {
 });
 
 exports.update = wrapAsync(async (req, res) => {
-  const user = await User.findOneAndUpdate({ _id: req.body.id }, {
+  // eslint-disable-next-line no-underscore-dangle
+  const user = await User.findOneAndUpdate({ _id: req.user._id }, {
     fullName: req.body.fullName,
     email: req.body.email,
     phoneNumber: req.body.phoneNumber,
