@@ -1,8 +1,7 @@
-import React from "react";
-import { useReducer } from "react";
-import UserContext from "../contexts/user-context";
+/* eslint-disable react/jsx-filename-extension */
+import React, { useReducer } from 'react';
+import UserContext from '../contexts/user-context';
 import { userApis } from '../api/api';
-
 const {getUser, login, register, updateUser} = userApis;
 const defaultUserState = { user: {}};
 
@@ -13,8 +12,9 @@ const userReducer = (state, action) => {
     }
 }
 
-const UserProvider = (props) => {
-    const [userState, dispatchUserAction] = useReducer(userReducer, defaultUserState);
+const UserProvider = ({ children }) => {
+  const [userState, dispatchUserAction] = useReducer(userReducer, defaultUserState);
+
 
     const getMeHandler = async() => {
         try {
@@ -39,24 +39,29 @@ const UserProvider = (props) => {
         }catch(err){
             console.log(err.response.data.data.message);
         }
-      }
 
-      const loginHandler = async(email, password) =>{
-          try {
-            const token = await login(email, password);
-            localStorage.setItem('token', token.data.token);
-          }catch(err){
-              console.log(err.response.data.data.message);
-          }
       }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-      const registerHandler = async(fullName, email, password, phoneNumber, address) => {
-        try {
-            await register(fullName, email, password, phoneNumber, address);
-        }catch(err){
-            console.log(err.response.data.data.message);
-        }
-      }
+  const loginHandler = async (email, password) => {
+    try {
+      const token = await login(email, password);
+      localStorage.setItem('token', token.data.token);
+    } catch (err) {
+      console.log(err.response.data.data.message);
+    }
+  };
+
+  const registerHandler = async (fullName, email, password, phoneNumber, address) => {
+    try {
+      await register(fullName, email, password, phoneNumber, address);
+    } catch (err) {
+      console.log(err.response.data.data.message);
+    }
+  };
 
       const logoutHandler = () => {
         try {
@@ -75,10 +80,10 @@ const UserProvider = (props) => {
           updateUser: updateHandler
       }
 
-      return (
-        <UserContext.Provider value={userContext}>
-            {props.children}
-        </UserContext.Provider>
-    );
-}
+  return (
+    <UserContext.Provider value={userContext}>
+      {children}
+    </UserContext.Provider>
+  );
+};
 export default UserProvider;
