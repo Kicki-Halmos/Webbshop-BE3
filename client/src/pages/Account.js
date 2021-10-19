@@ -6,12 +6,12 @@ const Account = () => {
     const user = userCtx.user;
 
     useEffect(() => {
-            userCtx.getUser();
+            userCtx.getUser();  
 	}, []);
 
     return (
     <div>
-        {!user ? <div>Loading</div> : <EditUserForm user={user} /> }
+        {!user.fullName ? <div>Loading</div> : <EditUserForm user={user} /> }
     </div>
     )
 }
