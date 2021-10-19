@@ -94,6 +94,7 @@ const Navbar = () => {
             <li className="nav-link" href="#">
                  cart
                 </li>
+                
          
 
           </ul>
