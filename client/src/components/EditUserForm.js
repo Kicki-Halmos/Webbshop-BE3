@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from 'react';
-import { userApis } from '../api/api';
-const { updateUser } = userApis;
-
+import React, {useState, useEffect, useContext} from 'react';
+import UserContext from '../contexts/user-context';
 
 export default function EditUserForm({user}) {
+
+    const userCtx = useContext(UserContext);
 
     useEffect(() => {
         setFormData({fullName: user.fullName, email: user.email, phoneNumber: user.phoneNumber, address: user.address})
@@ -18,8 +18,7 @@ export default function EditUserForm({user}) {
 
     const handleOnSubmit = (e) => {
         e.preventDefault();
-        const token = localStorage.getItem('token');
-        updateUser(token, user._id, formData.fullName, formData.email, formData.phoneNumber, formData.address);
+        userCtx.updateUser(user._id, formData.fullName, formData.email, formData.phoneNumber, formData.address);
     }
     return (
         <div>

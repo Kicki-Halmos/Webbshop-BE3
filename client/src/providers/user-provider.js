@@ -3,12 +3,13 @@ import { useReducer } from "react";
 import UserContext from "../contexts/user-context";
 import { userApis } from '../api/api';
 
-const {getUser, login, register} = userApis;
+const {getUser, login, register, updateUser} = userApis;
 const defaultUserState = { user: {}};
 
 const userReducer = (state, action) => {
     switch (action.type) {
         case "get_me": return { user: action.user };
+        case "update_user": return { user: action.user};
     }
 }
 
@@ -24,6 +25,19 @@ const UserProvider = (props) => {
         } 
         } catch(error){
             console.log(error);
+        }
+      }
+
+      const updateHandler = async(id, fullName, email, phoneNumber, address) => {
+        try {
+            const token = localStorage.getItem('token');
+            if(token){
+                const updatedUser = await updateUser(token, id, fullName, email, phoneNumber, address);
+                dispatchUserAction({ type: "update_user", user: updatedUser.data.data})  
+            }
+
+        }catch(err){
+            console.log(err.response.data.data.message);
         }
       }
 
@@ -57,7 +71,8 @@ const UserProvider = (props) => {
           getUser: getMeHandler,
           loginUser: loginHandler,
           registerUser: registerHandler,
-          logoutUser: logoutHandler
+          logoutUser: logoutHandler,
+          updateUser: updateHandler
       }
 
       return (

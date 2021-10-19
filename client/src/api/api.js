@@ -24,10 +24,15 @@ const deleteProductItem = (id) => api.delete(`/api/products/${id}`);
 
 const login = (email, password) => api.post('/api/users/login', {email, password});
 const register = (fullName, email, password, phoneNumber, address) => api.post('/api/users/register', {fullName, email, password, phoneNumber, address });
-const getUser = () => api.get('/api/users');
+const getUser = (token) => api.get('/api/users', {headers: {
+    Authorization: `Bearer ${token}`,
+},});
+const updateUser = (token, id, fullName, email, phoneNumber, address) => api.put(`/api/users/${id}`, {id, fullName, email, phoneNumber, address}, {headers: {
+    Authorization: `Bearer ${token}`,
+},});
   
 export const productApis = { getProducts,createProductItem,updateProductItem,getProductItem,deleteProductItem };
-export const userApis = { login, register, getUser };
+export const userApis = { login, register, getUser, updateUser };
 
 
 export default api;
