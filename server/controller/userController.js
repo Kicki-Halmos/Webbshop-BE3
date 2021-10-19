@@ -10,11 +10,11 @@ exports.getUser = wrapAsync(async (req, res) => {
 });
 
 exports.update = wrapAsync(async (req, res) => {
-  const {
-    fullName, email, password, phoneNumber, address,
-  } = req.body;
-  const user = await User.findOneAndUpdate(req.params.id, {
-    fullName, email, password, phoneNumber, address,
+  const user = await User.findOneAndUpdate({ _id: req.body.id }, {
+    fullName: req.body.fullName,
+    email: req.body.email,
+    phoneNumber: req.body.phoneNumber,
+    address: req.body.address,
   }, { new: true });
   return res.status(200).json({ data: user });
 });
