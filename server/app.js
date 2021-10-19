@@ -5,6 +5,8 @@ const logger = require('morgan');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const mongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
 const sendError = require('./utils/errorHandler');
 
 dotenv.config({ path: './config.env' });
@@ -31,6 +33,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(mongoSanitize());
+app.use(xss());
 app.use('/api/products', productRouter);
 app.use('/api/users', userRouter);
 app.use('/api/orders', orderRouter);
