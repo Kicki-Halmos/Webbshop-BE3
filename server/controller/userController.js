@@ -10,21 +10,24 @@ exports.getUser = wrapAsync(async (req, res) => {
   res.status(200).json({ data: req.user });
 });
 
+
 exports.update = wrapAsync(async (req, res, next) => {
   const {
-    fullName, email, password, phoneNumber, address,
+    fullName, email, phoneNumber, address,
   } = req.body;
-  if (!fullName || !email || !password || !phoneNumber || !address) {
+  if (!fullName || !email || !phoneNumber || !address) {
     next(new AppError('need to fill in all forms', 400));
-  }
-  if (password.length < 5 || password.length > 100) {
-    next(new AppError('password needs to be at least 5 characters (max 100)', 400));
   }
   if (!validator.isEmail(email)) {
     next(new AppError('the email field needs to be correct', 400));
   }
-  const user = await User.findOneAndUpdate(req.params.id, {
-    fullName, email, password, phoneNumber, address,
+  // eslint-disable-next-line no-underscore-dangle
+  const user = await User.findOneAndUpdate({ _id: req.user._id }, {
+    fullName,
+    email,
+    phoneNumber,
+    address,
+
   }, { new: true });
   return res.status(200).json({ data: user });
 });
