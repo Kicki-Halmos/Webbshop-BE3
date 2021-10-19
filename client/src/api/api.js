@@ -15,17 +15,25 @@ const updateProductItem = (id, title, description, price, brand, category, img) 
 const getProductItem = (id) => api.get(`/api/products/${id}`);
 const deleteProductItem = (id) => api.delete(`/api/products/${id}`);
 
-const updateUser = (token, id, fullName, email, phoneNumber, address) => api.put(`/api/users/${id}`, {id, fullName, email, phoneNumber, address}, {headers: {
+const updateUser = (token, id, fullName, email, phoneNumber, address) => api.put(`/api/users/${id}`, {
+  id, fullName, email, phoneNumber, address,
+}, {
+  headers: {
     Authorization: `Bearer ${token}`,
-},});
+  },
+});
 const login = (email, password) => api.post('/api/users/login', { email, password });
 const register = (fullName, email, password, phoneNumber, address) => api.post('/api/users/register', {
   fullName, email, password, phoneNumber, address,
 });
 const getUser = () => api.get('/api/users');
-  
-export const productApis = { getProducts,createProductItem,updateProductItem,getProductItem,deleteProductItem };
-export const userApis = { login, register, getUser, updateUser };
+
+export const productApis = {
+  getProducts, createProductItem, updateProductItem, getProductItem, deleteProductItem,
+};
+export const userApis = {
+  login, register, getUser, updateUser,
+};
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
@@ -36,10 +44,5 @@ api.interceptors.request.use((config) => {
   return config;
 },
 (err) => Promise.reject(err));
-
-export const productApis = {
-  getProducts, createProductItem, updateProductItem, getProductItem, deleteProductItem,
-};
-export const userApis = { login, register, getUser };
 
 export default api;
