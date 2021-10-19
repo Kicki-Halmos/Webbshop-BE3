@@ -1,20 +1,20 @@
-import React, {useEffect, useContext} from "react"
-import EditUserForm from "../components/EditUserForm"
+import React, { useEffect, useContext } from 'react';
+import EditUserForm from '../components/EditUserForm';
 import UserContext from '../contexts/user-context';
+
 const Account = () => {
-    const userCtx = useContext(UserContext);
-    const user = userCtx.user;
+  const userCtx = useContext(UserContext);
+  const { user } = userCtx;
 
-    useEffect(() => {
-            userCtx.getUser();  
-	}, []);
+  useEffect(() => {
+    userCtx.getUser();
+  }, []);
 
-    return (
+  return (
     <div>
-        {!user.fullName ? <div>Loading</div> : <EditUserForm user={user} /> }
+      {!user.fullName ? <div>Loading</div> : <EditUserForm user={user} /> }
     </div>
-    )
-}
+  );
+};
 
 export default Account;
-
