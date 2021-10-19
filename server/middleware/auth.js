@@ -2,26 +2,24 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/UserModel');
 const AppError = require('../utils/AppError');
 
-module.exports = async (req, res, next) => {
-  let token = req.headers.authorization;
-  if (token && token.startsWith('Bearer ')) {
-    // Remove Bearer from string
-    token = token.slice(7, token.length);
+module.exports = (req, res, next) => {
+  const { authorization } = req.headers;
+
+  if (!authorization) {
+    next(new AppError('You must be logged in', 403));
   }
 
-  if (token) {
-    jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
-      if (err) {
-        return next(new AppError('You must be logged in', 403));
-      }
-      const { userId } = decoded;
+  const token = authorization.replace('Bearer ', '');
 
-      const user = await User.findById(userId);
+  jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
+    if (err) {
+      next(new AppError('You must be logged in', 403));
+    }
+    const { userId } = decoded;
 
-      req.user = user;
+    const user = await User.findById(userId);
 
-      return next();
-    });
-  }
-  return next(new AppError('You must be logged in', 403));
+    req.user = user;
+    next();
+  });
 };
