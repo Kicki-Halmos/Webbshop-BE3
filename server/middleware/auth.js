@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/UserModel');
+const AppError = require('../utils/AppError');
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
   let token = req.headers.authorization;
   if (token && token.startsWith('Bearer ')) {
     // Remove Bearer from string
@@ -11,10 +12,7 @@ module.exports = (req, res, next) => {
   if (token) {
     jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
       if (err) {
-        res.json({
-          success: false,
-          message: 'Token is not valid',
-        });
+        return next(new AppError('You must be logged in', 403));
       }
       const { userId } = decoded;
 
@@ -22,12 +20,8 @@ module.exports = (req, res, next) => {
 
       req.user = user;
 
-      next();
-    });
-  } else {
-    res.json({
-      success: false,
-      message: 'Auth token is not supplied',
+      return next();
     });
   }
+  return next(new AppError('You must be logged in', 403));
 };

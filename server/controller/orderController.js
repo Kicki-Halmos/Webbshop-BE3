@@ -1,71 +1,51 @@
 const Order = require('../models/OrderModel');
+const wrapAsync = require('../utils/wrapAsync');
 
 // get all orders
-exports.getAllOrders = async (req, res) => {
+exports.getAllOrders = wrapAsync(async (req, res) => {
   const allOrders = await Order.find({});
 
-  res.status(200);
-  res.json({ data: allOrders });
-};
+  res.status(200).json({ data: allOrders });
+});
 
 // get one order
-exports.getSingleOrder = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const singleOrder = await Order.findOne({ id });
-    res.status(200);
-    res.json({ data: singleOrder });
-  } catch (error) {
-    return error;
-  }
-};
+exports.getSingleOrder = wrapAsync(async (req, res) => {
+  const { id } = req.params;
+  const singleOrder = await Order.findOne({ id });
+  res.status(200).json({ data: singleOrder });
+});
 
 // add new order
-exports.addNewOrder = async (req, res) => {
-  try {
-    const {
-      product, sent, totalCost, deliveryCost,
-    } = req.body;
+exports.addNewOrder = wrapAsync(async (req, res) => {
+  const {
+    product, sent, totalCost, deliveryCost,
+  } = req.body;
 
-    const order = new Order({
-      product,
-      sent,
-      totalCost,
-      deliveryCost,
-    });
+  const order = new Order({
+    product,
+    sent,
+    totalCost,
+    deliveryCost,
+  });
 
-    await order.save();
-    res.status(201);
-    res.json({ data: order });
-  } catch (error) {
-    return error;
-  }
-};
+  await order.save();
+  res.status(201).json({ data: order });
+});
 // update order
-exports.uppdateOrder = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { product, sent } = req.body;
+exports.uppdateOrder = wrapAsync(async (req, res) => {
+  const { id } = req.params;
+  const { product, sent } = req.body;
 
-    const updatedOrder = await Order.findByIdAndUpdate(id, { product, sent },
-      { new: true });
+  const updatedOrder = await Order.findByIdAndUpdate(id, { product, sent },
+    { new: true });
 
-    res.status(200);
-    res.json({ data: updatedOrder });
-  } catch (error) {
-    return error;
-  }
-};
+  res.status(200).json({ data: updatedOrder });
+});
 // delete order
-exports.deleteOrder = async (req, res) => {
-  try {
-    const { id } = req.params;
+exports.deleteOrder = wrapAsync(async (req, res) => {
+  const { id } = req.params;
 
-    const deleteddOrder = await Order.findByIdAndDelete(id);
+  const deleteddOrder = await Order.findByIdAndDelete(id);
 
-    res.status(204);
-    res.json({ data: deleteddOrder });
-  } catch (error) {
-    return error;
-  }
-};
+  res.status(204).json({ data: deleteddOrder });
+});
