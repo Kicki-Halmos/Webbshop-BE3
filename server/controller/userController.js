@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const validator = require('validator');
 const User = require('../models/UserModel');
 const AppError = require('../utils/AppError');
 const wrapAsync = require('../utils/wrapAsync');
@@ -19,10 +20,19 @@ exports.update = wrapAsync(async (req, res) => {
   return res.status(200).json({ data: user });
 });
 
-exports.register = wrapAsync(async (req, res) => {
+exports.register = wrapAsync(async (req, res, next) => {
   const {
     fullName, email, password, phoneNumber, address,
   } = req.body;
+  if (!fullName || !email || !password || !phoneNumber || !address) {
+    next(new AppError('need to fill in all forms', 400));
+  }
+  if (password.length < 5 || password.length > 100) {
+    next(new AppError('password needs to be at least 5 characters (max 100)', 400));
+  }
+  if (!validator.isEmail(email)) {
+    next(new AppError('the email field needs to be correct', 400));
+  }
   const newUser = new User({
     fullName, email, password, phoneNumber, address,
   });
