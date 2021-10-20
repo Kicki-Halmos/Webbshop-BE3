@@ -28,6 +28,11 @@ const register = (fullName, email, password, phoneNumber, address) => api.post('
 });
 const getUser = () => api.get('/api/users');
 
+const getCart = (email) => api.get('/api/carts', email);
+const addNewCart = (email) => api.post('/api/carts', email);
+const updateCart = (email, cart) => api.put('/api/carts', { email, cart });
+const deleteCart = (email) => api.delete('/api/carts', email);
+
 export const productApis = {
   getProducts, createProductItem, updateProductItem, getProductItem, deleteProductItem,
 };
@@ -35,9 +40,12 @@ export const userApis = {
   login, register, getUser, updateUser,
 };
 
+export const cartApis = {
+  getCart, addNewCart, updateCart, deleteCart,
+};
+
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
-  console.log(token);
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
