@@ -8,6 +8,21 @@ const ProductList = () => {
   const productList = productCtx.products;
   const [searchTerm, setSearchTerm] = useState('');
 
+  showAllProducts(() => {
+    return (
+      productList.map((product) => (
+        <div className="col" key={product._id}>
+          <ProductItem
+            id={product._id}
+            title={product.title}
+            price={product.price}
+            img={product.img}
+            author={product.author}
+        </div>
+      ))
+    );
+  });
+
   useEffect(() => {
     productCtx.getProducts();
   }, []);
@@ -17,25 +32,20 @@ const ProductList = () => {
       <input className="m-3" type="text" placeholder="Search here" onChange={(e) => setSearchTerm(e.target.value)} />
       <div className="m-4 row">
         <div>
-          {searchTerm === '' ? <div>Loading</div> : productList.filter((val) => val.title.toLowerCase().includes(searchTerm.toLowerCase()) || val.author.toLowerCase().includes(searchTerm.toLowerCase()))
+          {searchTerm === '' ? showAllProducts() : productList
+          .filter((val) => val.title.toLowerCase().includes(searchTerm.toLowerCase()) || val.author.toLowerCase().includes(searchTerm.toLowerCase()))
             .map((val) => (
-              <div>
-                <p>{val.title}</p>
+              <div className="col">
+                <ProductItem
+                  id={val._id}
+                  title={val.title}
+                  price={val.price}
+                  img={val.img}
+                  author={val.author}
+                />
               </div>
             ))}
         </div>
-        {!productList ? <div>Loading</div> : productList.map((product) => (
-          <div className="col">
-            <ProductItem
-              key={product._id}
-              id={product._id}
-              title={product.title}
-              price={product.price}
-              img={product.img}
-              author={product.author}
-            />
-          </div>
-        )) }
       </div>
     </div>
   );
