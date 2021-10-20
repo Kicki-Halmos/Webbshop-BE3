@@ -25,16 +25,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-},
-{
-  toJSON: { virtuals: true },
-  toObject: { virtuals: true },
-});
-
-userSchema.virtual('cart', {
-  ref: 'Cart',
-  foreignField: 'userId',
-  localField: '_id',
 });
 
 userSchema.pre('save', async function hashPass(next) {
