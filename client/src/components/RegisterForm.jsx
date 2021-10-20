@@ -1,9 +1,11 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import UserContext from '../contexts/user-context';
 
 export default function RegisterForm() {
   const userCtx = useContext(UserContext);
+  const history = useHistory();
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -18,15 +20,16 @@ export default function RegisterForm() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
-    userCtx.registerUser(
+    await userCtx.registerUser(
       formData.fullName,
       formData.email,
       formData.password,
       formData.phoneNumber,
       formData.address,
     );
+    history.push('/login');
   };
 
   return (

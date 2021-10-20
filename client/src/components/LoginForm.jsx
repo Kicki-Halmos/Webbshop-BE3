@@ -1,9 +1,11 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import UserContext from '../contexts/user-context';
 
 export default function LoginForm() {
   const userCtx = useContext(UserContext);
+  const history = useHistory();
 
   const [formData, setFormData] = useState({
     email: '',
@@ -15,9 +17,13 @@ export default function LoginForm() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
-    userCtx.loginUser(formData.email, formData.password);
+    await userCtx.loginUser(formData.email, formData.password);
+    const token = localStorage.getItem('token');
+    if (token) {
+      history.goBack();
+    }
   };
 
   return (
