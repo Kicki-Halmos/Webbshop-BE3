@@ -3,6 +3,8 @@ import React, { useEffect } from "react";
 
 const Navbar = () => {
   const token = localStorage.getItem("token");
+//   const [isAuth, setIsAuth]= useState([])
+
 
   function parseJwt(token) {
     if (!token) {
@@ -10,15 +12,15 @@ const Navbar = () => {
     }
     const base64Url = token.split(".")[1];
     const base64 = base64Url.replace("-", "+").replace("_", "/");
+
     return JSON.parse(window.atob(base64));
+
   }
-  console.log(parseJwt(token));
-  // console.log(parseJwt(token).user);
 
   useEffect(() => {
     parseJwt(token)
     console.log("useEffect ran......");
-  });
+  },[]);
   return (
     <div className="mb-4 ">
       <nav className="navbar navbar-expand-md navbar-light bg-primary px-3">
