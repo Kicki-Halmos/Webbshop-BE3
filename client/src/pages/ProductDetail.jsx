@@ -1,14 +1,14 @@
 import React, {
   useEffect, useContext, Fragment, useState,
 } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import ProductContext from '../contexts/product-context';
 
 const ProductDetail = () => {
   const productCtx = useContext(ProductContext);
   const product = productCtx.oneProduct;
   const [inputValue, setInputValue] = useState('1');
-
+  const history = useHistory();
   const params = useParams();
   const { id } = params;
 
@@ -18,6 +18,10 @@ const ProductDetail = () => {
 
   const saveToCart = () => {
     // funktion som ska komma från cart-context sen
+    const token = localStorage.getItem('token');
+    if (!token) {
+      history.push('/login');
+    }
   };
 
   useEffect(() => {
