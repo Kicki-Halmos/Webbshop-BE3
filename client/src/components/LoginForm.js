@@ -1,13 +1,16 @@
 import React, { useState, useContext } from 'react';
+import  { useHistory } from 'react-router-dom';
 import UserContext from '../contexts/user-context';
 
 export default function LoginForm() {
 
     const userCtx = useContext(UserContext);
+    const history=useHistory()
 
     const [formData, setFormData] = useState({
         email: '',
         password: ''
+        
     })
 
     const handleOnChange = (e) => {
@@ -18,6 +21,10 @@ export default function LoginForm() {
     const handleOnSubmit =  (e) => {
         e.preventDefault();
         userCtx.loginUser(formData.email, formData.password);
+        // const token = localStorage.getItem('token');
+        history.push("/products")
+
+
     }
 
     return ( 

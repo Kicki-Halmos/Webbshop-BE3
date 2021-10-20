@@ -16,15 +16,14 @@ const Navbar = () => {
   // console.log(parseJwt(token).user);
 
   useEffect(() => {
-    // parseJwt(token)
-
+    parseJwt(token)
     console.log("useEffect ran......");
-  }, [token]);
+  });
   return (
-    <div>
+    <div className="mb-4 ">
       <nav className="navbar navbar-expand-md navbar-light bg-primary px-3">
-        <a className="navbar-brand" href="/">
-          <h1> Shop </h1>{" "}
+        <a className="navbar-brand " href="/">
+          <h3 className="mb-0 "> Shop </h3>{" "}
         </a>
         <button
           className="navbar-toggler"
@@ -38,66 +37,41 @@ const Navbar = () => {
           <span className="navbar-toggler-icon" />
         </button>
         <div
-          className="collapse navbar-collapse justify-content-end"
+          className="collapse navbar-collapse justify-content-end "
           id="navbarNav"
         >
-          <ul className="navbar-nav">
-            {token ? (
+          {token ? (
+            <ul className="navbar-nav ">
+              <li className="nav-item"></li>
               <li className="nav-item">
-                <li className="nav-link" href="#">
-                  {`welcome ${parseJwt(token).user.fullName}`}{" "}
-                </li>
-                
-              </li>
-              
-            ) : (
-              <li className="nav-item">
-                <h1 className="nav-link" href="#">
-                  Welcome{" "}
-                </h1>
-
-              </li>
-              
-            )}
-            {token ? (
-              <li className="nav-item">
-                <li className="nav-link" href="#">
-                 Logout
+                <li className="nav-link text-light" href="#">
+                  my orders
                 </li>
               </li>
-              
-            ) : (
               <li className="nav-item">
-                <li className="nav-link" href="#">
-                 Login / Register
-                </li>
-
-              </li>
-              
-            )}
-            {token ? (
-              <li className="nav-item">
-                <li className="nav-link" href="#">
-                 my orders
+                <li className="nav-link text-light" href="#">
+                  cart
                 </li>
               </li>
-              
-            ) : (
               <li className="nav-item">
-                <li className="nav-link" href="#">
-                 cart
+                <li className="nav-link text-light" href="#">
+                  {`Account ${parseJwt(token).user.fullName}`}{" "}
                 </li>
-
               </li>
-              
-            )}
-            <li className="nav-link" href="#">
-                 cart
-                </li>
-                
-         
-
-          </ul>
+              <li className="nav-link text-light" href="#">
+                Logout
+              </li>
+            </ul>
+          ) : (
+            <ul className="navbar-nav">
+              <li className="nav-link text-light" href="#">
+                Cart
+              </li>
+              <li className="nav-link text-light" href="#">
+                Login / Register
+              </li>
+            </ul>
+          )}
         </div>
       </nav>
     </div>
