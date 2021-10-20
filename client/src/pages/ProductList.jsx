@@ -1,3 +1,4 @@
+/* eslint-disable arrow-body-style */
 /* eslint-disable no-underscore-dangle */
 import React, { useEffect, useContext, useState } from 'react';
 import ProductItem from '../components/ProductItem';
@@ -8,9 +9,13 @@ const ProductList = () => {
   const productList = productCtx.products;
   const [searchTerm, setSearchTerm] = useState('');
 
-  showAllProducts(() => {
+  useEffect(() => {
+    productCtx.getProducts();
+  }, []);
+
+  const showAllProducts = () => {
     return (
-      productList.map((product) => (
+      !productList ? <div>Loading</div> : productList.map((product) => (
         <div className="col" key={product._id}>
           <ProductItem
             id={product._id}
@@ -18,24 +23,22 @@ const ProductList = () => {
             price={product.price}
             img={product.img}
             author={product.author}
+          />
         </div>
       ))
     );
-  });
-
-  useEffect(() => {
-    productCtx.getProducts();
-  }, []);
+  };
 
   return (
     <div>
       <input className="m-3" type="text" placeholder="Search here" onChange={(e) => setSearchTerm(e.target.value)} />
       <div className="m-4 row">
-        <div>
-          {searchTerm === '' ? showAllProducts() : productList
-          .filter((val) => val.title.toLowerCase().includes(searchTerm.toLowerCase()) || val.author.toLowerCase().includes(searchTerm.toLowerCase()))
+        {searchTerm === ''
+          ? showAllProducts()
+          : productList.filter((val) => val.title.toLowerCase().includes(searchTerm.toLowerCase())
+        || val.author.toLowerCase().includes(searchTerm.toLowerCase()))
             .map((val) => (
-              <div className="col">
+              <div className="col" key={val._id}>
                 <ProductItem
                   id={val._id}
                   title={val.title}
@@ -45,7 +48,6 @@ const ProductList = () => {
                 />
               </div>
             ))}
-        </div>
       </div>
     </div>
   );
