@@ -10,13 +10,12 @@ exports.getUser = wrapAsync(async (req, res) => {
   res.status(200).json({ data: req.user });
 });
 
-
 exports.update = wrapAsync(async (req, res, next) => {
   const {
     fullName, email, phoneNumber, address,
   } = req.body;
   if (!fullName || !email || !phoneNumber || !address) {
-    next(new AppError('need to fill in all forms', 400));
+    return next(new AppError('need to fill in all forms', 400));
   }
   if (!validator.isEmail(email)) {
     next(new AppError('the email field needs to be correct', 400));
