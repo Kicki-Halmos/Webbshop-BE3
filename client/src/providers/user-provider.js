@@ -45,7 +45,7 @@ const UserProvider = ({ children }) => {
         dispatchUserAction({ type: 'update_user', user: updatedUser.data.data });
       }
     } catch (err) {
-      console.log(err.response.data.data.message);
+      errorMessageHandler(err.response.data.data.message);
     }
   };
 
