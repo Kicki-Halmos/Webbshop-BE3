@@ -1,9 +1,19 @@
-import React, {  } from "react";
+import React, { useEffect, useContext , useState} from 'react';
+import { useHistory } from 'react-router-dom';
+import UserContext from '../contexts/user-context';
+
 // import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const token = localStorage.getItem("token");
-//   const [isAuth, setIsAuth]= useState([])
+   const userCtx = useContext(UserContext);
+  const { user } = userCtx;
+
+//   console.log(user)
+  const history = useHistory();
+  const [isAuth, setIsAuth]= useState(token)
+
+
 
 
   function parseJwt(token) {
@@ -16,17 +26,32 @@ const Navbar = () => {
     return JSON.parse(window.atob(base64));
 
   }
+  function logoutUser(){
+      console.log('clicked');
+    localStorage.removeItem('token');
+    history.push("/login")
+
+  }
 
 //   * fix so that when the token updates navabr update, if logged in get logged in users data
-//   useEffect(() => {
-//     parseJwt(token)
-//     console.log("useEffect ran......");
-//   },[]);
+  useEffect(() => {
+    userCtx.getUser();
+    if (token) {
+    //   history.push('/login');
+    //   console.log(token)
+      setIsAuth(token)
+    //   console.log(isAuth);
+
+    }
+  }, [isAuth]);
+
+
   return (
     <div className="mb-4 ">
       <nav className="navbar navbar-expand-md navbar-light bg-primary px-3">
         <a className="navbar-brand " href="/">
           <h3 className="mb-0 "> Shop </h3>{" "}
+           {user.fullName &&<div>Loading</div>  }
         </a>
         <button
           className="navbar-toggler"
@@ -61,19 +86,21 @@ const Navbar = () => {
                   {`Account ${parseJwt(token).user.fullName}`}{" "}
                 </li>
               </li>
-              <li className="nav-link text-light" href="#">
+              <a className="nav-link text-light"  onClick={logoutUser}>
                 Logout
-              </li>
+              </a>
             </ul>
           ) : (
             <ul className="navbar-nav">
               <li className="nav-link text-light" href="#">
                 Cart
               </li>
-              <li className="nav-link text-light" href="#">
-                Login / Register
-              </li>
+              <a className="nav-link text-light" href="/login">
+                Login /
+              </a>
+               <span><a className="nav-link text-light" href="/register" >Register</a>  </span> 
             </ul>
+
           )}
         </div>
       </nav>
