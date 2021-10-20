@@ -17,10 +17,11 @@ const Navbar = () => {
 
   }
 
-  useEffect(() => {
-    parseJwt(token)
-    console.log("useEffect ran......");
-  },[]);
+//   * fix so that when the token updates navabr update, if logged in get logged in users data
+//   useEffect(() => {
+//     parseJwt(token)
+//     console.log("useEffect ran......");
+//   },[]);
   return (
     <div className="mb-4 ">
       <nav className="navbar navbar-expand-md navbar-light bg-primary px-3">
