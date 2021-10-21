@@ -35,7 +35,7 @@ const getUser = () => api.get('/api/users');
 
 const getCart = () => api.get('/api/carts');
 const addNewCart = () => api.post('/api/carts');
-const updateCart = (product, quantity, remove) => api.put('/api/carts', { product, quantity, remove });
+const updateCart = (product, quantity, val) => api.put('/api/carts', { product, quantity, val });
 const deleteCart = () => api.delete('/api/carts');
 
 export const productApis = {
