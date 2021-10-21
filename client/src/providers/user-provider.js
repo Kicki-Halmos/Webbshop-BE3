@@ -7,7 +7,7 @@ import history from '../utils/history';
 const {
   getUser, login, register, updateUser,
 } = userApis;
-const defaultUserState = { user: {}, alertMessage: '' };
+const defaultUserState = { user: {}, alertMessage: {} };
 
 const userReducer = (state, action) => {
   switch (action.type) {
@@ -21,8 +21,8 @@ const userReducer = (state, action) => {
 const UserProvider = ({ children }) => {
   const [userState, dispatchUserAction] = useReducer(userReducer, defaultUserState);
 
-  const alertMessageHandler = (message) => {
-    console.log(message);
+  const alertMessageHandler = (content, status) => {
+    const message = { content, status };
     dispatchUserAction({ type: 'update_alert_message', alertMessage: message });
   };
 
@@ -40,7 +40,7 @@ const UserProvider = ({ children }) => {
       const token = localStorage.getItem('token');
       if (token) {
         const updatedUser = await updateUser(token, id, fullName, email, phoneNumber, address);
-        alertMessageHandler(updatedUser.data.message);
+        alertMessageHandler(updatedUser.data.message, updatedUser.data.status);
         dispatchUserAction({ type: 'update_user', user: updatedUser.data.data });
       }
     } catch (err) {
