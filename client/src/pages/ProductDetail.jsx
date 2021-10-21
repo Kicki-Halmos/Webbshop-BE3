@@ -38,8 +38,11 @@ const ProductDetail = () => {
       {product
       && (
       <div className="row m-5">
-        <div className="col-4 m-4">
-          <img src={product.img} style={{ maxWidth: '20rem' }} alt="book cover" />
+        <div className="col-md-6 m-4">
+          <div>
+            {' '}
+            <img src={product.img} style={{ minWidth: '20rem' }} alt="book cover" />
+          </div>
 
         </div>
         <div className="col m-4">
