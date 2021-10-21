@@ -7,13 +7,13 @@ import history from '../utils/history';
 const {
   getUser, login, register, updateUser,
 } = userApis;
-const defaultUserState = { user: {}, errorMessage: '' };
+const defaultUserState = { user: {}, alertMessage: {} };
 
 const userReducer = (state, action) => {
   switch (action.type) {
     case 'get_me': return { user: action.user };
-    case 'update_user': return { user: action.user };
-    case 'update_error_message': return { errorMessage: action.errorMessage };
+    case 'update_user': return { ...state, user: action.user };
+    case 'update_alert_message': return { ...state, alertMessage: action.alertMessage };
     default: return defaultUserState;
   }
 };
@@ -21,8 +21,9 @@ const userReducer = (state, action) => {
 const UserProvider = ({ children }) => {
   const [userState, dispatchUserAction] = useReducer(userReducer, defaultUserState);
 
-  const errorMessageHandler = (message) => {
-    dispatchUserAction({ type: 'update_error_message', errorMessage: message });
+  const alertMessageHandler = (content, status) => {
+    const message = { content, status };
+    dispatchUserAction({ type: 'update_alert_message', alertMessage: message });
   };
 
   const getMeHandler = async () => {
@@ -39,10 +40,11 @@ const UserProvider = ({ children }) => {
       const token = localStorage.getItem('token');
       if (token) {
         const updatedUser = await updateUser(token, id, fullName, email, phoneNumber, address);
+        alertMessageHandler(updatedUser.data.message, updatedUser.data.status);
         dispatchUserAction({ type: 'update_user', user: updatedUser.data.data });
       }
     } catch (err) {
-      errorMessageHandler(err.response.data.data.message);
+      alertMessageHandler(err.response.data.data.message);
     }
   };
 
@@ -51,7 +53,7 @@ const UserProvider = ({ children }) => {
       const token = await login(email, password);
       localStorage.setItem('token', token.data.token);
     } catch (err) {
-      errorMessageHandler(err.response.data.data.message);
+      alertMessageHandler(err.response.data.data.message);
     }
   };
 
@@ -60,7 +62,7 @@ const UserProvider = ({ children }) => {
       await register(fullName, email, password, phoneNumber, address);
       history.push('/login');
     } catch (err) {
-      errorMessageHandler(err.response.data.data.message);
+      alertMessageHandler(err.response.data.data.message);
     }
   };
 
@@ -74,13 +76,13 @@ const UserProvider = ({ children }) => {
 
   const userContext = {
     user: userState.user,
-    errorMessage: userState.errorMessage,
+    alertMessage: userState.alertMessage,
     getUser: getMeHandler,
     loginUser: loginHandler,
     registerUser: registerHandler,
     logoutUser: logoutHandler,
     updateUser: updateHandler,
-    setErrorMessage: errorMessageHandler,
+    setalertMessage: alertMessageHandler,
   };
 
   return (
