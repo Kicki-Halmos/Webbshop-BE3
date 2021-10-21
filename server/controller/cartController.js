@@ -31,12 +31,13 @@ exports.updateCart = wrapAsync(async (req, res) => {
   let updatedProducts = [];
   const cart = await Cart
     .findOne({ userId: req.user._id });
+
   const existingProduct = cart.products.find(({ product }) => product == req.body.product);
 
   if (existingProduct) {
     updatedProducts = cart.products.map((item) => {
       if (req.body.product == item.product) {
-        return { product: item.product, quantity: item.quantity + req.body.quantity };
+        return { product: item.product, quantity: req.body.quantity };
       }
       return item;
     });

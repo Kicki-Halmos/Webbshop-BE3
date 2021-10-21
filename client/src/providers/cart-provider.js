@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 /* eslint-disable react/jsx-filename-extension */
 import React, { useReducer } from 'react';
 import CartContext from '../contexts/cart-context';
@@ -9,18 +10,22 @@ const defaultCartState = { items: [], totalAmount: 0 };
 
 const cartReducer = (state, action) => {
   switch (action.type) {
-    case 'get_cart': return {
-      items: action.items,
-      totalAmount: action.items.map((item) => {
+    case 'get_cart':
+      let updatedTotalAmount = state.totalAmount;
+      action.items.map((item) => {
         let amount = 0;
         if (item.quantity === 1) {
           amount += item.product.price;
         } else {
           amount += (item.product.price * item.quantity);
         }
-        return amount;
-      }),
-    };
+        // eslint-disable-next-line no-return-assign
+        return updatedTotalAmount += amount;
+      });
+      return {
+        items: action.items,
+        totalAmount: updatedTotalAmount,
+      };
     default: return defaultCartState;
   }
 };
@@ -30,8 +35,7 @@ const CartProvider = ({ children }) => {
 
   const getCartHandler = async () => {
     try {
-      const email = 'sara@katt.se';
-      const cart = await getCart(email);
+      const cart = await getCart();
       dispatchCartAction({ type: 'get_cart', items: cart.data.data.products });
     } catch (error) {
       console.log(error);
