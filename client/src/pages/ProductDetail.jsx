@@ -4,7 +4,7 @@ import React, {
 import { useParams, useHistory } from 'react-router-dom';
 import ProductContext from '../contexts/product-context';
 import UserContext from '../contexts/user-context';
-import ErrorMessage from '../components/ErrorMessage';
+import AlertMessage from '../components/AlertMessage';
 
 const ProductDetail = () => {
   const productCtx = useContext(ProductContext);
@@ -14,7 +14,7 @@ const ProductDetail = () => {
   const history = useHistory();
   const params = useParams();
   const { id } = params;
-  const message = userCtx.errorMessage;
+  const message = userCtx.alertMessage;
 
   const inputChangeHandler = (event) => {
     setInputValue(event.target.value);
@@ -34,7 +34,7 @@ const ProductDetail = () => {
 
   return (
     <>
-      {message && message !== '' && <ErrorMessage message={message} />}
+      {message && message !== '' && <AlertMessage message={message} />}
       {product
       && (
       <div className="row m-5">
