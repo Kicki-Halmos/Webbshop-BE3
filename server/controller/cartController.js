@@ -28,31 +28,40 @@ exports.addNewCart = wrapAsync(async (req, res) => {
 });
 
 exports.updateCart = wrapAsync(async (req, res) => {
-  const { product, quantity, remove } = req.body;
+  const {
+    product, quantity, val,
+  } = req.body;
+  console.log(req.body);
+  const quantityNumber = Number(quantity);
   let updatedProducts = [];
   const cart = await Cart
     .findOne({ userId: req.user._id });
 
   const existingProduct = cart.products.find((item) => item.product == product);
 
-  console.log(existingProduct);
-
-  if (existingProduct) {
-    updatedProducts = cart.products.map((item) => {
-      if (product == item.product) {
-        return { product: item.product, quantity };
-      }
-      return item;
-    });
-  } else {
-    updatedProducts = cart.products;
-    updatedProducts.push({ product, quantity });
+  if (val === 'remove') {
+    updatedProducts = cart.products.filter((item) => item.product != product);
+    console.log(updatedProducts);
   }
 
-  if (remove) {
-    updatedProducts = cart.products.filter((item) => item.product != remove);
+  if (val !== 'remove') {
+    if (existingProduct) {
+      updatedProducts = cart.products.map((item) => {
+        if (product == item.product) {
+          if (val === 'plus') {
+            return { product: item.product, quantity: item.quantity + quantityNumber };
+          } return { product: item.product, quantity };
+        }
+        return item;
+      });
+    } else {
+      console.log('hej');
+      updatedProducts = cart.products;
+      updatedProducts.push({ product, quantity });
+    }
   }
 
+  // console.log(updatedProducts);
   const updatedCart = await Cart
     .findOneAndUpdate({ userId: req.user._id }, { products: updatedProducts }, { new: true })
     .populate('products.product');
