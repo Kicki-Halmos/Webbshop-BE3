@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
 import UserContext from '../contexts/user-context';
+import ErrorMessage from './ErrorMessage';
 
 export default function RegisterForm() {
   const userCtx = useContext(UserContext);
-  const history = useHistory();
+  const message = userCtx.errorMessage;
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -22,19 +22,19 @@ export default function RegisterForm() {
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-    await userCtx.registerUser(
+    userCtx.registerUser(
       formData.fullName,
       formData.email,
       formData.password,
       formData.phoneNumber,
       formData.address,
     );
-    history.push('/login');
   };
 
   return (
     <div>
       <h1>Register</h1>
+      {message !== '' && <ErrorMessage message={message} />}
       <form onSubmit={handleOnSubmit}>
         <div className="mb-3">
           <label htmlFor="registerFullName" className="htmlF-label">Full name</label>

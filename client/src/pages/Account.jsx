@@ -18,7 +18,7 @@ const Account = () => {
 
   return (
     <div>
-      {!user.fullName ? <div>Loading</div> : <EditUserForm user={user} /> }
+      {user && !user.fullName ? <div>Loading</div> : <EditUserForm user={user} /> }
     </div>
   );
 };

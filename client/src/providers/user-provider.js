@@ -2,16 +2,18 @@
 import React, { useReducer } from 'react';
 import UserContext from '../contexts/user-context';
 import { userApis } from '../api/api';
+import history from '../utils/history';
 
 const {
   getUser, login, register, updateUser,
 } = userApis;
-const defaultUserState = { user: {} };
+const defaultUserState = { user: {}, errorMessage: '' };
 
 const userReducer = (state, action) => {
   switch (action.type) {
     case 'get_me': return { user: action.user };
     case 'update_user': return { user: action.user };
+    case 'update_error_message': return { errorMessage: action.errorMessage };
     default: return defaultUserState;
   }
 };
@@ -19,13 +21,14 @@ const userReducer = (state, action) => {
 const UserProvider = ({ children }) => {
   const [userState, dispatchUserAction] = useReducer(userReducer, defaultUserState);
 
+  const errorMessageHandler = (message) => {
+    dispatchUserAction({ type: 'update_error_message', errorMessage: message });
+  };
+
   const getMeHandler = async () => {
     try {
-      const token = localStorage.getItem('token');
-      if (token) {
-        const user = await getUser(token);
-        dispatchUserAction({ type: 'get_me', user: user.data.data });
-      }
+      const user = await getUser();
+      dispatchUserAction({ type: 'get_me', user: user.data.data });
     } catch (error) {
       console.log(error);
     }
@@ -39,7 +42,7 @@ const UserProvider = ({ children }) => {
         dispatchUserAction({ type: 'update_user', user: updatedUser.data.data });
       }
     } catch (err) {
-      console.log(err.response.data.data.message);
+      errorMessageHandler(err.response.data.data.message);
     }
   };
 
@@ -48,15 +51,16 @@ const UserProvider = ({ children }) => {
       const token = await login(email, password);
       localStorage.setItem('token', token.data.token);
     } catch (err) {
-      console.log(err.response.data.data.message);
+      errorMessageHandler(err.response.data.data.message);
     }
   };
 
   const registerHandler = async (fullName, email, password, phoneNumber, address) => {
     try {
       await register(fullName, email, password, phoneNumber, address);
+      history.push('/login');
     } catch (err) {
-      console.log(err.response.data.data.message);
+      errorMessageHandler(err.response.data.data.message);
     }
   };
 
@@ -70,11 +74,13 @@ const UserProvider = ({ children }) => {
 
   const userContext = {
     user: userState.user,
+    errorMessage: userState.errorMessage,
     getUser: getMeHandler,
     loginUser: loginHandler,
     registerUser: registerHandler,
     logoutUser: logoutHandler,
     updateUser: updateHandler,
+    setErrorMessage: errorMessageHandler,
   };
 
   return (

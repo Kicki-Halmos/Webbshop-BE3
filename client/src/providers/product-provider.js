@@ -1,9 +1,10 @@
 /* eslint-disable max-len */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/jsx-filename-extension */
-import React, { useReducer } from 'react';
+import React, { useReducer, useContext } from 'react';
 import ProductContext from '../contexts/product-context';
 import { productApis } from '../api/api';
+import UserContext from '../contexts/user-context';
 
 const {
   getProducts, createProductItem, updateProductItem, getProductItem, deleteProductItem,
@@ -26,6 +27,7 @@ const productReducer = (state, action) => {
 
 const ProductProvider = ({ children }) => {
   const [productState, dispatchProductAction] = useReducer(productReducer, defaultProductState);
+  const userCtx = useContext(UserContext);
 
   const getProductsHandler = async () => {
     try {
@@ -59,7 +61,7 @@ const ProductProvider = ({ children }) => {
       const product = await getProductItem(id);
       dispatchProductAction({ type: 'get_one_product', product: product.data.data });
     } catch (error) {
-      console.log(error);
+      userCtx.setErrorMessage(error.response.data.data.message);
     }
   };
 
@@ -80,7 +82,6 @@ const ProductProvider = ({ children }) => {
     updateProduct: updateProductHandler,
     getOneProduct: getProductItemHandler,
     deleteProduct: deleteProductItemHandler,
-
   };
 
   return (
