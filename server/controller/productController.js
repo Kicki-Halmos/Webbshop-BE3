@@ -21,11 +21,14 @@ exports.addNewProduct = wrapAsync(async (req, res) => {
 });
 
 exports.findProduct = wrapAsync(async (req, res, next) => {
-  const oneProduct = await Product.findOne({ _id: req.params.id });
-  if (!oneProduct) {
-    return next(new AppError('the product does not exist', 404));
+  if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+    const oneProduct = await Product.findOne({ _id: req.params.id });
+    if (!oneProduct) {
+      return next(new AppError('the product does not exist', 404));
+    }
+    return res.status(200).json({ data: oneProduct });
   }
-  return res.status(200).json({ data: oneProduct });
+  return next(new AppError('the product does not exist', 404));
 });
 
 exports.allProducts = wrapAsync(async (req, res) => {
