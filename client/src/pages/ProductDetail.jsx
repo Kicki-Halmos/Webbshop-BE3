@@ -3,14 +3,18 @@ import React, {
 } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import ProductContext from '../contexts/product-context';
+import UserContext from '../contexts/user-context';
+import ErrorMessage from '../components/ErrorMessage';
 
 const ProductDetail = () => {
   const productCtx = useContext(ProductContext);
+  const userCtx = useContext(UserContext);
   const product = productCtx.oneProduct;
   const [inputValue, setInputValue] = useState('1');
   const history = useHistory();
   const params = useParams();
   const { id } = params;
+  const message = userCtx.errorMessage;
 
   const inputChangeHandler = (event) => {
     setInputValue(event.target.value);
@@ -30,6 +34,7 @@ const ProductDetail = () => {
 
   return (
     <>
+      {message && message !== '' && <ErrorMessage message={message} />}
       {product
       && (
       <div className="row m-5">

@@ -3,9 +3,11 @@
 /* eslint-disable max-len */
 import React, { useState, useEffect, useContext } from 'react';
 import UserContext from '../contexts/user-context';
+import ErrorMessage from './ErrorMessage';
 
 export default function EditUserForm({ user }) {
   const userCtx = useContext(UserContext);
+  const message = userCtx.errorMessage;
   const [formData, setFormData] = useState(null);
 
   useEffect(() => {
@@ -26,6 +28,7 @@ export default function EditUserForm({ user }) {
   return (
     <div>
       <h1>Account</h1>
+      {message && message !== '' && <ErrorMessage message={message} />}
       {formData && (
         <form onSubmit={handleOnSubmit}>
           <div className="mb-3">
