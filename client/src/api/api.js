@@ -17,10 +17,6 @@ const deleteProductItem = (id) => api.delete(`/api/products/${id}`);
 
 const updateUser = (token, id, fullName, email, phoneNumber, address) => api.put(`/api/users/${id}`, {
   id, fullName, email, phoneNumber, address,
-}, {
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
 });
 const login = (email, password) => api.post('/api/users/login', { email, password });
 const register = (fullName, email, password, phoneNumber, address) => api.post('/api/users/register', {

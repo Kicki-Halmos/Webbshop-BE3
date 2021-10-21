@@ -27,11 +27,8 @@ const UserProvider = ({ children }) => {
 
   const getMeHandler = async () => {
     try {
-      const token = localStorage.getItem('token');
-      if (token) {
-        const user = await getUser(token);
-        dispatchUserAction({ type: 'get_me', user: user.data.data });
-      }
+      const user = await getUser();
+      dispatchUserAction({ type: 'get_me', user: user.data.data });
     } catch (error) {
       console.log(error);
     }
