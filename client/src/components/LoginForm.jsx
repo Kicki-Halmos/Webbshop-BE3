@@ -31,7 +31,7 @@ export default function LoginForm() {
   return (
     <div>
       <h1>Login</h1>
-      {message !== '' && <AlertMessage message={message} />}
+      {message.content && <AlertMessage message={message} />}
       <form onSubmit={handleOnSubmit}>
         <div className="mb-3">
           <label htmlFor="loginEmail" className="htmlF-label">Email address</label>

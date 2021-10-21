@@ -34,7 +34,7 @@ const ProductDetail = () => {
 
   return (
     <>
-      {message && message !== '' && <AlertMessage message={message} />}
+      {message.content && <AlertMessage message={message} />}
       {product
       && (
       <div className="row m-5">
