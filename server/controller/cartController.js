@@ -28,22 +28,29 @@ exports.addNewCart = wrapAsync(async (req, res) => {
 });
 
 exports.updateCart = wrapAsync(async (req, res) => {
+  const { product, quantity, remove } = req.body;
   let updatedProducts = [];
   const cart = await Cart
     .findOne({ userId: req.user._id });
 
-  const existingProduct = cart.products.find(({ product }) => product == req.body.product);
+  const existingProduct = cart.products.find((item) => item.product == product);
+
+  console.log(existingProduct);
 
   if (existingProduct) {
     updatedProducts = cart.products.map((item) => {
-      if (req.body.product == item.product) {
-        return { product: item.product, quantity: req.body.quantity };
+      if (product == item.product) {
+        return { product: item.product, quantity };
       }
       return item;
     });
   } else {
     updatedProducts = cart.products;
-    updatedProducts.push({ product: req.body.product, quantity: req.body.quantity });
+    updatedProducts.push({ product, quantity });
+  }
+
+  if (remove) {
+    updatedProducts = cart.products.filter((item) => item.product != remove);
   }
 
   const updatedCart = await Cart
