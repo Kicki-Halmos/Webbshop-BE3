@@ -13,12 +13,13 @@ import Account from './pages/Account';
 import ProductProvider from './providers/product-provider';
 import UserProvider from './providers/user-provider';
 import history from './utils/history';
+import Navbar from './components/Navbar';
 
 function App() {
   return (
     <UserProvider>
       <ProductProvider>
-
+        <Navbar />
         <div className="container">
           <Router history={history}>
             <Switch>
