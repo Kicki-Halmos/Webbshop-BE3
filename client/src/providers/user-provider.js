@@ -83,6 +83,7 @@ const UserProvider = ({ children }) => {
     registerUser: registerHandler,
     logoutUser: logoutHandler,
     updateUser: updateHandler,
+    setErrorMessage: errorMessageHandler,
   };
 
   return (

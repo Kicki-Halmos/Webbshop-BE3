@@ -8,6 +8,7 @@ const UserContext = React.createContext({
   loginUser: () => {},
   registerUser: () => {},
   logoutUser: () => {},
+  setErrorMessage: () => {},
 });
 
 export default UserContext;
