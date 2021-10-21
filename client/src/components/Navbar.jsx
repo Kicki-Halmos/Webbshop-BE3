@@ -43,14 +43,14 @@ export default function Navbar() {
             <ul className="navbar-nav ">
               <li className="nav-item" />
               <li className="nav-item">
-                <li className="nav-link text-light" href="#">
+                <a className="nav-link text-light" href="/orders">
                   my orders
-                </li>
+                </a>
               </li>
               <li className="nav-item">
-                <li className="nav-link text-light" href="#">
+                <a className="nav-link text-light" href="/cart">
                   cart
-                </li>
+                </a>
               </li>
               <li className="nav-item">
                 <li className="nav-link text-light" href="#">
