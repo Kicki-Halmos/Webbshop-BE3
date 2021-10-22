@@ -3,8 +3,6 @@ const {
   allProducts, findProduct, addNewProduct, updateProduct, deleteProduct,
 } = require('../controller/productController');
 
-// const auth = require('../middleware/auth');
-
 const router = express.Router();
 
 router.get('/', allProducts);

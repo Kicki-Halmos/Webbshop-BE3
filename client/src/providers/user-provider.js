@@ -52,6 +52,9 @@ const UserProvider = ({ children }) => {
     try {
       const token = await login(email, password);
       localStorage.setItem('token', token.data.token);
+      if (token.data.adminToken) {
+        localStorage.setItem('adminToken', token.data.adminToken);
+      }
     } catch (err) {
       alertMessageHandler(err.response.data.data.message);
     }
@@ -69,6 +72,7 @@ const UserProvider = ({ children }) => {
   const logoutHandler = () => {
     try {
       localStorage.removeItem('token');
+      localStorage.removeItem('adminToken');
     } catch (err) {
       console.log(err);
     }

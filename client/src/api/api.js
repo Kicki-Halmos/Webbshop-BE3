@@ -5,15 +5,6 @@ const api = axios.create({
   baseURL: 'http://localhost:3000',
 });
 
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-},
-(err) => Promise.reject(err));
-
 const getProducts = () => api.get('/api/products');
 const createProductItem = (title, description, price, brand, category, img) => api.post('/api/products', {
   title, description, price, brand, category, img,
@@ -44,9 +35,25 @@ export const productApis = {
 export const userApis = {
   login, register, getUser, updateUser,
 };
-
 export const cartApis = {
   getCart, addNewCart, updateCart, deleteCart,
 };
+
+api.interceptors.request.use((config) => {
+  const adminToken = localStorage.getItem('adminToken');
+  const token = localStorage.getItem('token');
+  console.log(adminToken);
+  if (adminToken) {
+    config.headers = { 'X-Auth-Token': adminToken };
+  }
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+},
+(err) => Promise.reject(err));
+
+
+
 
 export default api;
