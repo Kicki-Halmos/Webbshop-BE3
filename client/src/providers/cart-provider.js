@@ -5,12 +5,16 @@ import React, { useReducer } from 'react';
 import CartContext from '../contexts/cart-context';
 import { cartApis } from '../api/api';
 
-const { getCart, updateCart, deleteCart } = cartApis;
+const {
+  getCart, updateCart, deleteCart, addNewCart,
+} = cartApis;
 
 const defaultCartState = { items: [], totalCost: 0 };
 
 const cartReducer = (state, action) => {
   switch (action.type) {
+    case 'add_cart':
+      return { items: action.item, totalCost: action.item.price };
     case 'get_cart':
       let updatedTotalCost = 0;
       action.items.map((item) => {
@@ -34,6 +38,16 @@ const cartReducer = (state, action) => {
 
 const CartProvider = ({ children }) => {
   const [cartState, dispatchCartAction] = useReducer(cartReducer, defaultCartState);
+
+  const addCartHandler = async (product, quantity) => {
+    try {
+      const cart = await addNewCart(product, quantity);
+      console.log(cart);
+      dispatchCartAction({ type: 'add_cart', item: cart.data.data.products[0].product });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const getCartHandler = async () => {
     try {
@@ -65,6 +79,7 @@ const CartProvider = ({ children }) => {
   const cartContext = {
     items: cartState.items,
     totalCost: cartState.totalCost,
+    addCart: addCartHandler,
     getCart: getCartHandler,
     updateCart: updateCartHandler,
     deleteCart: deleteCartHandler,

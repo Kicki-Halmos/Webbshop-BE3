@@ -1,14 +1,7 @@
 const mongoose = require('mongoose');
 
-const { Schema } = mongoose;
-
 const OrderSchema = new mongoose.Schema({
-  products: {
-    type: Schema.Types.ObjectId,
-    ref: 'Cart',
-    required: true,
-
-  },
+  products: { type: Array },
   status: {
     type: String,
     default: 'registered',

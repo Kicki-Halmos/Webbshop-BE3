@@ -9,7 +9,11 @@ const ProductItem = (props) => {
   } = props;
 
   const saveToCart = () => {
-    cartCtx.updateCart(id, 1, 'plus');
+    if (cartCtx.items[0]) {
+      cartCtx.updateCart(id, 1, 'plus');
+    } else {
+      cartCtx.addCart(id, 1);
+    }
   };
 
   return (

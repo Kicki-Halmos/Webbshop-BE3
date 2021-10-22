@@ -18,20 +18,19 @@ exports.getSingleOrder = wrapAsync(async (req, res) => {
 // add new order
 exports.addNewOrder = wrapAsync(async (req, res) => {
   const {
-    products, status, totalCost, deliveryCost,
+    products, totalCost, deliveryCost,
   } = req.body;
 
   const userId = req.user.id;
 
-  const order = new Order({
+  const order = await new Order({
     products,
-    status,
     totalCost,
     deliveryCost,
     userId,
   });
 
-  await order.save();
+  order.save();
   res.status(201).json({ data: order });
 });
 // update order

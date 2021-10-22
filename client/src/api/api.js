@@ -25,7 +25,7 @@ const register = (fullName, email, password, phoneNumber, address) => api.post('
 const getUser = () => api.get('/api/users');
 
 const getCart = () => api.get('/api/carts');
-const addNewCart = () => api.post('/api/carts');
+const addNewCart = (product, quantity) => api.post('/api/carts', { product, quantity });
 const updateCart = (product, quantity, val) => api.put('/api/carts', { product, quantity, val });
 const deleteCart = () => api.delete('/api/carts');
 
@@ -52,7 +52,6 @@ export const orderApis = {
 api.interceptors.request.use((config) => {
   const adminToken = localStorage.getItem('adminToken');
   const token = localStorage.getItem('token');
-  console.log(adminToken);
   if (adminToken) {
     config.headers = { 'X-Auth-Token': adminToken };
   }
