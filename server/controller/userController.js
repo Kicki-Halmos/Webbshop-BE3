@@ -4,6 +4,7 @@ const validator = require('validator');
 const User = require('../models/UserModel');
 const AppError = require('../utils/AppError');
 const wrapAsync = require('../utils/wrapAsync');
+const Order = require('../models/OrderModel');
 
 exports.getUser = wrapAsync(async (req, res) => {
   req.user.password = undefined;
@@ -66,4 +67,12 @@ exports.login = wrapAsync(async (req, res, next) => {
     return res.status(200).json({ token, data: { user } });
   }
   return next(new AppError('email or password incorrect', 401));
+});
+
+// get users orders
+exports.getMyOrders = wrapAsync(async (req, res) => {
+  // console.log(req.body.userId);
+  const usersOrders = await Order.find({ userId: req.body.userId });
+
+  res.status(200).json({ data: usersOrders });
 });
