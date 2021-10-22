@@ -16,6 +16,7 @@ import history from './utils/history';
 import Navbar from './components/Navbar';
 import ProductsAdmin from './pages/ProductsAdmin';
 import ProductFormAdmin from './pages/ProductFormAdmin';
+import ProductUpdate from './pages/ProductUpdate';
 import OrdersAdmin from './pages/OrdersAdmin';
 
 function App() {
@@ -52,6 +53,9 @@ function App() {
               </Route>
               <Route path="/admin/orders">
                 <OrdersAdmin />
+              </Route>
+              <Route path="/admin/update-product/:id">
+                <ProductUpdate />
               </Route>
               <Route path="/admin/create-product">
                 <ProductFormAdmin />

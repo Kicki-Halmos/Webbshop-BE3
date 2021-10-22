@@ -29,8 +29,8 @@ export default function Admin() {
         {productList && (
           <tbody>
             {productList.map((product) => (
-              <tr>
-                <td>{product.title}</td>
+              <tr key={product._id}>
+                <td><Link to={`/admin/update-product/${product._id}`}>{product.title}</Link></td>
                 <td>{product.author}</td>
                 <td>{product.price}</td>
                 <td>{product.category}</td>
