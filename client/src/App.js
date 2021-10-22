@@ -14,6 +14,8 @@ import ProductProvider from './providers/product-provider';
 import UserProvider from './providers/user-provider';
 import history from './utils/history';
 import Navbar from './components/Navbar';
+import Admin from './pages/Admin';
+import NewProduct from './pages/NewProduct';
 
 function App() {
   return (
@@ -48,6 +50,12 @@ function App() {
                 <Account />
               </Route>
             </Switch>
+            <Route path="/admin">
+              <Admin />
+            </Route>
+            <Route path="/createproduct">
+              <NewProduct />
+            </Route>
           </Router>
         </div>
       </ProductProvider>
