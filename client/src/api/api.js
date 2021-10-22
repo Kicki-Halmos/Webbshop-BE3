@@ -5,6 +5,15 @@ const api = axios.create({
   baseURL: 'http://localhost:3000',
 });
 
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+},
+(err) => Promise.reject(err));
+
 const getProducts = () => api.get('/api/products');
 const createProductItem = (title, description, price, brand, category, img) => api.post('/api/products', {
   title, description, price, brand, category, img,
@@ -24,6 +33,11 @@ const register = (fullName, email, password, phoneNumber, address) => api.post('
 });
 const getUser = () => api.get('/api/users');
 
+const getCart = () => api.get('/api/carts');
+const addNewCart = () => api.post('/api/carts');
+const updateCart = (product, quantity, val) => api.put('/api/carts', { product, quantity, val });
+const deleteCart = () => api.delete('/api/carts');
+
 export const productApis = {
   getProducts, createProductItem, updateProductItem, getProductItem, deleteProductItem,
 };
@@ -31,14 +45,8 @@ export const userApis = {
   login, register, getUser, updateUser,
 };
 
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
-  console.log(token);
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-},
-(err) => Promise.reject(err));
+export const cartApis = {
+  getCart, addNewCart, updateCart, deleteCart,
+};
 
 export default api;

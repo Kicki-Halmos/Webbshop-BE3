@@ -12,6 +12,7 @@ import Orders from './pages/Orders';
 import Account from './pages/Account';
 import ProductProvider from './providers/product-provider';
 import UserProvider from './providers/user-provider';
+import CartProvider from './providers/cart-provider';
 import history from './utils/history';
 import Navbar from './components/Navbar';
 import ProductsAdmin from './pages/ProductsAdmin';
@@ -22,6 +23,40 @@ function App() {
   return (
     <UserProvider>
       <ProductProvider>
+<<<<<<< HEAD
+        <CartProvider>
+          <div className="container">
+            <Router history={history}>
+              <Switch>
+                <Route path="/" exact>
+                  <Redirect to="/products" />
+                </Route>
+                <Route path="/products" exact>
+                  <ProductList />
+                </Route>
+                <Route path="/products/:id">
+                  <ProductDetail />
+                </Route>
+                <Route path="/login">
+                  <Login />
+                </Route>
+                <Route path="/register">
+                  <Register />
+                </Route>
+                <Route path="/cart">
+                  <Cart />
+                </Route>
+                <Route path="/orders">
+                  <Orders />
+                </Route>
+                <Route path="/account">
+                  <Account />
+                </Route>
+              </Switch>
+            </Router>
+          </div>
+        </CartProvider>
+=======
         <Navbar />
         <div className="container">
           <Router history={history}>
@@ -62,6 +97,7 @@ function App() {
             </Switch>
           </Router>
         </div>
+>>>>>>> main
       </ProductProvider>
     </UserProvider>
   );
