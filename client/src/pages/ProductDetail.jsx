@@ -1,9 +1,14 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-underscore-dangle */
 import React, {
-  useEffect, useContext, Fragment, useState,
+  useEffect, useContext, useState, useRef,
 } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import ProductContext from '../contexts/product-context';
 import UserContext from '../contexts/user-context';
+
+import CartContext from '../contexts/cart-context';
+
 import AlertMessage from '../components/AlertMessage';
 
 const ProductDetail = () => {
@@ -11,30 +16,36 @@ const ProductDetail = () => {
   const userCtx = useContext(UserContext);
   const product = productCtx.oneProduct;
   const [inputValue, setInputValue] = useState('1');
+  const refValue = useRef(null);
+  const cartCtx = useContext(CartContext);
+  const { items } = cartCtx;
   const history = useHistory();
   const params = useParams();
   const { id } = params;
   const message = userCtx.alertMessage;
+
+  const quantity = items.filter((item) => item.product._id === id);
+
+  useEffect(() => {
+    productCtx.getOneProduct(id);
+    cartCtx.getCart();
+  }, []);
 
   const inputChangeHandler = (event) => {
     setInputValue(event.target.value);
   };
 
   const saveToCart = () => {
-    // funktion som ska komma från cart-context sen
     const token = localStorage.getItem('token');
     if (!token) {
       history.push('/login');
     }
+    cartCtx.updateCart(id, refValue.current.value, 'plus');
   };
-
-  useEffect(() => {
-    productCtx.getOneProduct(id);
-  }, []);
 
   return (
     <>
-      {message.content && <AlertMessage message={message} />}
+      {message && message.content && <AlertMessage message={message} />}
       {product
       && (
       <div className="row m-5">
@@ -59,7 +70,27 @@ const ProductDetail = () => {
           </p>
           <div className="d-flex border-top border-bottom p-2 my-4">
             <p className="fw-bold fs-4 m-2 align-self-center">Välj antal</p>
-            <input onChange={inputChangeHandler} type="number" className="col-1 fw-bold rounded p-1 m-2" min="1" value={inputValue} />
+            {inputValue === '1' && quantity[0] ? (
+              <input
+                ref={refValue}
+                onChange={inputChangeHandler}
+                type="number"
+                className="col-1 fw-bold rounded p-1 m-2"
+                min="1"
+                value={quantity[0].quantity}
+              />
+            )
+              : (
+                <input
+                  ref={refValue}
+                  onChange={inputChangeHandler}
+                  type="number"
+                  className="col-1 fw-bold rounded p-1 m-2"
+                  min="1"
+                  value={inputValue}
+                />
+              ) }
+
             <button onClick={saveToCart} type="button" className="btn btn-danger m-2 fw-bold fs-4 col-8">Lägg i varukorg</button>
           </div>
           <p className="m-2">{product.description}</p>

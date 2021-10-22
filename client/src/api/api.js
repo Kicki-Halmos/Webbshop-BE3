@@ -24,11 +24,19 @@ const register = (fullName, email, password, phoneNumber, address) => api.post('
 });
 const getUser = () => api.get('/api/users');
 
+const getCart = () => api.get('/api/carts');
+const addNewCart = () => api.post('/api/carts');
+const updateCart = (product, quantity, val) => api.put('/api/carts', { product, quantity, val });
+const deleteCart = () => api.delete('/api/carts');
+
 export const productApis = {
   getProducts, createProductItem, updateProductItem, getProductItem, deleteProductItem,
 };
 export const userApis = {
   login, register, getUser, updateUser,
+};
+export const cartApis = {
+  getCart, addNewCart, updateCart, deleteCart,
 };
 
 api.interceptors.request.use((config) => {
@@ -44,5 +52,8 @@ api.interceptors.request.use((config) => {
   return config;
 },
 (err) => Promise.reject(err));
+
+
+
 
 export default api;
