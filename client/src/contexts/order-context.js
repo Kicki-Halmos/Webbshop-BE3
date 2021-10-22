@@ -1,9 +1,7 @@
 import React from 'react';
 
 const OrderContext = React.createContext({
-  items: [],
-  deliveryCost: 50,
-  totalCost: 0,
+  orders: [],
   getOrders: () => {},
   getOneOrder: () => {},
   addOrder: () => {},

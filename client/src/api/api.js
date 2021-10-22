@@ -31,7 +31,7 @@ const deleteCart = () => api.delete('/api/carts');
 
 const getOrders = () => api.get('/api/orders');
 const getOneOrder = (id) => api.get(`api/orders/${id}`);
-const addOrder = () => api.post('/api/orders');
+const addOrder = (products, totalCost, deliveryCost) => api.post('/api/orders', { products, totalCost, deliveryCost });
 const updateOrder = (id) => api.post(`api/orders/${id}`);
 const deleteOrder = (id) => api.post(`api/orders/${id}`);
 

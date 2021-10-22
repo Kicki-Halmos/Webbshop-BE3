@@ -15,7 +15,7 @@ const defaultProductState = { products: [], oneProduct: {} };
 const productReducer = (state, action) => {
   switch (action.type) {
     case 'get_products': return { products: action.products };
-    case 'add_product': return { products: [...state, action.product] };
+    case 'add_product': return { products: [...state.products, action.product] };
     case 'update_product': return {
       products: (state.products.map((product) => (product._id === action.product.id ? action.product : product))),
     };

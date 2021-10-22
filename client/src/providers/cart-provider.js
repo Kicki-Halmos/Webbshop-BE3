@@ -7,7 +7,7 @@ import { cartApis } from '../api/api';
 
 const { getCart, updateCart, deleteCart } = cartApis;
 
-const defaultCartState = { items: [], totalCost: 0, cartId: '' };
+const defaultCartState = { items: [], totalCost: 0 };
 
 const cartReducer = (state, action) => {
   switch (action.type) {
@@ -26,7 +26,6 @@ const cartReducer = (state, action) => {
       return {
         items: action.items,
         totalCost: updatedTotalCost,
-        cartId: action.cartId,
       };
     case 'delete_cart': return defaultCartState;
     default: return defaultCartState;
@@ -39,7 +38,6 @@ const CartProvider = ({ children }) => {
   const getCartHandler = async () => {
     try {
       const cart = await getCart();
-      console.log(cart);
       dispatchCartAction({ type: 'get_cart', items: cart.data.data.products });
     } catch (error) {
       console.log(error);
@@ -49,7 +47,7 @@ const CartProvider = ({ children }) => {
   const updateCartHandler = async (product, quantity, val) => {
     try {
       const cart = await updateCart(product, quantity, val);
-      dispatchCartAction({ type: 'get_cart', items: cart.data.data.products, cartId: cart.data.data._id });
+      dispatchCartAction({ type: 'get_cart', items: cart.data.data.products });
     } catch (error) {
       console.log(error);
     }
@@ -70,7 +68,6 @@ const CartProvider = ({ children }) => {
     getCart: getCartHandler,
     updateCart: updateCartHandler,
     deleteCart: deleteCartHandler,
-
   };
 
   return (

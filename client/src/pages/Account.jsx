@@ -2,10 +2,11 @@ import React, { useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import EditUserForm from '../components/EditUserForm';
 import UserContext from '../contexts/user-context';
+import AlertMessage from '../components/AlertMessage';
 
 const Account = () => {
   const userCtx = useContext(UserContext);
-  const { user } = userCtx;
+  const { user, alertMessage } = userCtx;
   const history = useHistory();
 
   useEffect(() => {
@@ -18,6 +19,7 @@ const Account = () => {
 
   return (
     <div>
+      {alertMessage && alertMessage !== {} && <AlertMessage message={alertMessage} />}
       {user && !user.fullName ? <div>Loading</div> : <EditUserForm user={user} /> }
     </div>
   );
