@@ -29,6 +29,12 @@ const addNewCart = () => api.post('/api/carts');
 const updateCart = (product, quantity, val) => api.put('/api/carts', { product, quantity, val });
 const deleteCart = () => api.delete('/api/carts');
 
+const getOrders = () => api.get('/api/orders');
+const getOneOrder = (id) => api.get(`api/orders/${id}`);
+const addOrder = () => api.post('/api/orders');
+const updateOrder = (id) => api.post(`api/orders/${id}`);
+const deleteOrder = (id) => api.post(`api/orders/${id}`);
+
 export const productApis = {
   getProducts, createProductItem, updateProductItem, getProductItem, deleteProductItem,
 };
@@ -37,6 +43,10 @@ export const userApis = {
 };
 export const cartApis = {
   getCart, addNewCart, updateCart, deleteCart,
+};
+
+export const orderApis = {
+  getOrders, getOneOrder, addOrder, updateOrder, deleteOrder,
 };
 
 api.interceptors.request.use((config) => {
@@ -52,8 +62,5 @@ api.interceptors.request.use((config) => {
   return config;
 },
 (err) => Promise.reject(err));
-
-
-
 
 export default api;

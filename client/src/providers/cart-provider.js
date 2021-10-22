@@ -1,31 +1,34 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-case-declarations */
 /* eslint-disable react/jsx-filename-extension */
 import React, { useReducer } from 'react';
 import CartContext from '../contexts/cart-context';
 import { cartApis } from '../api/api';
 
-const { getCart, updateCart } = cartApis;
+const { getCart, updateCart, deleteCart } = cartApis;
 
-const defaultCartState = { items: [], totalAmount: 0 };
+const defaultCartState = { items: [], totalCost: 0, cartId: '' };
 
 const cartReducer = (state, action) => {
   switch (action.type) {
     case 'get_cart':
-      let updatedTotalAmount = 0;
+      let updatedTotalCost = 0;
       action.items.map((item) => {
-        let amount = 0;
+        let cost = 0;
         if (item.quantity === 1) {
-          amount += item.product.price;
+          cost += item.product.price;
         } else {
-          amount += (item.product.price * item.quantity);
+          cost += (item.product.price * item.quantity);
         }
         // eslint-disable-next-line no-return-assign
-        return updatedTotalAmount += amount;
+        return updatedTotalCost += cost;
       });
       return {
         items: action.items,
-        totalAmount: updatedTotalAmount,
+        totalCost: updatedTotalCost,
+        cartId: action.cartId,
       };
+    case 'delete_cart': return defaultCartState;
     default: return defaultCartState;
   }
 };
@@ -36,6 +39,7 @@ const CartProvider = ({ children }) => {
   const getCartHandler = async () => {
     try {
       const cart = await getCart();
+      console.log(cart);
       dispatchCartAction({ type: 'get_cart', items: cart.data.data.products });
     } catch (error) {
       console.log(error);
@@ -45,26 +49,27 @@ const CartProvider = ({ children }) => {
   const updateCartHandler = async (product, quantity, val) => {
     try {
       const cart = await updateCart(product, quantity, val);
-      dispatchCartAction({ type: 'get_cart', items: cart.data.data.products });
+      dispatchCartAction({ type: 'get_cart', items: cart.data.data.products, cartId: cart.data.data._id });
     } catch (error) {
       console.log(error);
     }
   };
 
-  /* const removeProductFromCartHandler = async (product, quantity, remove) => {
+  const deleteCartHandler = async (id) => {
     try {
-      const cart = await updateCart(product, quantity, remove);
-      dispatchCartAction({ type: 'get_cart', items: cart.data.data.products });
+      await deleteCart(id);
+      dispatchCartAction({ type: 'delete_cart' });
     } catch (error) {
       console.log(error);
     }
-  }; */
+  };
 
   const cartContext = {
     items: cartState.items,
-    totalAmount: cartState.totalAmount,
+    totalCost: cartState.totalCost,
     getCart: getCartHandler,
     updateCart: updateCartHandler,
+    deleteCart: deleteCartHandler,
 
   };
 

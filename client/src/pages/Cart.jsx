@@ -6,7 +6,7 @@ import CartItem from '../components/CartItem';
 
 const Cart = () => {
   const cartCtx = useContext(CartContext);
-  const { items, totalAmount } = cartCtx;
+  const { items, totalCost /* cartId */ } = cartCtx;
 
   const addOrderHandler = () => {
     // function som lägger till ordern
@@ -15,9 +15,6 @@ const Cart = () => {
   useEffect(() => {
     cartCtx.getCart();
   }, []);
-
-  items !== [] && console.log(items);
-  totalAmount !== 0 && console.log(totalAmount);
 
   return (
     <div className="row m-4">
@@ -37,7 +34,7 @@ const Cart = () => {
         <p className="">
           Summa:
           {' '}
-          {cartCtx.totalAmount}
+          {totalCost}
           {' '}
           kr
         </p>
@@ -45,7 +42,7 @@ const Cart = () => {
         <p className="fw-bold">
           Totalsumma:
           {' '}
-          {cartCtx.totalAmount + 50}
+          {totalCost + 50}
         </p>
       </div>
       <button onClick={addOrderHandler} className="btn btn-danger p-2 fw-bold fs-4" type="button">Beställ</button>
