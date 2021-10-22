@@ -4,14 +4,14 @@ const wrapAsync = require('../utils/wrapAsync');
 
 exports.addNewProduct = wrapAsync(async (req, res) => {
   const {
-    title, price, description, brand, category, img,
+    title, price, description, author, category, img,
   } = req.body;
 
   const product = new Product({
     title,
     price,
     description,
-    brand,
+    author,
     category,
     img,
   });
@@ -38,10 +38,10 @@ exports.allProducts = wrapAsync(async (req, res) => {
 
 exports.updateProduct = wrapAsync(async (req, res, next) => {
   const {
-    title, price, description, brand, category, img,
+    title, price, description, author, category, img,
   } = req.body;
   const updatedProduct = await Product.findByIdAndUpdate(req.params.id, {
-    title, price, description, brand, category, img,
+    title, price, description, author, category, img,
   }, { new: true });
   if (!updatedProduct) {
     return next(new AppError('the product does not exist', 404));

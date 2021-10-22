@@ -34,7 +34,7 @@ export default function RegisterForm() {
   return (
     <div>
       <h1>Register</h1>
-      {message !== '' && <AlertMessage message={message} />}
+      {message.content && <AlertMessage message={message} />}
       <form onSubmit={handleOnSubmit}>
         <div className="mb-3">
           <label htmlFor="registerFullName" className="htmlF-label">Full name</label>

@@ -28,7 +28,7 @@ export default function EditUserForm({ user }) {
   return (
     <div>
       <h1>Account</h1>
-      {message && message !== '' && <AlertMessage message={message} />}
+      {message && message !== {} && <AlertMessage message={message} />}
       {formData && (
         <form onSubmit={handleOnSubmit}>
           <div className="mb-3">
