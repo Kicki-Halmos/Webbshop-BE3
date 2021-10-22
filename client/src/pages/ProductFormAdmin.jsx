@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import AdminNav from '../components/AdminNav';
 
 export default function NewProductForm() {
   const [formData, setFormData] = useState({
@@ -18,9 +18,7 @@ export default function NewProductForm() {
   };
   return (
     <div>
-      <Link to="/admin" style={{ textDecoration: 'none' }}>
-        <button type="button" className="btn btn-primary">Go back</button>
-      </Link>
+      <AdminNav />
       <form>
         <div className="mb-3">
           <label htmlFor="title" className="htmlF-label">Title</label>

@@ -14,8 +14,9 @@ import ProductProvider from './providers/product-provider';
 import UserProvider from './providers/user-provider';
 import history from './utils/history';
 import Navbar from './components/Navbar';
-import Admin from './pages/Admin';
-import NewProduct from './pages/NewProduct';
+import ProductsAdmin from './pages/ProductsAdmin';
+import ProductFormAdmin from './pages/ProductFormAdmin';
+import OrdersAdmin from './pages/OrdersAdmin';
 
 function App() {
   return (
@@ -49,13 +50,16 @@ function App() {
               <Route path="/account">
                 <Account />
               </Route>
+              <Route path="/admin/orders">
+                <OrdersAdmin />
+              </Route>
+              <Route path="/admin/create-product">
+                <ProductFormAdmin />
+              </Route>
+              <Route path="/admin">
+                <ProductsAdmin />
+              </Route>
             </Switch>
-            <Route path="/admin">
-              <Admin />
-            </Route>
-            <Route path="/createproduct">
-              <NewProduct />
-            </Route>
           </Router>
         </div>
       </ProductProvider>
