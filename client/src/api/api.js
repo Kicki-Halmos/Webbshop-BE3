@@ -6,11 +6,11 @@ const api = axios.create({
 });
 
 const getProducts = () => api.get('/api/products');
-const createProductItem = (title, description, price, brand, category, img) => api.post('/api/products', {
-  title, description, price, brand, category, img,
+const createProductItem = (title, price, description, author, category, img) => api.post('/api/products', {
+  title, description, price, author, category, img,
 });
-const updateProductItem = (id, title, description, price, brand, category, img) => api.put(`/api/products/${id}`, {
-  title, description, price, brand, category, img,
+const updateProductItem = (id, title, description, price, author, category, img) => api.put(`/api/products/${id}`, {
+  title, description, price, author, category, img,
 });
 const getProductItem = (id) => api.get(`/api/products/${id}`);
 const deleteProductItem = (id) => api.delete(`/api/products/${id}`);

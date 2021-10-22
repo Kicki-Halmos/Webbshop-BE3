@@ -15,7 +15,7 @@ const defaultProductState = { products: [], oneProduct: {} };
 const productReducer = (state, action) => {
   switch (action.type) {
     case 'get_products': return { products: action.products };
-    case 'add_product': return { products: [...state, action.product] };
+    case 'add_product': return { products: [...state.products, action.product] };
     case 'update_product': return {
       products: (state.products.map((product) => (product._id === action.product.id ? action.product : product))),
     };
@@ -38,9 +38,9 @@ const ProductProvider = ({ children }) => {
     }
   };
 
-  const addProductHandler = async () => {
+  const addProductHandler = async (title, price, description, author, category, img) => {
     try {
-      const product = await createProductItem();
+      const product = await createProductItem(title, Number(price), description, author, category, img);
       dispatchProductAction({ type: 'add_product', product: product.data.data });
     } catch (error) {
       console.log(error);
