@@ -32,8 +32,12 @@ export const userApis = {
 };
 
 api.interceptors.request.use((config) => {
+  const adminToken = localStorage.getItem('adminToken');
   const token = localStorage.getItem('token');
-  console.log(token);
+  console.log(adminToken);
+  if (adminToken) {
+    config.headers = { 'X-Auth-Token': adminToken };
+  }
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
