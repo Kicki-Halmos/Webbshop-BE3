@@ -21,9 +21,8 @@ const ProductDetail = () => {
   const params = useParams();
   const { id } = params;
   const message = userCtx.errorMessage;
-  // const quantity = cartCtx.items.filter((item) => item.product._id === id);
-  // quantity !== [] && console.log(quantity);
-  items !== [] && console.log(items);
+
+  const quantity = items.filter((item) => item.product._id === id);
 
   useEffect(() => {
     productCtx.getOneProduct(id);
@@ -67,7 +66,27 @@ const ProductDetail = () => {
           </p>
           <div className="d-flex border-top border-bottom p-2 my-4">
             <p className="fw-bold fs-4 m-2 align-self-center">Välj antal</p>
-            <input ref={refValue} onChange={inputChangeHandler} type="number" className="col-1 fw-bold rounded p-1 m-2" min="1" value={inputValue} />
+            {quantity[0] ? (
+              <input
+                ref={refValue}
+                onChange={inputChangeHandler}
+                type="number"
+                className="col-1 fw-bold rounded p-2 m-2"
+                min="1"
+                value={quantity[0].quantity}
+              />
+            )
+              : (
+                <input
+                  ref={refValue}
+                  onChange={inputChangeHandler}
+                  type="number"
+                  className="col-1 fw-bold rounded p-2 m-2"
+                  min="1"
+                  value={inputValue}
+                />
+              ) }
+
             <button onClick={saveToCart} type="button" className="btn btn-danger m-2 fw-bold fs-4 col-8">Lägg i varukorg</button>
           </div>
           <p className="m-2">{product.description}</p>

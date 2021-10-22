@@ -8,7 +8,9 @@ const Cart = () => {
   const cartCtx = useContext(CartContext);
   const { items, totalAmount } = cartCtx;
 
-  // skriv en onchange function som uppdateras så fort summan uppdateras.
+  const addOrderHandler = () => {
+    // function som lägger till ordern
+  };
 
   useEffect(() => {
     cartCtx.getCart();
@@ -27,9 +29,26 @@ const Cart = () => {
           img={item.product.img}
           title={item.product.title}
           quantity={item.quantity}
+          price={item.product.price}
         />
 
       ))}
+      <div className="p-2">
+        <p className="">
+          Summa:
+          {' '}
+          {cartCtx.totalAmount}
+          {' '}
+          kr
+        </p>
+        <p className="">Frakt: 50kr</p>
+        <p className="fw-bold">
+          Totalsumma:
+          {' '}
+          {cartCtx.totalAmount + 50}
+        </p>
+      </div>
+      <button onClick={addOrderHandler} className="btn btn-danger p-2 fw-bold fs-4" type="button">Beställ</button>
 
     </div>
   );

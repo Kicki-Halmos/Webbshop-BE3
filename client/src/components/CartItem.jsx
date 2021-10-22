@@ -2,11 +2,13 @@ import React, { useContext, useState, useRef } from 'react';
 import CartContext from '../contexts/cart-context';
 
 const CartItem = ({
-  img, title, quantity, id,
+  img, title, quantity, id, price,
 }) => {
   const [inputValue, setInputValue] = useState('');
   const refValue = useRef('');
   const cartCtx = useContext(CartContext);
+
+  const sum = price * quantity;
 
   const inputChangeHandler = (event) => {
     setInputValue(event.target.value);
@@ -18,18 +20,22 @@ const CartItem = ({
   };
   return (
     <div className="row bg-light m-2">
-      <img className="col img-fluid" style={{ maxWidth: '7rem' }} src={img} alt="book cover" />
+      <img className="col img-fluid m-2" style={{ maxWidth: '7rem' }} src={img} alt="book cover" />
       <div className="col">
-
         <p className="fw-bold">{title}</p>
         <input onChange={inputChangeHandler} type="number" ref={refValue} className="col-1 fw-bold rounded p-1 m-2" min="1" value={inputValue === '' ? quantity : inputValue} />
+        <p className="fw-bold m-2">
+          {sum}
+          {' '}
+          kr
+        </p>
       </div>
       <button
-        className="col-1 col-offset-11 btn btn-danger align-self-center p-2"
+        className="col-1 col-offset-11 btn btn-danger align-self-center p-1"
         type="button"
         onClick={removeProductHandler}
       >
-        Remove
+        Ta bort
 
       </button>
 
