@@ -10,13 +10,19 @@ const OrderSchema = new mongoose.Schema({
 
   },
   sent: {
-    type: Boolean,
+    type: String,
+    default: 'registered',
   },
   totalCost: {
     type: Number,
   },
   deliveryCost: {
     type: Number,
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
   },
 
 });
