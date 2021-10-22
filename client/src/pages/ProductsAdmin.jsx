@@ -17,15 +17,28 @@ export default function Admin() {
       <AdminNav />
       <h1>List all products</h1>
       <Link to="/admin/create-product" style={{ textDecoration: 'none' }}>Create new product</Link>
-      {productList && (
-        productList.map((product) => (
-          <div className="col" key={product._id}>
-            <li>
-              {product.title}
-            </li>
-          </div>
-        ))
-      )}
+      <table className="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>title</th>
+            <th>author</th>
+            <th>price</th>
+            <th>category</th>
+          </tr>
+        </thead>
+        {productList && (
+          <tbody>
+            {productList.map((product) => (
+              <tr>
+                <td>{product.title}</td>
+                <td>{product.author}</td>
+                <td>{product.price}</td>
+                <td>{product.category}</td>
+              </tr>
+            ))}
+          </tbody>
+        )}
+      </table>
     </div>
   );
 }
