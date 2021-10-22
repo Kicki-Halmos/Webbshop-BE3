@@ -13,5 +13,6 @@ router.put('/:id', auth, userController.update);
 router.post('/login', userController.login);
 
 router.post('/register', userController.register);
+router.get('/orders', userController.getMyOrders);
 
 module.exports = router;
