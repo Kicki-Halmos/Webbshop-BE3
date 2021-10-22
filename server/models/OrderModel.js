@@ -3,13 +3,13 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const OrderSchema = new mongoose.Schema({
-  product: {
+  products: {
     type: Schema.Types.ObjectId,
     ref: 'Cart',
     required: true,
 
   },
-  sent: {
+  status: {
     type: String,
     default: 'registered',
   },
