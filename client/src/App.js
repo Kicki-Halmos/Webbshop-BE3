@@ -23,8 +23,8 @@ function App() {
   return (
     <UserProvider>
       <ProductProvider>
-<<<<<<< HEAD
         <CartProvider>
+          <Navbar />
           <div className="container">
             <Router history={history}>
               <Switch>
@@ -52,52 +52,19 @@ function App() {
                 <Route path="/account">
                   <Account />
                 </Route>
+                <Route path="/admin/orders">
+                  <OrdersAdmin />
+                </Route>
+                <Route path="/admin/create-product">
+                  <ProductFormAdmin />
+                </Route>
+                <Route path="/admin">
+                  <ProductsAdmin />
+                </Route>
               </Switch>
             </Router>
           </div>
         </CartProvider>
-=======
-        <Navbar />
-        <div className="container">
-          <Router history={history}>
-            <Switch>
-              <Route path="/" exact>
-                <Redirect to="/products" />
-              </Route>
-              <Route path="/products" exact>
-                <ProductList />
-              </Route>
-              <Route path="/products/:id">
-                <ProductDetail />
-              </Route>
-              <Route path="/login">
-                <Login />
-              </Route>
-              <Route path="/register">
-                <Register />
-              </Route>
-              <Route path="/cart">
-                <Cart />
-              </Route>
-              <Route path="/orders">
-                <Orders />
-              </Route>
-              <Route path="/account">
-                <Account />
-              </Route>
-              <Route path="/admin/orders">
-                <OrdersAdmin />
-              </Route>
-              <Route path="/admin/create-product">
-                <ProductFormAdmin />
-              </Route>
-              <Route path="/admin">
-                <ProductsAdmin />
-              </Route>
-            </Switch>
-          </Router>
-        </div>
->>>>>>> main
       </ProductProvider>
     </UserProvider>
   );

@@ -45,7 +45,7 @@ const ProductDetail = () => {
 
   return (
     <>
-      {message.content && <AlertMessage message={message} />}
+      {message && message.content && <AlertMessage message={message} />}
       {product
       && (
       <div className="row m-5">
@@ -70,12 +70,12 @@ const ProductDetail = () => {
           </p>
           <div className="d-flex border-top border-bottom p-2 my-4">
             <p className="fw-bold fs-4 m-2 align-self-center">Välj antal</p>
-            {quantity[0] ? (
+            {inputValue === '1' && quantity[0] ? (
               <input
                 ref={refValue}
                 onChange={inputChangeHandler}
                 type="number"
-                className="col-1 fw-bold rounded p-2 m-2"
+                className="col-1 fw-bold rounded p-1 m-2"
                 min="1"
                 value={quantity[0].quantity}
               />
@@ -85,7 +85,7 @@ const ProductDetail = () => {
                   ref={refValue}
                   onChange={inputChangeHandler}
                   type="number"
-                  className="col-1 fw-bold rounded p-2 m-2"
+                  className="col-1 fw-bold rounded p-1 m-2"
                   min="1"
                   value={inputValue}
                 />
