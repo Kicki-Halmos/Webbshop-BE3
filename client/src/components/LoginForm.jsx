@@ -2,11 +2,11 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import UserContext from '../contexts/user-context';
-import ErrorMessage from './ErrorMessage';
+import AlertMessage from './AlertMessage';
 
 export default function LoginForm() {
   const userCtx = useContext(UserContext);
-  const message = userCtx.errorMessage;
+  const message = userCtx.alertMessage;
   const history = useHistory();
 
   const [formData, setFormData] = useState({
@@ -31,7 +31,7 @@ export default function LoginForm() {
   return (
     <div>
       <h1>Login</h1>
-      {message !== '' && <ErrorMessage message={message} />}
+      {message.content && <AlertMessage message={message} />}
       <form onSubmit={handleOnSubmit}>
         <div className="mb-3">
           <label htmlFor="loginEmail" className="htmlF-label">Email address</label>

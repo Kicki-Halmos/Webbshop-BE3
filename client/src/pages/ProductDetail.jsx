@@ -6,8 +6,10 @@ import React, {
 import { useParams, useHistory } from 'react-router-dom';
 import ProductContext from '../contexts/product-context';
 import UserContext from '../contexts/user-context';
-import ErrorMessage from '../components/ErrorMessage';
+
 import CartContext from '../contexts/cart-context';
+
+import AlertMessage from '../components/AlertMessage';
 
 const ProductDetail = () => {
   const productCtx = useContext(ProductContext);
@@ -20,7 +22,7 @@ const ProductDetail = () => {
   const history = useHistory();
   const params = useParams();
   const { id } = params;
-  const message = userCtx.errorMessage;
+  const message = userCtx.alertMessage;
 
   const quantity = items.filter((item) => item.product._id === id);
 
@@ -43,13 +45,15 @@ const ProductDetail = () => {
 
   return (
     <>
-
-      {message && message !== '' && <ErrorMessage message={message} />}
+      {message.content && <AlertMessage message={message} />}
       {product
       && (
       <div className="row m-5">
-        <div className="col-4 m-4">
-          <img src={product.img} style={{ maxWidth: '20rem' }} alt="book cover" />
+        <div className="col-md-6 m-4">
+          <div>
+            {' '}
+            <img src={product.img} style={{ minWidth: '20rem' }} alt="book cover" />
+          </div>
 
         </div>
         <div className="col m-4">

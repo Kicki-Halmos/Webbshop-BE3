@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useContext } from 'react';
 import UserContext from '../contexts/user-context';
-import ErrorMessage from './ErrorMessage';
+import AlertMessage from './AlertMessage';
 
 export default function RegisterForm() {
   const userCtx = useContext(UserContext);
-  const message = userCtx.errorMessage;
+  const message = userCtx.alertMessage;
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -34,7 +34,7 @@ export default function RegisterForm() {
   return (
     <div>
       <h1>Register</h1>
-      {message !== '' && <ErrorMessage message={message} />}
+      {message.content && <AlertMessage message={message} />}
       <form onSubmit={handleOnSubmit}>
         <div className="mb-3">
           <label htmlFor="registerFullName" className="htmlF-label">Full name</label>

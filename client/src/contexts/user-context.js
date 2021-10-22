@@ -2,13 +2,13 @@ import React from 'react';
 
 const UserContext = React.createContext({
   user: {},
-  errorMessage: '',
+  alertMessage: '',
   getUser: () => {},
   updateUser: () => {},
   loginUser: () => {},
   registerUser: () => {},
   logoutUser: () => {},
-  setErrorMessage: () => {},
+  setAlertMessage: () => {},
 });
 
 export default UserContext;

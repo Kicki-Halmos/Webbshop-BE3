@@ -61,7 +61,7 @@ const ProductProvider = ({ children }) => {
       const product = await getProductItem(id);
       dispatchProductAction({ type: 'get_one_product', product: product.data.data });
     } catch (error) {
-      userCtx.setErrorMessage(error.response.data.data.message);
+      userCtx.setAlertMessage(error.response.data.data.message);
     }
   };
 
