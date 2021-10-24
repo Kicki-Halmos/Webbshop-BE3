@@ -23,6 +23,7 @@ const register = (fullName, email, password, phoneNumber, address) => api.post('
   fullName, email, password, phoneNumber, address,
 });
 const getUser = () => api.get('/api/users');
+const getUserOrders = () => api.get('/api/users/orders');
 
 const getCart = () => api.get('/api/carts');
 const addNewCart = (product, quantity) => api.post('/api/carts', { product, quantity });
@@ -32,14 +33,14 @@ const deleteCart = () => api.delete('/api/carts');
 const getOrders = () => api.get('/api/orders');
 const getOneOrder = (id) => api.get(`api/orders/${id}`);
 const addOrder = (products, totalCost, deliveryCost) => api.post('/api/orders', { products, totalCost, deliveryCost });
-const updateOrder = (id) => api.post(`api/orders/${id}`);
+const updateOrder = (id, status) => api.post(`api/orders/${id}`, { status });
 const deleteOrder = (id) => api.post(`api/orders/${id}`);
 
 export const productApis = {
   getProducts, createProductItem, updateProductItem, getProductItem, deleteProductItem,
 };
 export const userApis = {
-  login, register, getUser, updateUser,
+  login, register, getUser, updateUser, getUserOrders,
 };
 export const cartApis = {
   getCart, addNewCart, updateCart, deleteCart,
