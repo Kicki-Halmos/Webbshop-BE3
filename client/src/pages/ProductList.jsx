@@ -58,38 +58,44 @@ const ProductList = () => {
   return (
     <div>
       <input className="m-3" type="text" placeholder="Search here" onChange={(e) => setSearchTerm(e.target.value)} />
-      <div>
-        <a id="Deckare" className={genre === 'Deckare' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Deckare</a>
-      </div>
-      <div>
-        <a id="Skönlitteratur" className={genre === 'Skönlitteratur' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Skönliteratur</a>
-      </div>
-      <div>
-        <a id="Data & IT" className={genre === 'Data & IT' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Data & IT</a>
-      </div>
-      <div>
-        <a id="Samhälle & politik" className={genre === 'Samhälle & politik' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Samhälle & politik</a>
-      </div>
-      <div>
-        <a id="Djur & natur" className={genre === 'Djur & natur' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Djur & natur</a>
-      </div>
-      <div>
-        <a id="Mat & dryck" className={genre === 'Mat & dryck' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Mat & dryck</a>
-      </div>
-      <div>
-        <a id="Ekonomi & ledarskap" className={genre === 'Ekonomi & ledarskap' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Ekonomi & ledarskap</a>
-      </div>
-      <div>
-        <a id="Biografier" className={genre === 'Biografier' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Biografier</a>
-      </div>
-      <div>
-        <a id="Resor" className={genre === 'Resor' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Resor</a>
-      </div>
-      <div>
-        <a id="Kultur" className={genre === 'Kultur' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Kultur</a>
-      </div>
-      <div>
-        <a id="Medicin" className={genre === 'Medicin' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Medicin</a>
+      <div className="container">
+        <div className="row row-cols-6">
+          <div className="col mb-4">
+            <a id="Deckare" className={genre === 'Deckare' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Deckare</a>
+          </div>
+          <div className="col mb-4">
+            <a id="Skönlitteratur" className={genre === 'Skönlitteratur' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Skönliteratur</a>
+          </div>
+          <div className="col mb-4">
+            <a id="Data & IT" className={genre === 'Data & IT' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Data & IT</a>
+          </div>
+          <div className="col mb-4">
+            <a id="Samhälle & politik" className={genre === 'Samhälle & politik' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Samhälle & politik</a>
+          </div>
+          <div className="col mb-4">
+            <a id="Djur & natur" className={genre === 'Djur & natur' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Djur & natur</a>
+          </div>
+          <div className="col mb-4">
+            <a id="Mat & dryck" className={genre === 'Mat & dryck' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Mat & dryck</a>
+          </div>
+        </div>
+        <div className="row row-cols-6">
+          <div className="col mb-4">
+            <a id="Ekonomi & ledarskap" className={genre === 'Ekonomi & ledarskap' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Ekonomi & ledarskap</a>
+          </div>
+          <div className="col mb-4">
+            <a id="Biografier" className={genre === 'Biografier' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Biografier</a>
+          </div>
+          <div className="col mb-4">
+            <a id="Resor" className={genre === 'Resor' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Resor</a>
+          </div>
+          <div className="col mb-4">
+            <a id="Kultur" className={genre === 'Kultur' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Kultur</a>
+          </div>
+          <div className="col mb-4">
+            <a id="Medicin" className={genre === 'Medicin' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Medicin</a>
+          </div>
+        </div>
       </div>
       <div className="m-4 row">
         {renderProducts(products)}
