@@ -38,9 +38,9 @@ exports.addNewOrder = wrapAsync(async (req, res) => {
 // update order
 exports.uppdateOrder = wrapAsync(async (req, res) => {
   const { id } = req.params;
-  const { product, status } = req.body;
+  const { status } = req.body;
 
-  const updatedOrder = await Order.findByIdAndUpdate(id, { product, status },
+  const updatedOrder = await Order.findByIdAndUpdate(id, { status },
     { new: true });
 
   res.status(200).json({ data: updatedOrder });
@@ -49,7 +49,7 @@ exports.uppdateOrder = wrapAsync(async (req, res) => {
 exports.deleteOrder = wrapAsync(async (req, res) => {
   const { id } = req.params;
 
-  const deletedOrder = await Order.findByIdAndDelete(id);
+  await Order.findByIdAndDelete(id);
 
-  res.status(204).json({ data: deletedOrder });
+  res.status(204).end();
 });
