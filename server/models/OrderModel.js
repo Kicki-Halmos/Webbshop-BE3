@@ -12,6 +12,9 @@ const OrderSchema = new mongoose.Schema({
   deliveryCost: {
     type: Number,
   },
+  deliveryAddress: {
+    type: String,
+  },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

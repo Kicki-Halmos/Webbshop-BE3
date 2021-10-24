@@ -22,11 +22,13 @@ exports.addNewOrder = wrapAsync(async (req, res) => {
   } = req.body;
 
   const userId = req.user.id;
+  const deliveryAddress = req.user.address;
 
   const order = await new Order({
     products,
     totalCost,
     deliveryCost,
+    deliveryAddress,
     userId,
   });
 
