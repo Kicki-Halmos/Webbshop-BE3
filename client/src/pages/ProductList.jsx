@@ -59,13 +59,13 @@ const ProductList = () => {
     <div>
       <input className="m-3" type="text" placeholder="Search here" onChange={(e) => setSearchTerm(e.target.value)} />
       <div>
-        <a id="Deckare" href="/" onClick={(event) => handleGenreChange(event)}>Deckare</a>
+        <a id="Deckare" className={genre === 'Deckare' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Deckare</a>
       </div>
       <div>
-        <a id="Skönlitteratur" href="/" onClick={(event) => handleGenreChange(event)}>Skönliteratur</a>
+        <a id="Skönlitteratur" className={genre === 'Skönlitteratur' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Skönliteratur</a>
       </div>
       <div>
-        <a id="Data & IT" href="/" onClick={(event) => handleGenreChange(event)}>Data & IT</a>
+        <a id="Data & IT" className={genre === 'Data & IT' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Data & IT</a>
       </div>
       <div className="m-4 row">
         {renderProducts(products)}
