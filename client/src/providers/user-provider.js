@@ -5,15 +5,16 @@ import { userApis } from '../api/api';
 import history from '../utils/history';
 
 const {
-  getUser, login, register, updateUser,
+  getUser, login, register, updateUser, getUserOrders,
 } = userApis;
-const defaultUserState = { user: {}, alertMessage: {} };
+const defaultUserState = { user: {}, alertMessage: {}, orders: [] };
 
 const userReducer = (state, action) => {
   switch (action.type) {
-    case 'get_me': return { user: action.user };
+    case 'get_me': return { ...state, user: action.user };
     case 'update_user': return { ...state, user: action.user };
     case 'update_alert_message': return { ...state, alertMessage: action.alertMessage };
+    case 'get_user_orders': return { ...state, orders: action.orders };
     default: return defaultUserState;
   }
 };
@@ -30,6 +31,15 @@ const UserProvider = ({ children }) => {
     try {
       const user = await getUser();
       dispatchUserAction({ type: 'get_me', user: user.data.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getUserOrdersHandler = async () => {
+    try {
+      const orders = await getUserOrders();
+      dispatchUserAction({ type: 'get_user_orders', orders: orders.data.data });
     } catch (error) {
       console.log(error);
     }
@@ -80,6 +90,7 @@ const UserProvider = ({ children }) => {
 
   const userContext = {
     user: userState.user,
+    userOrders: userState.orders,
     alertMessage: userState.alertMessage,
     getUser: getMeHandler,
     loginUser: loginHandler,
@@ -87,6 +98,7 @@ const UserProvider = ({ children }) => {
     logoutUser: logoutHandler,
     updateUser: updateHandler,
     setAlertMessage: alertMessageHandler,
+    getUserOrders: getUserOrdersHandler,
   };
 
   return (
