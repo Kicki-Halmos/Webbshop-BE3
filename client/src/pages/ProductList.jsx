@@ -8,14 +8,15 @@ const ProductList = () => {
   const productCtx = useContext(ProductContext);
   const productList = productCtx.products;
   const [searchTerm, setSearchTerm] = useState('');
+  const [genre, setGenre] = useState('');
 
   useEffect(() => {
     productCtx.getProducts();
   }, []);
 
-  const showAllProducts = () => {
+  const renderProducts = (products) => {
     return (
-      !productList ? <div>Loading</div> : productList.map((product) => (
+      !products ? <div>Loading</div> : products.map((product) => (
         <div className="col" key={product._id}>
           <ProductItem
             id={product._id}
@@ -29,25 +30,45 @@ const ProductList = () => {
     );
   };
 
+  const filterBySearchTerm = () => {
+    return productList
+      .filter((val) => (
+        val.title.toLowerCase().includes(searchTerm.toLowerCase())
+        || val.author.toLowerCase().includes(searchTerm.toLowerCase())));
+  };
+
+  const filterByGenre = () => {
+    return productList
+      .filter((val) => val.category.includes(genre));
+  };
+
+  const handleGenreChange = (e) => {
+    e.preventDefault();
+    setGenre(e.target.attributes[0].nodeValue);
+    setSearchTerm('');
+  };
+
+  let products = productList;
+  if (searchTerm) {
+    products = filterBySearchTerm();
+  } else if (genre) {
+    products = filterByGenre();
+  }
+
   return (
     <div>
       <input className="m-3" type="text" placeholder="Search here" onChange={(e) => setSearchTerm(e.target.value)} />
+      <div>
+        <a id="Deckare" href="/" onClick={(event) => handleGenreChange(event)}>Deckare</a>
+      </div>
+      <div>
+        <a id="Skönlitteratur" href="/" onClick={(event) => handleGenreChange(event)}>Skönliteratur</a>
+      </div>
+      <div>
+        <a id="Data & IT" href="/" onClick={(event) => handleGenreChange(event)}>Data & IT</a>
+      </div>
       <div className="m-4 row">
-        {searchTerm === ''
-          ? showAllProducts()
-          : productList.filter((val) => val.title.toLowerCase().includes(searchTerm.toLowerCase())
-        || val.author.toLowerCase().includes(searchTerm.toLowerCase()))
-            .map((val) => (
-              <div className="col" key={val._id}>
-                <ProductItem
-                  id={val._id}
-                  title={val.title}
-                  price={val.price}
-                  img={val.img}
-                  author={val.author}
-                />
-              </div>
-            ))}
+        {renderProducts(products)}
       </div>
     </div>
   );
