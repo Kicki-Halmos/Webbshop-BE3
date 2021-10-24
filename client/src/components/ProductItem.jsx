@@ -9,6 +9,7 @@ const ProductItem = (props) => {
   } = props;
 
   const saveToCart = () => {
+    console.log(cartCtx.items);
     if (cartCtx.items[0]) {
       cartCtx.updateCart(id, 1, 'plus');
     } else {

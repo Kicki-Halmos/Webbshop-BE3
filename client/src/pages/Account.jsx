@@ -3,12 +3,11 @@ import React, { useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import EditUserForm from '../components/EditUserForm';
 import UserContext from '../contexts/user-context';
-import AlertMessage from '../components/AlertMessage';
 import UserOrderItem from '../components/UserOrderItem';
 
 const Account = () => {
   const userCtx = useContext(UserContext);
-  const { user, alertMessage, userOrders } = userCtx;
+  const { user, userOrders } = userCtx;
   const history = useHistory();
 
   useEffect(() => {
@@ -22,7 +21,6 @@ const Account = () => {
 
   return (
     <div>
-      {alertMessage.content && <AlertMessage message={alertMessage} />}
       {user && !user.fullName ? <div>Loading</div> : <EditUserForm user={user} /> }
       {userOrders !== [] && userOrders.map((order) => (
         <UserOrderItem

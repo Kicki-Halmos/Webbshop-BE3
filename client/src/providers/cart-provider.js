@@ -14,7 +14,7 @@ const defaultCartState = { items: [], totalCost: 0 };
 const cartReducer = (state, action) => {
   switch (action.type) {
     case 'add_cart':
-      return { items: action.item, totalCost: action.item.price };
+      return { items: [action.item], totalCost: action.item.price };
     case 'get_cart':
       let updatedTotalCost = 0;
       action.items.map((item) => {

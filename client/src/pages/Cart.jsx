@@ -13,11 +13,10 @@ const Cart = () => {
   const userCtx = useContext(UserContext);
   const { items, totalCost } = cartCtx;
   const history = useHistory();
-  console.log(items);
 
   const addOrderHandler = () => {
     orderCtx.addOrder(items, totalCost);
-    userCtx.setAlertMessage('Your order was succesfully created!');
+    userCtx.setAlertMessage('Your order was succesfully created!', 'success');
     cartCtx.deleteCart();
     history.push('/account');
   };
