@@ -3,12 +3,16 @@
 /* eslint-disable react/jsx-filename-extension */
 import React, { useReducer, useContext } from 'react';
 import ProductContext from '../contexts/product-context';
-import { productApis } from '../api/api';
+import { productApis, adminApis } from '../api/api';
 import UserContext from '../contexts/user-context';
 
 const {
-  getProducts, createProductItem, updateProductItem, getProductItem, deleteProductItem,
+  getProducts, getProductItem,
 } = productApis;
+
+const {
+  adminGetProducts, adminCreateProductItem, adminDeleteProductItem, adminGetProductItem, adminUpdateProductItem,
+} = adminApis;
 
 const defaultProductState = { products: [], oneProduct: {} };
 
@@ -38,24 +42,6 @@ const ProductProvider = ({ children }) => {
     }
   };
 
-  const addProductHandler = async (title, price, description, author, category, img) => {
-    try {
-      const product = await createProductItem(title, Number(price), description, author, category, img);
-      dispatchProductAction({ type: 'add_product', product: product.data.data });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const updateProductHandler = async (id) => {
-    try {
-      const product = await updateProductItem(id);
-      dispatchProductAction({ type: 'update_product', product: product.data.data });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const getProductItemHandler = async (id) => {
     try {
       const product = await getProductItem(id);
@@ -65,9 +51,45 @@ const ProductProvider = ({ children }) => {
     }
   };
 
-  const deleteProductItemHandler = async (id) => {
+  const adminGetProductsHandler = async () => {
     try {
-      await deleteProductItem(id);
+      const products = await adminGetProducts();
+      dispatchProductAction({ type: 'get_products', products: products.data.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const adminGetProductItemHandler = async (id) => {
+    try {
+      const product = await adminGetProductItem(id);
+      dispatchProductAction({ type: 'get_one_product', product: product.data.data });
+    } catch (error) {
+      console.log();
+    }
+  };
+
+  const adminAddProductHandler = async (title, price, description, author, category, img) => {
+    try {
+      const product = await adminCreateProductItem(title, Number(price), description, author, category, img);
+      dispatchProductAction({ type: 'add_product', product: product.data.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const adminUpdateProductHandler = async (id) => {
+    try {
+      const product = await adminUpdateProductItem(id);
+      dispatchProductAction({ type: 'update_product', product: product.data.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const adminDeleteProductItemHandler = async (id) => {
+    try {
+      await adminDeleteProductItem(id);
       dispatchProductAction({ type: 'delete_product', id });
     } catch (error) {
       console.log(error);
@@ -78,10 +100,12 @@ const ProductProvider = ({ children }) => {
     products: productState.products,
     oneProduct: productState.oneProduct,
     getProducts: getProductsHandler,
-    addProduct: addProductHandler,
-    updateProduct: updateProductHandler,
     getOneProduct: getProductItemHandler,
-    deleteProduct: deleteProductItemHandler,
+    adminGetProducts: adminGetProductsHandler,
+    adminGetOneProduct: adminGetProductItemHandler,
+    adminAddProduct: adminAddProductHandler,
+    adminUpdateProduct: adminUpdateProductHandler,
+    adminDeleteProduct: adminDeleteProductItemHandler,
   };
 
   return (

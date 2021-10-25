@@ -5,7 +5,7 @@ import { userApis } from '../api/api';
 import history from '../utils/history';
 
 const {
-  getUser, login, register, updateUser, getUserOrders,
+  getUser, login, register, updateUser, getUserOrders, addUserOrder,
 } = userApis;
 const defaultUserState = { user: {}, alertMessage: {}, orders: [] };
 
@@ -15,6 +15,7 @@ const userReducer = (state, action) => {
     case 'update_user': return { ...state, user: action.user };
     case 'update_alert_message': return { ...state, alertMessage: action.alertMessage };
     case 'get_user_orders': return { ...state, orders: action.orders };
+    case 'add_order': return { ...state, orders: [...state.orders, action.order] };
     default: return defaultUserState;
   }
 };
@@ -43,6 +44,11 @@ const UserProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const addUserOrderHandler = async (products, totalCost) => {
+    const order = await addUserOrder(products, totalCost, '50');
+    dispatchUserAction({ type: 'add_order', order: order.data.data.order });
   };
 
   const updateHandler = async (id, fullName, email, phoneNumber, address) => {

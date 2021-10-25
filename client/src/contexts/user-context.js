@@ -11,6 +11,7 @@ const UserContext = React.createContext({
   logoutUser: () => {},
   setAlertMessage: () => {},
   getUserOrders: () => {},
+  addUserOrder: () => {},
 });
 
 export default UserContext;

@@ -4,9 +4,13 @@ const ProductContext = React.createContext({
   products: [],
   oneProduct: {},
   getProducts: () => {},
-  addProduct: () => {},
-  updateProduct: () => {},
   getOneProduct: () => {},
+  adminGetProducts: () => {},
+  adminGetOneProduct: () => {},
+  adminAddProduct: () => {},
+  adminUpdateProduct: () => {},
+  adminDeleteProduct: () => {},
+
 });
 
 export default ProductContext;
