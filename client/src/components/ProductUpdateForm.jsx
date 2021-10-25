@@ -1,8 +1,11 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import ProductContext from '../contexts/product-context';
 
 export default function ProductUpdateForm({ product }) {
+  const productCtx = useContext(ProductContext);
   const [formData, setFormData] = useState(null);
 
   useEffect(() => {
@@ -21,11 +24,25 @@ export default function ProductUpdateForm({ product }) {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    productCtx.updateProduct(
+      product._id,
+      formData.title,
+      formData.price,
+      formData.description,
+      formData.author,
+      formData.category,
+      formData.img,
+    );
+  };
+
   return (
     <div>
       {formData
       && (
-      <form>
+      <form onSubmit={handleOnSubmit}>
         <div className="mb-3">
           <label htmlFor="title" className="htmlF-label">Title</label>
           <input name="title" value={formData.title} onChange={handleOnChange} type="text" className="form-control" id="title" />

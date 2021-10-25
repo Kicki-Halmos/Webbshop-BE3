@@ -47,9 +47,9 @@ const ProductProvider = ({ children }) => {
     }
   };
 
-  const updateProductHandler = async (id) => {
+  const updateProductHandler = async (id, title, price, description, author, category, img) => {
     try {
-      const product = await updateProductItem(id);
+      const product = await updateProductItem(id, title, Number(price), description, author, category, img);
       dispatchProductAction({ type: 'update_product', product: product.data.data });
     } catch (error) {
       console.log(error);

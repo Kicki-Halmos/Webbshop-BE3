@@ -9,7 +9,7 @@ const getProducts = () => api.get('/api/products');
 const createProductItem = (title, price, description, author, category, img) => api.post('/api/products', {
   title, description, price, author, category, img,
 });
-const updateProductItem = (id, title, description, price, author, category, img) => api.put(`/api/products/${id}`, {
+const updateProductItem = (id, title, price, description, author, category, img) => api.put(`/api/products/${id}`, {
   title, description, price, author, category, img,
 });
 const getProductItem = (id) => api.get(`/api/products/${id}`);
