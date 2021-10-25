@@ -48,7 +48,7 @@ const UserProvider = ({ children }) => {
 
   const addUserOrderHandler = async (products, totalCost) => {
     const order = await addUserOrder(products, totalCost, '50');
-    dispatchUserAction({ type: 'add_order', order: order.data.data.order });
+    dispatchUserAction({ type: 'add_order', order: order.data.data });
   };
 
   const updateHandler = async (id, fullName, email, phoneNumber, address) => {
@@ -105,6 +105,7 @@ const UserProvider = ({ children }) => {
     updateUser: updateHandler,
     setAlertMessage: alertMessageHandler,
     getUserOrders: getUserOrdersHandler,
+    addUserOrder: addUserOrderHandler,
   };
 
   return (

@@ -15,6 +15,6 @@ router.post('/register', userController.register);
 
 // orders
 router.get('/orders', auth, userController.getMyOrders);
-router.post('/', auth, userController.addNewOrder);
+router.post('/orders', auth, userController.addNewOrder);
 
 module.exports = router;

@@ -17,7 +17,7 @@ const register = (fullName, email, password, phoneNumber, address) => api.post('
 });
 const getUser = () => api.get('/api/user');
 const getUserOrders = () => api.get('/api/user/orders');
-const addUserOrder = (products, totalCost, deliveryCost) => api.post('/api/admin', { products, totalCost, deliveryCost });
+const addUserOrder = (products, totalCost, deliveryCost) => api.post('/api/user/orders', { products, totalCost, deliveryCost });
 
 const getCart = () => api.get('/api/cart');
 const addNewCart = (product, quantity) => api.post('/api/cart', { product, quantity });
