@@ -48,6 +48,12 @@ const ProductList = () => {
     setSearchTerm('');
   };
 
+  const handleSearchTerm = (e) => {
+    e.preventDefault();
+    setSearchTerm(e.target.value);
+    setGenre('');
+  };
+
   let products = productList;
   if (searchTerm) {
     products = filterBySearchTerm();
@@ -57,25 +63,37 @@ const ProductList = () => {
 
   return (
     <div>
-      <input className="m-3" type="text" placeholder="Search here" onChange={(e) => setSearchTerm(e.target.value)} />
+      <input
+        className="m-3"
+        type="text"
+        placeholder="Search here"
+        onChange={(event) => handleSearchTerm(event)}
+        value={searchTerm}
+      />
       <div className="container">
         <div className="row row-cols-6">
           <div className="col mb-4">
+            <img src="img/book.png" alt="Book" className="icon rounded d-block" />
             <a id="Deckare" className={genre === 'Deckare' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Deckare</a>
           </div>
           <div className="col mb-4">
+            <img src="img/book.png" alt="Book" className="icon rounded d-block" />
             <a id="Skönlitteratur" className={genre === 'Skönlitteratur' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Skönliteratur</a>
           </div>
           <div className="col mb-4">
+            <img src="img/book.png" alt="Book" className="icon rounded d-block" />
             <a id="Data & IT" className={genre === 'Data & IT' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Data & IT</a>
           </div>
           <div className="col mb-4">
+            <img src="img/book.png" alt="Book" className="icon rounded d-block" />
             <a id="Samhälle & politik" className={genre === 'Samhälle & politik' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Samhälle & politik</a>
           </div>
           <div className="col mb-4">
+            <img src="img/book.png" alt="Book" className="icon rounded d-block" />
             <a id="Djur & natur" className={genre === 'Djur & natur' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Djur & natur</a>
           </div>
           <div className="col mb-4">
+            <img src="img/book.png" alt="Book" className="icon rounded d-block" />
             <a id="Mat & dryck" className={genre === 'Mat & dryck' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Mat & dryck</a>
           </div>
         </div>
