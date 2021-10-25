@@ -3,14 +3,17 @@
 import React, { useEffect, useContext, useState } from 'react';
 import ProductItem from '../components/ProductItem';
 import ProductContext from '../contexts/product-context';
+import CartContext from '../contexts/cart-context';
 
 const ProductList = () => {
   const productCtx = useContext(ProductContext);
+  const cartCtx = useContext(CartContext);
   const productList = productCtx.products;
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     productCtx.getProducts();
+    cartCtx.getCart();
   }, []);
 
   const showAllProducts = () => {

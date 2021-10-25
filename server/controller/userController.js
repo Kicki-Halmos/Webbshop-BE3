@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const validator = require('validator');
@@ -77,8 +78,9 @@ exports.login = wrapAsync(async (req, res, next) => {
 
 // get users orders
 exports.getMyOrders = wrapAsync(async (req, res) => {
-  // console.log(req.body.userId);
-  const usersOrders = await Order.find({ userId: req.body.userId });
+  const orders = await Order
+    .find({ userId: req.user._id })
+    .populate('products.product');
 
-  res.status(200).json({ data: usersOrders });
+  res.status(200).json({ data: orders });
 });

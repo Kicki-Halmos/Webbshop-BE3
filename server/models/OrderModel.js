@@ -1,15 +1,8 @@
 const mongoose = require('mongoose');
 
-const { Schema } = mongoose;
-
 const OrderSchema = new mongoose.Schema({
-  product: {
-    type: Schema.Types.ObjectId,
-    ref: 'Cart',
-    required: true,
-
-  },
-  sent: {
+  products: { type: Array },
+  status: {
     type: String,
     default: 'registered',
   },
@@ -18,6 +11,9 @@ const OrderSchema = new mongoose.Schema({
   },
   deliveryCost: {
     type: Number,
+  },
+  deliveryAddress: {
+    type: String,
   },
   userId: {
     type: mongoose.Schema.Types.ObjectId,

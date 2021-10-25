@@ -61,7 +61,6 @@ exports.updateCart = wrapAsync(async (req, res) => {
     }
   }
 
-  // console.log(updatedProducts);
   const updatedCart = await Cart
     .findOneAndUpdate({ userId: req.user._id }, { products: updatedProducts }, { new: true })
     .populate('products.product');

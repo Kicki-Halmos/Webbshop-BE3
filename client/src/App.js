@@ -18,52 +18,55 @@ import Navbar from './components/Navbar';
 import ProductsAdmin from './pages/ProductsAdmin';
 import ProductFormAdmin from './pages/ProductFormAdmin';
 import OrdersAdmin from './pages/OrdersAdmin';
+import OrderProvider from './providers/order-provider';
 
 function App() {
   return (
     <UserProvider>
       <ProductProvider>
         <CartProvider>
-          <Navbar />
-          <div className="container">
-            <Router history={history}>
-              <Switch>
-                <Route path="/" exact>
-                  <Redirect to="/products" />
-                </Route>
-                <Route path="/products" exact>
-                  <ProductList />
-                </Route>
-                <Route path="/products/:id">
-                  <ProductDetail />
-                </Route>
-                <Route path="/login">
-                  <Login />
-                </Route>
-                <Route path="/register">
-                  <Register />
-                </Route>
-                <Route path="/cart">
-                  <Cart />
-                </Route>
-                <Route path="/orders">
-                  <Orders />
-                </Route>
-                <Route path="/account">
-                  <Account />
-                </Route>
-                <Route path="/admin/orders">
-                  <OrdersAdmin />
-                </Route>
-                <Route path="/admin/create-product">
-                  <ProductFormAdmin />
-                </Route>
-                <Route path="/admin">
-                  <ProductsAdmin />
-                </Route>
-              </Switch>
-            </Router>
-          </div>
+          <OrderProvider>
+            <Navbar />
+            <div className="container">
+              <Router history={history}>
+                <Switch>
+                  <Route path="/" exact>
+                    <Redirect to="/products" />
+                  </Route>
+                  <Route path="/products" exact>
+                    <ProductList />
+                  </Route>
+                  <Route path="/products/:id">
+                    <ProductDetail />
+                  </Route>
+                  <Route path="/login">
+                    <Login />
+                  </Route>
+                  <Route path="/register">
+                    <Register />
+                  </Route>
+                  <Route path="/cart">
+                    <Cart />
+                  </Route>
+                  <Route path="/orders">
+                    <Orders />
+                  </Route>
+                  <Route path="/account">
+                    <Account />
+                  </Route>
+                  <Route path="/admin/orders">
+                    <OrdersAdmin />
+                  </Route>
+                  <Route path="/admin/create-product">
+                    <ProductFormAdmin />
+                  </Route>
+                  <Route path="/admin">
+                    <ProductsAdmin />
+                  </Route>
+                </Switch>
+              </Router>
+            </div>
+          </OrderProvider>
         </CartProvider>
       </ProductProvider>
     </UserProvider>

@@ -40,7 +40,11 @@ const ProductDetail = () => {
     if (!token) {
       history.push('/login');
     }
-    cartCtx.updateCart(id, refValue.current.value, 'plus');
+    if (cartCtx.items[0]) {
+      cartCtx.updateCart(id, refValue.current.value, 'plus');
+    } else {
+      cartCtx.addCart(id, 1);
+    }
   };
 
   return (
