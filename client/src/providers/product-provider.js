@@ -38,9 +38,9 @@ const ProductProvider = ({ children }) => {
     }
   };
 
-  const addProductHandler = async () => {
+  const addProductHandler = async (title, price, description, author, category, img) => {
     try {
-      const product = await createProductItem();
+      const product = await createProductItem(title, Number(price), description, author, category, img);
       dispatchProductAction({ type: 'add_product', product: product.data.data });
     } catch (error) {
       console.log(error);
