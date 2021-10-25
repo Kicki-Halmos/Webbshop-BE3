@@ -11,3 +11,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.active {
+  color: red;
+}
+
+.icon {
+  height: 52px;
+  width: 52px
+}
