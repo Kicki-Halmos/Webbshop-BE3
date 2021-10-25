@@ -22,7 +22,7 @@ mongoose
 
 const productRouter = require('./routes/productRoutes');
 const userRouter = require('./routes/userRoutes');
-const orderRouter = require('./routes/orderRoutes');
+const adminRouter = require('./routes/adminRoutes');
 const cartRouter = require('./routes/cartRoutes');
 
 const app = express();
@@ -36,9 +36,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(mongoSanitize());
 app.use(xss());
 app.use('/api/products', productRouter);
-app.use('/api/users', userRouter);
-app.use('/api/orders', orderRouter);
-app.use('/api/carts', cartRouter);
+app.use('/api/user', userRouter);
+app.use('/api/admin', adminRouter);
+app.use('/api/cart', cartRouter);
 app.use(sendError);
 
 module.exports = app;

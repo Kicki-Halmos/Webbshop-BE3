@@ -11,8 +11,10 @@ router.get('/', auth, userController.getUser);
 router.put('/:id', auth, userController.update);
 
 router.post('/login', userController.login);
-
 router.post('/register', userController.register);
+
+// orders
 router.get('/orders', auth, userController.getMyOrders);
+router.post('/', auth, userController.addNewOrder);
 
 module.exports = router;
