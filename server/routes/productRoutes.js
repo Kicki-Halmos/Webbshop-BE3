@@ -2,15 +2,14 @@ const express = require('express');
 const {
   allProducts, findProduct, addNewProduct, updateProduct, deleteProduct,
 } = require('../controller/productController');
-
-// const auth = require('../middleware/auth');
+const adminAuth = require('../middleware/adminAuth');
 
 const router = express.Router();
 
 router.get('/', allProducts);
 router.get('/:id', findProduct);
-router.post('/', addNewProduct);
-router.put('/:id', updateProduct);
-router.delete('/:id', deleteProduct);
+router.post('/', adminAuth, addNewProduct);
+router.put('/:id', adminAuth, updateProduct);
+router.delete('/:id', adminAuth, deleteProduct);
 
 module.exports = router;

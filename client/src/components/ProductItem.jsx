@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import CartContext from '../contexts/cart-context';
 
 const ProductItem = (props) => {
+  const cartCtx = useContext(CartContext);
   const {
     id, title, price, img, author,
   } = props;
 
   const saveToCart = () => {
-    // funktion som ska komma från cart-context sen
+    console.log(cartCtx.items);
+    if (cartCtx.items[0]) {
+      cartCtx.updateCart(id, 1, 'plus');
+    } else {
+      cartCtx.addCart(id, 1);
+    }
   };
 
   return (

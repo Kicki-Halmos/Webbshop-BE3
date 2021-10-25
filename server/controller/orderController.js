@@ -18,25 +18,29 @@ exports.getSingleOrder = wrapAsync(async (req, res) => {
 // add new order
 exports.addNewOrder = wrapAsync(async (req, res) => {
   const {
-    product, sent, totalCost, deliveryCost,
+    products, totalCost, deliveryCost,
   } = req.body;
 
-  const order = new Order({
-    product,
-    sent,
+  const userId = req.user.id;
+  const deliveryAddress = req.user.address;
+
+  const order = await new Order({
+    products,
     totalCost,
     deliveryCost,
+    deliveryAddress,
+    userId,
   });
 
-  await order.save();
+  order.save();
   res.status(201).json({ data: order });
 });
 // update order
 exports.uppdateOrder = wrapAsync(async (req, res) => {
   const { id } = req.params;
-  const { product, sent } = req.body;
+  const { status } = req.body;
 
-  const updatedOrder = await Order.findByIdAndUpdate(id, { product, sent },
+  const updatedOrder = await Order.findByIdAndUpdate(id, { status },
     { new: true });
 
   res.status(200).json({ data: updatedOrder });
@@ -45,7 +49,7 @@ exports.uppdateOrder = wrapAsync(async (req, res) => {
 exports.deleteOrder = wrapAsync(async (req, res) => {
   const { id } = req.params;
 
-  const deleteddOrder = await Order.findByIdAndDelete(id);
+  await Order.findByIdAndDelete(id);
 
-  res.status(204).json({ data: deleteddOrder });
+  res.status(204).end();
 });

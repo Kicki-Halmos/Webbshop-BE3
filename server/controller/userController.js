@@ -1,9 +1,11 @@
+/* eslint-disable no-underscore-dangle */
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const validator = require('validator');
 const User = require('../models/UserModel');
 const AppError = require('../utils/AppError');
 const wrapAsync = require('../utils/wrapAsync');
+const Order = require('../models/OrderModel');
 
 exports.getUser = wrapAsync(async (req, res) => {
   req.user.password = undefined;
@@ -61,9 +63,24 @@ exports.login = wrapAsync(async (req, res, next) => {
     return next(new AppError('email or password incorrect', 401));
   }
   if (await bcrypt.compare(password, user.password)) {
+    if (user.isAdmin === true) {
+      const adminToken = jwt.sign({ userId: user.id }, process.env.JWT_SECRET_ADMIN);
+      const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
+      user.password = undefined;
+      return res.status(200).json({ adminToken, token, data: { user } });
+    }
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
     user.password = undefined;
     return res.status(200).json({ token, data: { user } });
   }
   return next(new AppError('email or password incorrect', 401));
+});
+
+// get users orders
+exports.getMyOrders = wrapAsync(async (req, res) => {
+  const orders = await Order
+    .find({ userId: req.user._id })
+    .populate('products.product');
+
+  res.status(200).json({ data: orders });
 });

@@ -23,17 +23,39 @@ const register = (fullName, email, password, phoneNumber, address) => api.post('
   fullName, email, password, phoneNumber, address,
 });
 const getUser = () => api.get('/api/users');
+const getUserOrders = () => api.get('/api/users/orders');
+
+const getCart = () => api.get('/api/carts');
+const addNewCart = (product, quantity) => api.post('/api/carts', { product, quantity });
+const updateCart = (product, quantity, val) => api.put('/api/carts', { product, quantity, val });
+const deleteCart = () => api.delete('/api/carts');
+
+const getOrders = () => api.get('/api/orders');
+const getOneOrder = (id) => api.get(`api/orders/${id}`);
+const addOrder = (products, totalCost, deliveryCost) => api.post('/api/orders', { products, totalCost, deliveryCost });
+const updateOrder = (id, status) => api.post(`api/orders/${id}`, { status });
+const deleteOrder = (id) => api.post(`api/orders/${id}`);
 
 export const productApis = {
   getProducts, createProductItem, updateProductItem, getProductItem, deleteProductItem,
 };
 export const userApis = {
-  login, register, getUser, updateUser,
+  login, register, getUser, updateUser, getUserOrders,
+};
+export const cartApis = {
+  getCart, addNewCart, updateCart, deleteCart,
+};
+
+export const orderApis = {
+  getOrders, getOneOrder, addOrder, updateOrder, deleteOrder,
 };
 
 api.interceptors.request.use((config) => {
+  const adminToken = localStorage.getItem('adminToken');
   const token = localStorage.getItem('token');
-  console.log(token);
+  if (adminToken) {
+    config.headers = { 'X-Auth-Token': adminToken };
+  }
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }

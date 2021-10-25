@@ -25,6 +25,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
 },
 {
   toJSON: { virtuals: true },
@@ -35,6 +40,7 @@ userSchema.virtual('cart', {
   ref: 'Cart',
   foreignField: 'userId',
   localField: '_id',
+
 });
 
 userSchema.pre('save', async function hashPass(next) {
