@@ -64,6 +64,20 @@ const ProductList = () => {
     products = filterByGenre();
   }
 
+  const genres = [
+    { name: 'Deckare', img: 'img/detective.png' },
+    { name: 'Skönlitteratur', img: 'img/book-2.png' },
+    { name: 'Data & IT', img: 'img/it-icon.png' },
+    { name: 'Samhälle & politik', img: 'img/people.png' },
+    { name: 'Djur & natur', img: 'img/nature.png' },
+    { name: 'Mat & dryck', img: 'img/food.png' },
+    { name: 'Ekonomi & ledarskap', img: 'img/economy.png' },
+    { name: 'Biografier', img: 'img/bio_person1.png' },
+    { name: 'Resor', img: 'img/travel.png' },
+    { name: 'Kultur', img: 'img/book.png' },
+    { name: 'Medicin', img: 'img/1.png' },
+  ];
+
   return (
     <div>
       <input
@@ -75,47 +89,13 @@ const ProductList = () => {
       />
       <div className="container">
         <div className="row row-cols-6">
-          <div className="col mb-4">
-            <img src="img/book.png" alt="Book" className="icon rounded d-block" />
-            <a id="Deckare" className={genre === 'Deckare' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Deckare</a>
-          </div>
-          <div className="col mb-4">
-            <img src="img/book.png" alt="Book" className="icon rounded d-block" />
-            <a id="Skönlitteratur" className={genre === 'Skönlitteratur' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Skönliteratur</a>
-          </div>
-          <div className="col mb-4">
-            <img src="img/book.png" alt="Book" className="icon rounded d-block" />
-            <a id="Data & IT" className={genre === 'Data & IT' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Data & IT</a>
-          </div>
-          <div className="col mb-4">
-            <img src="img/book.png" alt="Book" className="icon rounded d-block" />
-            <a id="Samhälle & politik" className={genre === 'Samhälle & politik' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Samhälle & politik</a>
-          </div>
-          <div className="col mb-4">
-            <img src="img/book.png" alt="Book" className="icon rounded d-block" />
-            <a id="Djur & natur" className={genre === 'Djur & natur' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Djur & natur</a>
-          </div>
-          <div className="col mb-4">
-            <img src="img/book.png" alt="Book" className="icon rounded d-block" />
-            <a id="Mat & dryck" className={genre === 'Mat & dryck' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Mat & dryck</a>
-          </div>
-        </div>
-        <div className="row row-cols-6">
-          <div className="col mb-4">
-            <a id="Ekonomi & ledarskap" className={genre === 'Ekonomi & ledarskap' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Ekonomi & ledarskap</a>
-          </div>
-          <div className="col mb-4">
-            <a id="Biografier" className={genre === 'Biografier' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Biografier</a>
-          </div>
-          <div className="col mb-4">
-            <a id="Resor" className={genre === 'Resor' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Resor</a>
-          </div>
-          <div className="col mb-4">
-            <a id="Kultur" className={genre === 'Kultur' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Kultur</a>
-          </div>
-          <div className="col mb-4">
-            <a id="Medicin" className={genre === 'Medicin' ? 'active' : ''} href="/" onClick={(event) => handleGenreChange(event)}>Medicin</a>
-          </div>
+          {genres.map((item) => (
+            <div className="col mb-4">
+              <img src={item.img} alt="Category" className="icon rounded d-block mt-3" />
+              <a id={item.name} className={`${genre === item.name ? 'active' : ''}`} href="/" onClick={(event) => handleGenreChange(event)}>{item.name}</a>
+            </div>
+
+          ))}
         </div>
       </div>
       <div className="m-4 row">
