@@ -4,7 +4,7 @@
 import React, {
   useEffect, useContext, useState, useRef,
 } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import OrderContext from '../contexts/order-context';
 import AdminNav from '../components/AdminNav';
 
@@ -14,6 +14,7 @@ export default function OrdersAdmin() {
   const [status, setStatus] = useState('');
   const [isInput, setIsInput] = useState(false);
   const refInput = useRef('');
+  const history = useHistory();
 
   useEffect(() => {
     orderCtx.getOrders();
@@ -31,6 +32,14 @@ export default function OrdersAdmin() {
     orderCtx.updateOrder(id, refStatus);
     setIsInput(false);
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem('adminToken');
+    if (!token) {
+      history.push('/admin');
+    }
+  }, []);
+
   return (
     <div>
       <AdminNav />

@@ -1,10 +1,13 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import ProductContext from '../contexts/product-context';
 import AdminNav from '../components/AdminNav';
 
 export default function NewProductForm() {
   const productCtx = useContext(ProductContext);
+  const history = useHistory();
+
   const [formData, setFormData] = useState({
     title: '',
     price: undefined,
@@ -13,6 +16,13 @@ export default function NewProductForm() {
     category: '',
     img: '',
   });
+
+  useEffect(() => {
+    const token = localStorage.getItem('adminToken');
+    if (!token) {
+      history.push('/admin');
+    }
+  }, []);
 
   const handleOnChange = (e) => {
     e.preventDefault();
