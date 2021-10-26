@@ -23,7 +23,7 @@ const Account = () => {
   return (
     <div>
       {user && !user.fullName ? <div>Loading</div> : <EditUserForm user={user} /> }
-      {userOrders[0] && userOrders !== [] && userOrders.sort((a, b) => new Date(a.createdAt.slice(0, 10)) - new Date(b.createdAt.slice(0, 10))).map((order) => (
+      {userOrders[0] && userOrders !== [] && userOrders.sort((a, b) => new Date(b.createdAt.slice(0, 10)) - new Date(a.createdAt.slice(0, 10))).map((order) => (
         <UserOrderItem
           key={order._id}
           orderId={order._id}

@@ -41,6 +41,7 @@ export default function OrdersAdmin() {
         <tbody>
           {orders.sort((a, b) => new Date(a.createdAt.slice(0, 10)) - new Date(b.createdAt.slice(0, 10))).map((order) => (
             <OrderTable
+              key={order._id}
               id={order._id}
               status={order.status}
               createdAt={order.createdAt}

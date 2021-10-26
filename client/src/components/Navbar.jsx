@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import UserContext from '../contexts/user-context';
 
@@ -9,15 +9,10 @@ export default function Navbar() {
   console.log(user);
 
   function logoutUser() {
-    console.log('clicked logout ');
     localStorage.removeItem('token');
     localStorage.removeItem('adminToken');
     history.push('/login');
   }
-
-  useEffect(() => {
-    userCtx.getUser();
-  }, []);
 
   return (
     <div className="mb-4 ">
@@ -40,7 +35,7 @@ export default function Navbar() {
           className="collapse navbar-collapse justify-content-end "
           id="navbarNav"
         >
-          {Object.keys(user).length !== 0 && (
+          {user && user.fullName ? (
             <ul className="navbar-nav ">
               <li className="nav-item" />
               <li className="nav-item">
@@ -66,23 +61,23 @@ export default function Navbar() {
               </li>
 
             </ul>
-          ) }
-          {Object.keys(user).length === 0 && (
+          )
+            : (
 
-            <ul className="navbar-nav">
-              <li className="nav-link text-light" href="#">
-                Cart
-              </li>
-              <a className="nav-link text-light" href="/login">
-                Login /
-              </a>
-              <span>
-                <a className="nav-link text-light" href="/register">Register</a>
-                {' '}
-              </span>
-            </ul>
+              <ul className="navbar-nav">
+                <li className="nav-link text-light" href="#">
+                  Cart
+                </li>
+                <a className="nav-link text-light" href="/login">
+                  Login /
+                </a>
+                <span>
+                  <a className="nav-link text-light" href="/register">Register</a>
+                  {' '}
+                </span>
+              </ul>
 
-          )}
+            )}
         </div>
       </nav>
     </div>

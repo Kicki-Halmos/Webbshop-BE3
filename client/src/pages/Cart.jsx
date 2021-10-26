@@ -21,6 +21,7 @@ const Cart = () => {
 
   useEffect(() => {
     cartCtx.getCart();
+    userCtx.getUser();
   }, []);
 
   return (
