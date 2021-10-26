@@ -11,6 +11,7 @@ export default function Navbar() {
   function logoutUser() {
     console.log('clicked logout ');
     localStorage.removeItem('token');
+    localStorage.removeItem('adminToken');
     history.push('/login');
   }
 
