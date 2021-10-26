@@ -64,8 +64,19 @@ const ProductList = () => {
     products = filterByGenre();
   }
 
-  // const genres = [{name: 'Deckare', img: 'img/book.png'}, 'Skönlitteratur', 'Data & IT'];
-  const genres = ['Deckare', 'Skönlitteratur', 'Data & IT', 'Samhälle & politik', 'Djur & natur', 'Mat & dryck', 'Ekonomi & ledarskap', 'Biografier', 'Resor', 'Kultur', 'Medicin'];
+  const genres = [
+    { name: 'Deckare', img: 'img/detective.png' },
+    { name: 'Skönlitteratur', img: 'img/book-2.png' },
+    { name: 'Data & IT', img: 'img/it-icon.png' },
+    { name: 'Samhälle & politik', img: 'img/people.png' },
+    { name: 'Djur & natur', img: 'img/nature.png' },
+    { name: 'Mat & dryck', img: 'img/food.png' },
+    { name: 'Ekonomi & ledarskap', img: 'img/economy.png' },
+    { name: 'Biografier', img: 'img/bio_person1.png' },
+    { name: 'Resor', img: 'img/travel.png' },
+    { name: 'Kultur', img: 'img/book.png' },
+    { name: 'Medicin', img: 'img/1.png' },
+  ];
 
   return (
     <div>
@@ -80,8 +91,8 @@ const ProductList = () => {
         <div className="row row-cols-6">
           {genres.map((item) => (
             <div className="col mb-4">
-              <img src="img/book.png" alt="Book" className="icon rounded d-block" />
-              <a id={item} className={`${genre === item ? 'active' : ''}`} href="/" onClick={(event) => handleGenreChange(event)}>{item}</a>
+              <img src={item.img} alt="Category" className="icon rounded d-block mt-3" />
+              <a id={item.name} className={`${genre === item.name ? 'active' : ''}`} href="/" onClick={(event) => handleGenreChange(event)}>{item.name}</a>
             </div>
 
           ))}
