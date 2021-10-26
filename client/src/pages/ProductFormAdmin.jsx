@@ -21,7 +21,7 @@ export default function NewProductForm() {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    productCtx.addProduct(
+    productCtx.adminAddProduct(
       formData.title,
       formData.price,
       formData.description,

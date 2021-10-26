@@ -8,7 +8,7 @@ const api = axios.create({
 const getProducts = () => api.get('/api/products');
 const getProductItem = (id) => api.get(`/api/products/${id}`);
 
-const updateUser = (token, id, fullName, email, phoneNumber, address) => api.put(`/api/user/${id}`, {
+const updateUser = (id, fullName, email, phoneNumber, address) => api.put(`/api/user/${id}`, {
   id, fullName, email, phoneNumber, address,
 });
 const login = (email, password) => api.post('/api/user/login', { email, password });
@@ -33,8 +33,8 @@ const adminGetProductItem = (id) => api.get(`/api/admin/products/${id}`);
 const adminCreateProductItem = (title, price, description, author, category, img) => api.post('/api/admin/products', {
   title, description, price, author, category, img,
 });
-const adminUpdateProductItem = (id, title, description, price, author, category, img) => api.put(`/api/admin/products/${id}`, {
-  title, description, price, author, category, img,
+const adminUpdateProductItem = (id, title, price, description, author, category, img) => api.put(`/api/admin/products/${id}`, {
+  title, price, description, author, category, img,
 });
 const adminDeleteProductItem = (id) => api.delete(`/api/admin/products/${id}`);
 

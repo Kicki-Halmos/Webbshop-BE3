@@ -9,7 +9,7 @@ export default function Admin() {
   const productList = productCtx.products;
 
   useEffect(() => {
-    productCtx.getProducts();
+    productCtx.adminGetProducts();
   }, []);
 
   return (

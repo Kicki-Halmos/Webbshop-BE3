@@ -13,7 +13,7 @@ export default function ProductUpdate() {
   const { id } = params;
 
   useEffect(() => {
-    productCtx.getOneProduct(id);
+    productCtx.adminGetOneProduct(id);
   }, []);
 
   return (
