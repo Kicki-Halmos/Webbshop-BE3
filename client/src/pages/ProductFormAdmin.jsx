@@ -1,10 +1,13 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import ProductContext from '../contexts/product-context';
 import AdminNav from '../components/AdminNav';
 
 export default function NewProductForm() {
   const productCtx = useContext(ProductContext);
+  const history = useHistory();
+
   const [formData, setFormData] = useState({
     title: '',
     price: undefined,
@@ -14,6 +17,13 @@ export default function NewProductForm() {
     img: '',
   });
 
+  useEffect(() => {
+    const token = localStorage.getItem('adminToken');
+    if (!token) {
+      history.push('/admin');
+    }
+  }, []);
+
   const handleOnChange = (e) => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -21,7 +31,7 @@ export default function NewProductForm() {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    productCtx.addProduct(
+    productCtx.adminAddProduct(
       formData.title,
       formData.price,
       formData.description,
@@ -49,19 +59,22 @@ export default function NewProductForm() {
         </div>
         <div className="mb-3">
           <label htmlFor="author" className="form-label">Author</label>
-          <select onChange={handleOnChange} value={formData.author} name="author" id="author" className="form-select" aria-label="Default select example">
-            {/* loopa igenom de authors som finns i databasen och skriv ut här sen */}
-            <option value="author1">author 1 </option>
-            <option value="author2">author 2</option>
-            <option value="author3">author 3</option>
-          </select>
+          <input name="author" value={formData.author} onChange={handleOnChange} type="text" className="form-control" id="author" />
         </div>
         <div className="mb-3">
           <label htmlFor="category" className="form-label">Category</label>
           <select onChange={handleOnChange} value={formData.category} name="category" id="category" className="form-select" aria-label="Default select example">
-            <option value="category1">category 1</option>
-            <option value="category2">category 2</option>
-            <option value="catgory3">category 3</option>
+            <option value="Deckare">Deckare</option>
+            <option value="Skönlitteratur">Skönlitteratur</option>
+            <option value="Data &amp; IT">Data &amp; IT</option>
+            <option value="Samhälle och politik">Samhälle och politik</option>
+            <option value="Djur &amp; natur">Djur &amp; natur</option>
+            <option value="Mat &amp; dryck">Mat &amp; dryck</option>
+            <option value="Ekonomi &amp; ledarskap">Ekonomi &amp; ledarskap</option>
+            <option value="Biografier">Biografier</option>
+            <option value="Resor">Resor</option>
+            <option value="Kultur">Kultur</option>
+            <option value="Medicin">Medicin</option>
           </select>
         </div>
         <div className="mb-3">

@@ -5,6 +5,7 @@ import React, { useReducer, useContext } from 'react';
 import ProductContext from '../contexts/product-context';
 import { productApis, adminApis } from '../api/api';
 import UserContext from '../contexts/user-context';
+import history from '../utils/history';
 
 const {
   getProducts, getProductItem,
@@ -23,7 +24,7 @@ const productReducer = (state, action) => {
     case 'update_product': return {
       products: (state.products.map((product) => (product._id === action.product._id ? action.product : product))),
     };
-    case 'get_one_product': return { oneProduct: action.product };
+    case 'get_one_product': return { ...state, oneProduct: action.product };
     case 'delete_product': return { products: state.products.filter((product) => product._id !== action.id) };
     default: return defaultProductState;
   }
@@ -56,7 +57,7 @@ const ProductProvider = ({ children }) => {
       const products = await adminGetProducts();
       dispatchProductAction({ type: 'get_products', products: products.data.data });
     } catch (error) {
-      console.log(error);
+      userCtx.setAlertMessage(error.response.data.data.message);
     }
   };
 
@@ -65,7 +66,7 @@ const ProductProvider = ({ children }) => {
       const product = await adminGetProductItem(id);
       dispatchProductAction({ type: 'get_one_product', product: product.data.data });
     } catch (error) {
-      console.log();
+      userCtx.setAlertMessage(error.response.data.data.message);
     }
   };
 
@@ -73,15 +74,17 @@ const ProductProvider = ({ children }) => {
     try {
       const product = await adminCreateProductItem(title, Number(price), description, author, category, img);
       dispatchProductAction({ type: 'add_product', product: product.data.data });
+      history.push('/admin');
     } catch (error) {
       console.log(error);
     }
   };
 
-  const adminUpdateProductHandler = async (id) => {
+  const adminUpdateProductHandler = async (id, title, price, description, author, category, img) => {
     try {
-      const product = await adminUpdateProductItem(id);
+      const product = await adminUpdateProductItem(id, title, price, description, author, category, img);
       dispatchProductAction({ type: 'update_product', product: product.data.data });
+      history.push('/admin');
     } catch (error) {
       console.log(error);
     }
