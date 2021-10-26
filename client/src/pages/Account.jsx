@@ -11,8 +11,8 @@ const Account = () => {
   const history = useHistory();
 
   useEffect(() => {
-    userCtx.getUserOrders();
     userCtx.getUser();
+    userCtx.getUserOrders();
     const token = localStorage.getItem('token');
     if (!token) {
       history.push('/login');
@@ -22,7 +22,7 @@ const Account = () => {
   return (
     <div>
       {user && !user.fullName ? <div>Loading</div> : <EditUserForm user={user} /> }
-      {userOrders !== [] && userOrders.map((order) => (
+      {userOrders[0] && userOrders !== [] && userOrders.map((order) => (
         <UserOrderItem
           key={order._id}
           orderId={order._id}
