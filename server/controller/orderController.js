@@ -11,12 +11,13 @@ exports.getAllOrders = wrapAsync(async (req, res) => {
 // get one order
 exports.getSingleOrder = wrapAsync(async (req, res) => {
   const { id } = req.params;
-  const singleOrder = await Order.findOne({ id });
+  const singleOrder = await Order.findOne({ _id: id });
   res.status(200).json({ data: singleOrder });
 });
 
 // update order
 exports.uppdateOrder = wrapAsync(async (req, res) => {
+  console.log('hej');
   const { id } = req.params;
   const { status } = req.body;
 
