@@ -35,8 +35,8 @@ export default function Admin() {
               {activeItem
               && (
               <p>
-                Are you sure you want to delete
-                {activeItem.title}
+                {`Are you sure you want to delete
+                ${activeItem.title}`}
               </p>
               )}
             </div>
@@ -72,7 +72,7 @@ export default function Admin() {
                     Delete
                   </button>
                 </td>
-                <td><button type="button"><Link to={`/admin/update-product/${product._id}`}>Edit</Link></button></td>
+                <td><button className="btn btn-primary" type="button"><Link to={`/admin/update-product/${product._id}`} style={{ textDecoration: 'none', color: 'white' }}>Edit</Link></button></td>
               </tr>
             ))}
           </tbody>
