@@ -57,7 +57,7 @@ const ProductProvider = ({ children }) => {
       const products = await adminGetProducts();
       dispatchProductAction({ type: 'get_products', products: products.data.data });
     } catch (error) {
-      console.log(error);
+      userCtx.setAlertMessage(error.response.data.data.message);
     }
   };
 
@@ -66,7 +66,7 @@ const ProductProvider = ({ children }) => {
       const product = await adminGetProductItem(id);
       dispatchProductAction({ type: 'get_one_product', product: product.data.data });
     } catch (error) {
-      console.log();
+      userCtx.setAlertMessage(error.response.data.data.message);
     }
   };
 

@@ -1,15 +1,20 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import AdminNav from '../components/AdminNav';
 import ProductContext from '../contexts/product-context';
 
 export default function Admin() {
   const productCtx = useContext(ProductContext);
   const productList = productCtx.products;
+  const history = useHistory();
 
   useEffect(() => {
     productCtx.adminGetProducts();
+    const token = localStorage.getItem('adminToken');
+    if (!token) {
+      history.push('/login');
+    }
   }, []);
 
   return (
