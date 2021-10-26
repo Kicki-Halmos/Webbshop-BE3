@@ -10,11 +10,11 @@ const OrderDetail = () => {
   const { oneOrder } = orderCtx;
   const params = useParams();
   const { id } = params;
-  console.log(id);
 
   useEffect(() => {
     orderCtx.getOneOrder(id);
   }, []);
+
   return (
     <div>
       <AdminNav />
