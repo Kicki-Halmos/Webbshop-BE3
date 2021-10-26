@@ -3,19 +3,17 @@
 import React, { useContext, useEffect } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import CartContext from '../contexts/cart-context';
-import OrderContext from '../contexts/order-context';
 import UserContext from '../contexts/user-context';
 import CartItem from '../components/CartItem';
 
 const Cart = () => {
   const cartCtx = useContext(CartContext);
-  const orderCtx = useContext(OrderContext);
   const userCtx = useContext(UserContext);
   const { items, totalCost } = cartCtx;
   const history = useHistory();
 
   const addOrderHandler = () => {
-    orderCtx.addOrder(items, totalCost);
+    userCtx.addUserOrder(items, totalCost);
     userCtx.setAlertMessage('Your order was succesfully created!', 'success');
     cartCtx.deleteCart();
     history.push('/account');

@@ -6,48 +6,58 @@ const api = axios.create({
 });
 
 const getProducts = () => api.get('/api/products');
-const createProductItem = (title, price, description, author, category, img) => api.post('/api/products', {
-  title, description, price, author, category, img,
-});
-const updateProductItem = (id, title, description, price, author, category, img) => api.put(`/api/products/${id}`, {
-  title, description, price, author, category, img,
-});
 const getProductItem = (id) => api.get(`/api/products/${id}`);
-const deleteProductItem = (id) => api.delete(`/api/products/${id}`);
 
-const updateUser = (token, id, fullName, email, phoneNumber, address) => api.put(`/api/users/${id}`, {
+const updateUser = (token, id, fullName, email, phoneNumber, address) => api.put(`/api/user/${id}`, {
   id, fullName, email, phoneNumber, address,
 });
-const login = (email, password) => api.post('/api/users/login', { email, password });
-const register = (fullName, email, password, phoneNumber, address) => api.post('/api/users/register', {
+const login = (email, password) => api.post('/api/user/login', { email, password });
+const register = (fullName, email, password, phoneNumber, address) => api.post('/api/user/register', {
   fullName, email, password, phoneNumber, address,
 });
-const getUser = () => api.get('/api/users');
-const getUserOrders = () => api.get('/api/users/orders');
+const getUser = () => api.get('/api/user');
+const getUserOrders = () => api.get('/api/user/orders');
+const addUserOrder = (products, totalCost, deliveryCost) => api.post('/api/user/orders', { products, totalCost, deliveryCost });
 
-const getCart = () => api.get('/api/carts');
-const addNewCart = (product, quantity) => api.post('/api/carts', { product, quantity });
-const updateCart = (product, quantity, val) => api.put('/api/carts', { product, quantity, val });
-const deleteCart = () => api.delete('/api/carts');
+const getCart = () => api.get('/api/cart');
+const addNewCart = (product, quantity) => api.post('/api/cart', { product, quantity });
+const updateCart = (product, quantity, val) => api.put('/api/cart', { product, quantity, val });
+const deleteCart = () => api.delete('/api/cart');
 
-const getOrders = () => api.get('/api/orders');
-const getOneOrder = (id) => api.get(`api/orders/${id}`);
-const addOrder = (products, totalCost, deliveryCost) => api.post('/api/orders', { products, totalCost, deliveryCost });
-const updateOrder = (id, status) => api.post(`api/orders/${id}`, { status });
-const deleteOrder = (id) => api.post(`api/orders/${id}`);
+const adminGetOrders = () => api.get('/api/admin/orders');
+const adminGetOneOrder = (id) => api.get(`api/admin/orders/${id}`);
+const adminUpdateOrder = (id, status) => api.post(`api/admin/orders/${id}`, { status });
+const adminDeleteOrder = (id) => api.post(`api/admin/orders/${id}`);
+const adminGetProducts = () => api.get('/api/admin/products');
+const adminGetProductItem = (id) => api.get(`/api/admin/products/${id}`);
+const adminCreateProductItem = (title, price, description, author, category, img) => api.post('/api/admin/products', {
+  title, description, price, author, category, img,
+});
+const adminUpdateProductItem = (id, title, description, price, author, category, img) => api.put(`/api/admin/products/${id}`, {
+  title, description, price, author, category, img,
+});
+const adminDeleteProductItem = (id) => api.delete(`/api/admin/products/${id}`);
 
 export const productApis = {
-  getProducts, createProductItem, updateProductItem, getProductItem, deleteProductItem,
+  getProducts, getProductItem,
 };
 export const userApis = {
-  login, register, getUser, updateUser, getUserOrders,
+  login, register, getUser, updateUser, getUserOrders, addUserOrder,
 };
 export const cartApis = {
   getCart, addNewCart, updateCart, deleteCart,
 };
 
-export const orderApis = {
-  getOrders, getOneOrder, addOrder, updateOrder, deleteOrder,
+export const adminApis = {
+  adminGetOrders,
+  adminGetOneOrder,
+  adminUpdateOrder,
+  adminDeleteOrder,
+  adminGetProducts,
+  adminGetProductItem,
+  adminCreateProductItem,
+  adminDeleteProductItem,
+  adminUpdateProductItem,
 };
 
 api.interceptors.request.use((config) => {

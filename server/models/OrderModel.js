@@ -4,7 +4,7 @@ const OrderSchema = new mongoose.Schema({
   products: { type: Array },
   status: {
     type: String,
-    default: 'registered',
+    default: 'registrerad',
   },
   totalCost: {
     type: Number,
