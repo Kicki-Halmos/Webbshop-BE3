@@ -31,6 +31,7 @@ const Account = () => {
           totalCost={order.totalCost}
           deliveryCost={order.deliveryCost}
           deliveryAddress={order.deliveryAddress}
+          dateRegistered={order.createdAt.slice(0, 10)}
         />
       ))}
     </div>

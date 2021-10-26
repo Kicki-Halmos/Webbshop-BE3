@@ -3,7 +3,7 @@ import React from 'react';
 
 const UserOrderItem = (props) => {
   const {
-    orderId, products, status, totalCost, deliveryCost, deliveryAddress,
+    orderId, products, status, totalCost, deliveryCost, deliveryAddress, dateRegistered,
   } = props;
 
   return (
@@ -57,6 +57,11 @@ const UserOrderItem = (props) => {
           Status på order:
           {' '}
           {status}
+        </p>
+        <p className="fw-bold p-3">
+          Orderdatum:
+          {' '}
+          {dateRegistered}
         </p>
       </div>
 

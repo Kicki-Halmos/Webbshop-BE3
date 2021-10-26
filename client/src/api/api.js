@@ -26,7 +26,7 @@ const deleteCart = () => api.delete('/api/cart');
 
 const adminGetOrders = () => api.get('/api/admin/orders');
 const adminGetOneOrder = (id) => api.get(`api/admin/orders/${id}`);
-const adminUpdateOrder = (id, status) => api.post(`api/admin/orders/${id}`, { status });
+const adminUpdateOrder = (id, status) => api.put(`api/admin/orders/${id}`, { status });
 const adminDeleteOrder = (id) => api.post(`api/admin/orders/${id}`);
 const adminGetProducts = () => api.get('/api/admin/products');
 const adminGetProductItem = (id) => api.get(`/api/admin/products/${id}`);
