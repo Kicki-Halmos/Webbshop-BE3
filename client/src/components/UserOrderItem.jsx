@@ -17,7 +17,17 @@ const UserOrderItem = (props) => {
         <ul key={product.product._id} className="list-group  pt-3 px-3">
           <li className="d-flex justify-content-between">
             {' '}
-            <p>{product.product.title}</p>
+            <div className="row">
+              <p className="col">
+                {product.product.title}
+
+              </p>
+              <p>
+                Författare:
+                {' '}
+                {product.product.author}
+              </p>
+            </div>
             <p>
               Antal:
               {' '}
