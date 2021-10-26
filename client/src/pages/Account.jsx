@@ -12,8 +12,8 @@ const Account = () => {
   const history = useHistory();
 
   useEffect(() => {
-    userCtx.getUser();
     userCtx.getUserOrders();
+    userCtx.getUser();
     const token = localStorage.getItem('token');
     if (!token) {
       history.push('/login');
@@ -32,7 +32,7 @@ const Account = () => {
           totalCost={order.totalCost}
           deliveryCost={order.deliveryCost}
           deliveryAddress={order.deliveryAddress}
-          dateRegistered={order.createdAt.slice(0, 10)}
+          dateRegistered={order.createdAt}
         />
       ))}
     </div>

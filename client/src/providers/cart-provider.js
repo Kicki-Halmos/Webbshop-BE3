@@ -42,7 +42,6 @@ const CartProvider = ({ children }) => {
   const addCartHandler = async (product, quantity) => {
     try {
       const cart = await addNewCart(product, quantity);
-      console.log(cart);
       dispatchCartAction({ type: 'add_cart', item: cart.data.data.products[0].product });
     } catch (error) {
       console.log(error);

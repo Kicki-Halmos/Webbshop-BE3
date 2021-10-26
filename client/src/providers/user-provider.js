@@ -47,8 +47,13 @@ const UserProvider = ({ children }) => {
   };
 
   const addUserOrderHandler = async (products, totalCost) => {
-    const order = await addUserOrder(products, totalCost, '50');
-    dispatchUserAction({ type: 'add_order', order: order.data.data });
+    try {
+      const order = await addUserOrder(products, totalCost, '50');
+      console.log(order);
+      dispatchUserAction({ type: 'add_order', order: order.data.data });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const updateHandler = async (id, fullName, email, phoneNumber, address) => {

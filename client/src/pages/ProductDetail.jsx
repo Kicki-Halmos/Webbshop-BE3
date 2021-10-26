@@ -42,8 +42,10 @@ const ProductDetail = () => {
     }
     if (cartCtx.items[0]) {
       cartCtx.updateCart(id, refValue.current.value, 'plus');
+      history.push('/products');
     } else {
       cartCtx.addCart(id, 1);
+      history.push('/products');
     }
   };
 

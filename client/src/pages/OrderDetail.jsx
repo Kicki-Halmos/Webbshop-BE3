@@ -27,7 +27,7 @@ const OrderDetail = () => {
           totalCost={oneOrder.totalCost}
           deliveryCost={oneOrder.deliveryCost}
           deliveryAddress={oneOrder.deliveryAddress}
-          dateRegistered={oneOrder.createdAt.slice(0, 10)}
+          dateRegistered={oneOrder.createdAt}
         />
       )}
     </div>

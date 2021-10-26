@@ -61,7 +61,7 @@ const UserOrderItem = (props) => {
         <p className="fw-bold p-3">
           Orderdatum:
           {' '}
-          {dateRegistered}
+          {dateRegistered && dateRegistered.slice(0, 10)}
         </p>
       </div>
 
