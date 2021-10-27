@@ -88,7 +88,7 @@ const ProductList = () => {
         value={searchTerm}
       />
       <div className="container">
-        <div className="row row-cols-6">
+        <div className="row row-cols-3 row-cols-sm-4 row-cols-md-6">
           {genres.map((item) => (
             <div className="col mb-4">
               <img src={item.img} alt="Category" className="icon rounded d-block mt-3" />
