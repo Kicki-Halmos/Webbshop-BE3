@@ -48,7 +48,6 @@ export default function Admin() {
         </div>
       </div>
       <AdminNav />
-      <h1>List all products</h1>
       <Link to="/admin/create-product" style={{ textDecoration: 'none' }}>Create new product</Link>
       <table className="table table-striped table-hover">
         <thead>

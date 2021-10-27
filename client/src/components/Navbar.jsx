@@ -6,7 +6,6 @@ export default function Navbar() {
   const userCtx = useContext(UserContext);
   const { user } = userCtx;
   const history = useHistory();
-  console.log(user);
 
   function logoutUser() {
     localStorage.removeItem('token');
@@ -39,21 +38,21 @@ export default function Navbar() {
             <ul className="navbar-nav ">
               <li className="nav-item" />
               <li className="nav-item">
-                <a className="nav-link text-light" href="/orders">
-                  my orders
+                <a className="nav-link text-light" href="/account">
+                  Account
                 </a>
               </li>
               <li className="nav-item">
                 <a className="nav-link text-light" href="/cart">
-                  cart
+                  Cart
                 </a>
               </li>
-              <li className="nav-item">
-                <li className="nav-link text-light" href="#">
-                  {user.fullName}
+              {user && user.isAdmin === true
+                && (
+                <li className="nav-item">
+                  <a className="nav-link text-light" href="/admin">Admin</a>
                 </li>
-              </li>
-
+                )}
               <li>
                 <a href="/login" onClick={logoutUser} className="nav-link text-light">
                   Logout
@@ -65,16 +64,21 @@ export default function Navbar() {
             : (
 
               <ul className="navbar-nav">
-                <li className="nav-link text-light" href="#">
-                  Cart
+                <li>
+                  <a className="nav-link text-light" href="/cart">
+                    Cart
+                  </a>
                 </li>
-                <a className="nav-link text-light" href="/login">
-                  Login /
-                </a>
-                <span>
+                <li>
+                  <a className="nav-link text-light" href="/login">
+                    Login
+                  </a>
+                </li>
+                <li>
                   <a className="nav-link text-light" href="/register">Register</a>
                   {' '}
-                </span>
+                </li>
+
               </ul>
 
             )}
