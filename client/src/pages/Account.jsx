@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-underscore-dangle */
 import React, { useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -11,8 +12,8 @@ const Account = () => {
   const history = useHistory();
 
   useEffect(() => {
-    userCtx.getUser();
     userCtx.getUserOrders();
+    userCtx.getUser();
     const token = localStorage.getItem('token');
     if (!token) {
       history.push('/login');
@@ -22,7 +23,7 @@ const Account = () => {
   return (
     <div>
       {user && !user.fullName ? <div>Loading</div> : <EditUserForm user={user} /> }
-      {userOrders[0] && userOrders !== [] && userOrders.map((order) => (
+      {userOrders[0] && userOrders !== [] && userOrders.sort((a, b) => new Date(b.createdAt.slice(0, 10)) - new Date(a.createdAt.slice(0, 10))).map((order) => (
         <UserOrderItem
           key={order._id}
           orderId={order._id}
@@ -31,6 +32,7 @@ const Account = () => {
           totalCost={order.totalCost}
           deliveryCost={order.deliveryCost}
           deliveryAddress={order.deliveryAddress}
+          dateRegistered={order.createdAt}
         />
       ))}
     </div>

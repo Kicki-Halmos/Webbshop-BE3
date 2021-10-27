@@ -13,7 +13,7 @@ const orderReducer = (state, action) => {
   switch (action.type) {
     case 'get_orders': return { orders: action.orders };
     case 'update_order': return { orders: state.orders.map((order) => (order._id === action.order._id ? action.order : order)) };
-    case 'get_one_order': return { oneOrder: action.order };
+    case 'get_one_order': return { ...state, oneOrder: action.order };
     case 'delete_order': return { orders: state.orders.filter((order) => order._id !== action.id) };
 
     default: return defaultOrderstate;
@@ -25,17 +25,19 @@ const OrderProvider = ({ children }) => {
 
   const getOrderHandler = async () => {
     const orders = await adminGetOrders();
-    dispatchOrderAction({ type: 'get_orders', orders: orders.data.data.orders });
+    dispatchOrderAction({ type: 'get_orders', orders: orders.data.data });
   };
 
   const updateOrderHandler = async (id, status) => {
     const order = await adminUpdateOrder(id, status);
-    dispatchOrderAction({ type: 'update_order', order: order.data.data.order });
+    dispatchOrderAction({ type: 'update_order', order: order.data.data });
   };
 
   const getOneOrderHandler = async (id) => {
+    console.log(id);
     const order = await adminGetOneOrder(id);
-    dispatchOrderAction({ type: 'get_one_order', order: order.data.data.order });
+    console.log(order);
+    dispatchOrderAction({ type: 'get_one_order', order: order.data.data });
   };
 
   const deleteOrderHandler = async (id) => {

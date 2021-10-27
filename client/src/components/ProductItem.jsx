@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import CartContext from '../contexts/cart-context';
 
 const ProductItem = (props) => {
@@ -7,9 +7,13 @@ const ProductItem = (props) => {
   const {
     id, title, price, img, author,
   } = props;
+  const history = useHistory();
 
   const saveToCart = () => {
-    console.log(cartCtx.items);
+    const token = localStorage.getItem('token');
+    if (!token) {
+      history.push('/login');
+    }
     if (cartCtx.items[0]) {
       cartCtx.updateCart(id, 1, 'plus');
     } else {

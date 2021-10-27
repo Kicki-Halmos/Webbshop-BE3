@@ -1,9 +1,10 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-case-declarations */
 /* eslint-disable react/jsx-filename-extension */
-import React, { useReducer } from 'react';
+import React, { useReducer, useContext } from 'react';
 import CartContext from '../contexts/cart-context';
 import { cartApis } from '../api/api';
+import UserContext from '../contexts/user-context';
 
 const {
   getCart, updateCart, deleteCart, addNewCart,
@@ -38,14 +39,14 @@ const cartReducer = (state, action) => {
 
 const CartProvider = ({ children }) => {
   const [cartState, dispatchCartAction] = useReducer(cartReducer, defaultCartState);
+  const userCtx = useContext(UserContext);
 
   const addCartHandler = async (product, quantity) => {
     try {
       const cart = await addNewCart(product, quantity);
-      console.log(cart);
       dispatchCartAction({ type: 'add_cart', item: cart.data.data.products[0].product });
     } catch (error) {
-      console.log(error);
+      userCtx.setAlertMessage(error.response.data.data.message);
     }
   };
 

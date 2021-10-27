@@ -4,15 +4,18 @@ import React, { useEffect, useContext, useState } from 'react';
 import ProductItem from '../components/ProductItem';
 import ProductContext from '../contexts/product-context';
 import CartContext from '../contexts/cart-context';
+import UserContext from '../contexts/user-context';
 
 const ProductList = () => {
   const productCtx = useContext(ProductContext);
   const cartCtx = useContext(CartContext);
+  const userCtx = useContext(UserContext);
   const productList = productCtx.products;
   const [searchTerm, setSearchTerm] = useState('');
   const [genre, setGenre] = useState('');
 
   useEffect(() => {
+    userCtx.getUser();
     productCtx.getProducts();
     cartCtx.getCart();
   }, []);
@@ -90,7 +93,10 @@ const ProductList = () => {
       <div className="container">
         <div className="row row-cols-6">
           {genres.map((item) => (
-            <div className="col mb-4">
+            <div
+              key={item.name}
+              className="col mb-4"
+            >
               <img src={item.img} alt="Category" className="icon rounded d-block mt-3" />
               <a id={item.name} className={`${genre === item.name ? 'active' : ''}`} href="/" onClick={(event) => handleGenreChange(event)}>{item.name}</a>
             </div>

@@ -8,18 +8,18 @@ import ProductList from './pages/ProductList';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Cart from './pages/Cart';
-import Orders from './pages/Orders';
 import Account from './pages/Account';
 import ProductProvider from './providers/product-provider';
 import UserProvider from './providers/user-provider';
 import CartProvider from './providers/cart-provider';
+import OrderProvider from './providers/order-provider';
 import history from './utils/history';
 import Navbar from './components/Navbar';
 import ProductsAdmin from './pages/ProductsAdmin';
 import ProductFormAdmin from './pages/ProductFormAdmin';
 import ProductUpdate from './pages/ProductUpdate';
 import OrdersAdmin from './pages/OrdersAdmin';
-import OrderProvider from './providers/order-provider';
+import OrderDetail from './pages/OrderDetail';
 
 function App() {
   return (
@@ -49,14 +49,14 @@ function App() {
                   <Route path="/cart">
                     <Cart />
                   </Route>
-                  <Route path="/orders">
-                    <Orders />
-                  </Route>
                   <Route path="/account">
                     <Account />
                   </Route>
-                  <Route path="/admin/orders">
+                  <Route exact path="/admin/orders">
                     <OrdersAdmin />
+                  </Route>
+                  <Route path="/admin/orders/:id">
+                    <OrderDetail />
                   </Route>
                   <Route path="/admin/update-product/:id">
                     <ProductUpdate />

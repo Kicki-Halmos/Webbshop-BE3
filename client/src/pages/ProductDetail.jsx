@@ -9,8 +9,6 @@ import UserContext from '../contexts/user-context';
 
 import CartContext from '../contexts/cart-context';
 
-import AlertMessage from '../components/AlertMessage';
-
 const ProductDetail = () => {
   const productCtx = useContext(ProductContext);
   const userCtx = useContext(UserContext);
@@ -22,7 +20,6 @@ const ProductDetail = () => {
   const history = useHistory();
   const params = useParams();
   const { id } = params;
-  const message = userCtx.alertMessage;
 
   const quantity = items.filter((item) => item.product._id === id);
 
@@ -39,17 +36,18 @@ const ProductDetail = () => {
     const token = localStorage.getItem('token');
     if (!token) {
       history.push('/login');
-    }
-    if (cartCtx.items[0]) {
+      userCtx.setAlertMessage('You must be logged in');
+    } else if (cartCtx.items[0]) {
       cartCtx.updateCart(id, refValue.current.value, 'plus');
+      history.push('/products');
     } else {
       cartCtx.addCart(id, 1);
+      history.push('/products');
     }
   };
 
   return (
     <>
-      {message && message.content && <AlertMessage message={message} />}
       {product
       && (
       <div className="row m-5">

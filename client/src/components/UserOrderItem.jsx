@@ -3,7 +3,7 @@ import React from 'react';
 
 const UserOrderItem = (props) => {
   const {
-    orderId, products, status, totalCost, deliveryCost, deliveryAddress,
+    orderId, products, status, totalCost, deliveryCost, deliveryAddress, dateRegistered,
   } = props;
 
   return (
@@ -17,7 +17,17 @@ const UserOrderItem = (props) => {
         <ul key={product.product._id} className="list-group  pt-3 px-3">
           <li className="d-flex justify-content-between">
             {' '}
-            <p>{product.product.title}</p>
+            <div className="row">
+              <p className="col">
+                {product.product.title}
+
+              </p>
+              <p>
+                Författare:
+                {' '}
+                {product.product.author}
+              </p>
+            </div>
             <p>
               Antal:
               {' '}
@@ -57,6 +67,11 @@ const UserOrderItem = (props) => {
           Status på order:
           {' '}
           {status}
+        </p>
+        <p className="fw-bold p-3">
+          Orderdatum:
+          {' '}
+          {dateRegistered && dateRegistered.slice(0, 10)}
         </p>
       </div>
 

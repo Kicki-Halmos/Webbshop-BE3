@@ -24,7 +24,7 @@ export default function LoginForm() {
     await userCtx.loginUser(formData.email, formData.password);
     const token = localStorage.getItem('token');
     if (token) {
-      history.goBack();
+      history.push('/products');
     }
   };
 
