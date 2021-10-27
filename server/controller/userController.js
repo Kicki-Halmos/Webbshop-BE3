@@ -30,7 +30,7 @@ exports.update = wrapAsync(async (req, res, next) => {
     address,
 
   }, { new: true });
-  return res.status(200).json({ data: user, message: 'Your informaton was updated!', status: 'success' });
+  return res.status(200).json({ data: user });
 });
 
 exports.register = wrapAsync(async (req, res, next) => {
