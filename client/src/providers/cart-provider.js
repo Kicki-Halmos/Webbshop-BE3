@@ -51,30 +51,18 @@ const CartProvider = ({ children }) => {
   };
 
   const getCartHandler = async () => {
-    try {
-      const cart = await getCart();
-      dispatchCartAction({ type: 'get_cart', items: cart.data.data.products });
-    } catch (error) {
-      console.log(error);
-    }
+    const cart = await getCart();
+    dispatchCartAction({ type: 'get_cart', items: cart.data.data.products });
   };
 
   const updateCartHandler = async (product, quantity, val) => {
-    try {
-      const cart = await updateCart(product, quantity, val);
-      dispatchCartAction({ type: 'get_cart', items: cart.data.data.products });
-    } catch (error) {
-      console.log(error);
-    }
+    const cart = await updateCart(product, quantity, val);
+    dispatchCartAction({ type: 'get_cart', items: cart.data.data.products });
   };
 
   const deleteCartHandler = async (id) => {
-    try {
-      await deleteCart(id);
-      dispatchCartAction({ type: 'delete_cart' });
-    } catch (error) {
-      console.log(error);
-    }
+    await deleteCart(id);
+    dispatchCartAction({ type: 'delete_cart' });
   };
 
   const cartContext = {

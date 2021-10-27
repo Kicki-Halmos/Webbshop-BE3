@@ -16,9 +16,7 @@ const database = process.env.DATABASE.replace(
 );
 
 mongoose
-  .connect(database)
-  .then(() => console.log('connected to db'))
-  .catch((error) => console.log(error));
+  .connect(database);
 
 const productRouter = require('./routes/productRoutes');
 const userRouter = require('./routes/userRoutes');

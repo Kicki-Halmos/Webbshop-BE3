@@ -71,32 +71,20 @@ const ProductProvider = ({ children }) => {
   };
 
   const adminAddProductHandler = async (title, price, description, author, category, img) => {
-    try {
-      const product = await adminCreateProductItem(title, Number(price), description, author, category, img);
-      dispatchProductAction({ type: 'add_product', product: product.data.data });
-      history.push('/admin');
-    } catch (error) {
-      console.log(error);
-    }
+    const product = await adminCreateProductItem(title, Number(price), description, author, category, img);
+    dispatchProductAction({ type: 'add_product', product: product.data.data });
+    history.push('/admin');
   };
 
   const adminUpdateProductHandler = async (id, title, price, description, author, category, img) => {
-    try {
-      const product = await adminUpdateProductItem(id, title, price, description, author, category, img);
-      dispatchProductAction({ type: 'update_product', product: product.data.data });
-      history.push('/admin');
-    } catch (error) {
-      console.log(error);
-    }
+    const product = await adminUpdateProductItem(id, title, price, description, author, category, img);
+    dispatchProductAction({ type: 'update_product', product: product.data.data });
+    history.push('/admin');
   };
 
   const adminDeleteProductItemHandler = async (id) => {
-    try {
-      await adminDeleteProductItem(id);
-      dispatchProductAction({ type: 'delete_product', id });
-    } catch (error) {
-      console.log(error);
-    }
+    await adminDeleteProductItem(id);
+    dispatchProductAction({ type: 'delete_product', id });
   };
 
   const productContext = {

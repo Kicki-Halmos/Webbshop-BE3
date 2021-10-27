@@ -29,30 +29,18 @@ const UserProvider = ({ children }) => {
   };
 
   const getMeHandler = async () => {
-    try {
-      const user = await getUser();
-      dispatchUserAction({ type: 'get_me', user: user.data.data });
-    } catch (error) {
-      console.log(error);
-    }
+    const user = await getUser();
+    dispatchUserAction({ type: 'get_me', user: user.data.data });
   };
 
   const getUserOrdersHandler = async () => {
-    try {
-      const orders = await getUserOrders();
-      dispatchUserAction({ type: 'get_user_orders', orders: orders.data.data });
-    } catch (error) {
-      console.log(error);
-    }
+    const orders = await getUserOrders();
+    dispatchUserAction({ type: 'get_user_orders', orders: orders.data.data });
   };
 
   const addUserOrderHandler = async (products, totalCost) => {
-    try {
-      const order = await addUserOrder(products, totalCost, '50');
-      dispatchUserAction({ type: 'add_order', order: order.data.data });
-    } catch (error) {
-      console.log(error);
-    }
+    const order = await addUserOrder(products, totalCost, '50');
+    dispatchUserAction({ type: 'add_order', order: order.data.data });
   };
 
   const updateHandler = async (id, fullName, email, phoneNumber, address) => {
@@ -90,12 +78,8 @@ const UserProvider = ({ children }) => {
   };
 
   const logoutHandler = () => {
-    try {
-      localStorage.removeItem('token');
-      localStorage.removeItem('adminToken');
-    } catch (err) {
-      console.log(err);
-    }
+    localStorage.removeItem('token');
+    localStorage.removeItem('adminToken');
   };
 
   const userContext = {
