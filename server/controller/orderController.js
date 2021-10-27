@@ -17,10 +17,8 @@ exports.getSingleOrder = wrapAsync(async (req, res) => {
 
 // update order
 exports.uppdateOrder = wrapAsync(async (req, res) => {
-  console.log('hej');
   const { id } = req.params;
   const { status } = req.body;
-
   const updatedOrder = await Order.findByIdAndUpdate(id, { status },
     { new: true });
 

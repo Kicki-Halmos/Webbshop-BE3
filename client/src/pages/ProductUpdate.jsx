@@ -12,7 +12,6 @@ export default function ProductUpdate() {
   const history = useHistory();
   const params = useParams();
   const { id } = params;
-  console.log(id);
 
   useEffect(() => {
     productCtx.adminGetOneProduct(id);

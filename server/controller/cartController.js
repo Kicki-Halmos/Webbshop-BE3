@@ -31,7 +31,6 @@ exports.updateCart = wrapAsync(async (req, res) => {
   const {
     product, quantity, val,
   } = req.body;
-  console.log(req.body);
   const quantityNumber = Number(quantity);
   let updatedProducts = [];
   const cart = await Cart
@@ -41,7 +40,6 @@ exports.updateCart = wrapAsync(async (req, res) => {
 
   if (val === 'remove') {
     updatedProducts = cart.products.filter((item) => item.product != product);
-    console.log(updatedProducts);
   }
 
   if (val !== 'remove') {
@@ -55,7 +53,6 @@ exports.updateCart = wrapAsync(async (req, res) => {
         return item;
       });
     } else {
-      console.log('hej');
       updatedProducts = cart.products;
       updatedProducts.push({ product, quantity });
     }

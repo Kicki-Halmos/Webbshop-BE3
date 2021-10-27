@@ -49,7 +49,6 @@ const UserProvider = ({ children }) => {
   const addUserOrderHandler = async (products, totalCost) => {
     try {
       const order = await addUserOrder(products, totalCost, '50');
-      console.log(order);
       dispatchUserAction({ type: 'add_order', order: order.data.data });
     } catch (error) {
       console.log(error);

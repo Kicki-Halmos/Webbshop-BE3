@@ -34,9 +34,7 @@ const OrderProvider = ({ children }) => {
   };
 
   const getOneOrderHandler = async (id) => {
-    console.log(id);
     const order = await adminGetOneOrder(id);
-    console.log(order);
     dispatchOrderAction({ type: 'get_one_order', order: order.data.data });
   };
 
