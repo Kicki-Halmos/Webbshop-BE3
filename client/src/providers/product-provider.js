@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable max-len */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/jsx-filename-extension */
@@ -71,20 +72,32 @@ const ProductProvider = ({ children }) => {
   };
 
   const adminAddProductHandler = async (title, price, description, author, category, img) => {
-    const product = await adminCreateProductItem(title, Number(price), description, author, category, img);
-    dispatchProductAction({ type: 'add_product', product: product.data.data });
-    history.push('/admin');
+    try {
+      const product = await adminCreateProductItem(title, Number(price), description, author, category, img);
+      dispatchProductAction({ type: 'add_product', product: product.data.data });
+      history.push('/admin');
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const adminUpdateProductHandler = async (id, title, price, description, author, category, img) => {
-    const product = await adminUpdateProductItem(id, title, price, description, author, category, img);
-    dispatchProductAction({ type: 'update_product', product: product.data.data });
-    history.push('/admin');
+    try {
+      const product = await adminUpdateProductItem(id, title, price, description, author, category, img);
+      dispatchProductAction({ type: 'update_product', product: product.data.data });
+      history.push('/admin');
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const adminDeleteProductItemHandler = async (id) => {
-    await adminDeleteProductItem(id);
-    dispatchProductAction({ type: 'delete_product', id });
+    try {
+      await adminDeleteProductItem(id);
+      dispatchProductAction({ type: 'delete_product', id });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const productContext = {

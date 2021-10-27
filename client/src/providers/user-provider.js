@@ -1,4 +1,5 @@
 /* eslint-disable react/jsx-filename-extension */
+/* eslint-disable no-console */
 import React, { useReducer } from 'react';
 import UserContext from '../contexts/user-context';
 import { userApis } from '../api/api';
@@ -24,23 +25,39 @@ const UserProvider = ({ children }) => {
   const [userState, dispatchUserAction] = useReducer(userReducer, defaultUserState);
 
   const alertMessageHandler = (content, status) => {
-    const message = { content, status };
-    dispatchUserAction({ type: 'update_alert_message', alertMessage: message });
+    try {
+      const message = { content, status };
+      dispatchUserAction({ type: 'update_alert_message', alertMessage: message });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const getMeHandler = async () => {
-    const user = await getUser();
-    dispatchUserAction({ type: 'get_me', user: user.data.data });
+    try {
+      const user = await getUser();
+      dispatchUserAction({ type: 'get_me', user: user.data.data });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const getUserOrdersHandler = async () => {
-    const orders = await getUserOrders();
-    dispatchUserAction({ type: 'get_user_orders', orders: orders.data.data });
+    try {
+      const orders = await getUserOrders();
+      dispatchUserAction({ type: 'get_user_orders', orders: orders.data.data });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const addUserOrderHandler = async (products, totalCost) => {
-    const order = await addUserOrder(products, totalCost, '50');
-    dispatchUserAction({ type: 'add_order', order: order.data.data });
+    try {
+      const order = await addUserOrder(products, totalCost, '50');
+      dispatchUserAction({ type: 'add_order', order: order.data.data });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const updateHandler = async (id, fullName, email, phoneNumber, address) => {

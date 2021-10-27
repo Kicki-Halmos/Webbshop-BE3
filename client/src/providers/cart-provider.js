@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-case-declarations */
 /* eslint-disable react/jsx-filename-extension */
+/* eslint-disable no-console */
 import React, { useReducer, useContext } from 'react';
 import CartContext from '../contexts/cart-context';
 import { cartApis } from '../api/api';
@@ -51,18 +53,30 @@ const CartProvider = ({ children }) => {
   };
 
   const getCartHandler = async () => {
-    const cart = await getCart();
-    dispatchCartAction({ type: 'get_cart', items: cart.data.data.products });
+    try {
+      const cart = await getCart();
+      dispatchCartAction({ type: 'get_cart', items: cart.data.data.products });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const updateCartHandler = async (product, quantity, val) => {
-    const cart = await updateCart(product, quantity, val);
-    dispatchCartAction({ type: 'get_cart', items: cart.data.data.products });
+    try {
+      const cart = await updateCart(product, quantity, val);
+      dispatchCartAction({ type: 'get_cart', items: cart.data.data.products });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const deleteCartHandler = async (id) => {
-    await deleteCart(id);
-    dispatchCartAction({ type: 'delete_cart' });
+    try {
+      await deleteCart(id);
+      dispatchCartAction({ type: 'delete_cart' });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const cartContext = {

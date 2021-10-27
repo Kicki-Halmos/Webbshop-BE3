@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/jsx-filename-extension */
+/* eslint-disable no-console */
 import React, { useReducer } from 'react';
 import OrderContext from '../contexts/order-context';
 import { adminApis } from '../api/api';
@@ -24,23 +25,39 @@ const OrderProvider = ({ children }) => {
   const [orderState, dispatchOrderAction] = useReducer(orderReducer, defaultOrderstate);
 
   const getOrderHandler = async () => {
-    const orders = await adminGetOrders();
-    dispatchOrderAction({ type: 'get_orders', orders: orders.data.data });
+    try {
+      const orders = await adminGetOrders();
+      dispatchOrderAction({ type: 'get_orders', orders: orders.data.data });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const updateOrderHandler = async (id, status) => {
-    const order = await adminUpdateOrder(id, status);
-    dispatchOrderAction({ type: 'update_order', order: order.data.data });
+    try {
+      const order = await adminUpdateOrder(id, status);
+      dispatchOrderAction({ type: 'update_order', order: order.data.data });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const getOneOrderHandler = async (id) => {
-    const order = await adminGetOneOrder(id);
-    dispatchOrderAction({ type: 'get_one_order', order: order.data.data });
+    try {
+      const order = await adminGetOneOrder(id);
+      dispatchOrderAction({ type: 'get_one_order', order: order.data.data });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const deleteOrderHandler = async (id) => {
-    await adminDeleteOrder(id);
-    dispatchOrderAction({ type: 'delete_order', id });
+    try {
+      await adminDeleteOrder(id);
+      dispatchOrderAction({ type: 'delete_order', id });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const orderContext = {
