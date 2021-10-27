@@ -21,7 +21,7 @@ const ProductDetail = () => {
   const params = useParams();
   const { id } = params;
 
-  const quantity = items.filter((item) => item.product._id === id);
+  const quantity = items && items.filter((item) => item.product._id === id);
 
   useEffect(() => {
     productCtx.getOneProduct(id);
