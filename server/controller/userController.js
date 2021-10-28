@@ -20,7 +20,7 @@ exports.update = wrapAsync(async (req, res, next) => {
     return next(new AppError('need to fill in all forms', 400));
   }
   if (!validator.isEmail(email)) {
-    next(new AppError('the email field needs to be correct', 400));
+    return next(new AppError('the email field needs to be correct', 400));
   }
   // eslint-disable-next-line no-underscore-dangle
   const user = await User.findOneAndUpdate({ _id: req.user._id }, {
@@ -30,7 +30,7 @@ exports.update = wrapAsync(async (req, res, next) => {
     address,
 
   }, { new: true });
-  return res.status(200).json({ data: user });
+  return res.status(200).json({ data: user, message: 'Your information was updated', status: 'success' });
 });
 
 exports.register = wrapAsync(async (req, res, next) => {
