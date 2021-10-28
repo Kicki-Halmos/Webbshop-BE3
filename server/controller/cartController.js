@@ -19,7 +19,6 @@ exports.getCart = wrapAsync(async (req, res) => {
 
 exports.addNewCart = wrapAsync(async (req, res) => {
   const { product, quantity } = req.body;
-
   await new Cart({ products: [{ product, quantity }], userId: req.user._id })
     .save();
   const cart = await Cart.findOne({ userId: req.user._id })

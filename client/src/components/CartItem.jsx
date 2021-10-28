@@ -16,7 +16,13 @@ const CartItem = ({
   };
 
   const removeProductHandler = () => {
-    cartCtx.updateCart(id, refValue.current.value, 'remove');
+    cartCtx.getCart();
+    const { items } = cartCtx;
+    if (items && items[1]) {
+      cartCtx.updateCart(id, refValue.current.value, 'remove');
+    } else {
+      cartCtx.deleteCart();
+    }
   };
   return (
     <div className="row bg-light m-2">
