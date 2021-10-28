@@ -37,12 +37,9 @@ const ProductProvider = ({ children }) => {
 
   const getProductsHandler = async () => {
     try {
-      console.log('before');
       const products = await getProducts();
-      console.log('after', products);
       dispatchProductAction({ type: 'get_products', products: products.data.data });
     } catch (error) {
-      console.error(error);
       userCtx.setAlertMessage(error.response.data.data.message);
     }
   };
