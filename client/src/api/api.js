@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: process.env.serverURL || 'http://localhost:3000',
 });
 
 const getProducts = () => api.get('/api/products');
