@@ -23,7 +23,7 @@ export default function EditUserForm({ user }) {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    userCtx.updateUser(user._id, formData.fullName, formData.email, formData.phoneNumber, formData.address);
+    userCtx.updateUser(formData.fullName, formData.email, formData.phoneNumber, formData.address);
   };
   return (
     <div>
