@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: process.env.serverURL || 'http://localhost:3000',
+  baseURL: 'https://sleepy-oasis-73308.herokuapp.com'
 });
 
 const getProducts = () => api.get('/api/products');
