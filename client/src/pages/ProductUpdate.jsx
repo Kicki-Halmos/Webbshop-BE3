@@ -19,7 +19,7 @@ export default function ProductUpdate() {
     if (!token) {
       history.push('/login');
     }
-  }, [productCtx, history,id]);
+  }, [history,id]);
 
   return (
     <div>

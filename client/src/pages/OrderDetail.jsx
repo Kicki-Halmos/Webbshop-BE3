@@ -13,7 +13,7 @@ const OrderDetail = () => {
 
   useEffect(() => {
     orderCtx.getOneOrder(id);
-  }, [orderCtx, id]);
+  }, [id]);
 
   return (
     <div>

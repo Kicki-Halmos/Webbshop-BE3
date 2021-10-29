@@ -18,7 +18,7 @@ const ProductList = () => {
     userCtx.getUser();
     productCtx.getProducts();
     cartCtx.getCart();
-  }, [userCtx, productCtx, cartCtx]);
+  }, []);
 
   const renderProducts = (products) => {
     return (
