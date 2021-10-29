@@ -17,14 +17,14 @@ export default function OrdersAdmin() {
 
   useEffect(() => {
     orderCtx.getOrders();
-  }, []);
+  }, [orderCtx]);
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
     if (!token) {
       history.push('/admin');
     }
-  }, []);
+  }, [history]);
 
   return (
     <div>

@@ -7,7 +7,7 @@ const Login = () => {
 
   useEffect(() => {
     userCtx.getUser();
-  }, []);
+  }, [userCtx]);
   return (
     <div>
       <LoginForm />

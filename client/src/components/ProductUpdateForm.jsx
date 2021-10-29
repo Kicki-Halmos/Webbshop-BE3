@@ -18,7 +18,7 @@ export default function ProductUpdateForm({ product }) {
       category: product.category,
       image: product.img,
     });
-  }, []);
+  }, [product.title, product.price, product.description, product.author, product.category, product.img]);
 
   const handleOnChange = (e) => {
     e.preventDefault();

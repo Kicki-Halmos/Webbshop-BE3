@@ -22,7 +22,7 @@ const Cart = () => {
   useEffect(() => {
     cartCtx.getCart();
     userCtx.getUser();
-  }, []);
+  }, [cartCtx, userCtx]);
 
   return (
     <>

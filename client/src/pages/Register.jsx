@@ -10,7 +10,7 @@ const Register = () => {
     if (token) {
       history.push('/');
     }
-  }, []);
+  }, [history]);
 
   return (
     <div>

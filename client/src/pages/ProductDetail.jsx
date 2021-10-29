@@ -26,7 +26,7 @@ const ProductDetail = () => {
   useEffect(() => {
     productCtx.getOneProduct(id);
     cartCtx.getCart();
-  }, []);
+  }, [productCtx, cartCtx, id]);
 
   const inputChangeHandler = (event) => {
     setInputValue(event.target.value);

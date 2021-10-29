@@ -19,7 +19,7 @@ export default function Admin() {
     if (!token) {
       history.push('/login');
     }
-  }, []);
+  }, [history, productCtx, userCtx]);
 
   const handleDelete = () => {
     productCtx.adminDeleteProduct(activeItem.id);

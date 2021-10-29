@@ -22,7 +22,7 @@ export default function NewProductForm() {
     if (!token) {
       history.push('/admin');
     }
-  }, []);
+  }, [history]);
 
   const handleOnChange = (e) => {
     e.preventDefault();

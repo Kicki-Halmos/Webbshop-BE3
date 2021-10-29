@@ -18,7 +18,7 @@ const Account = () => {
     if (!token) {
       history.push('/login');
     }
-  }, []);
+  }, [history, userCtx]);
 
   return (
     <div>

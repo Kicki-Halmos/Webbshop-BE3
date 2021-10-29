@@ -14,7 +14,7 @@ export default function EditUserForm({ user }) {
     setFormData({
       fullName: user.fullName, email: user.email, phoneNumber: user.phoneNumber, address: user.address,
     });
-  }, []);
+  }, [user.fullName, user.email, user.phoneNumber, user.address]);
 
   const handleOnChange = (e) => {
     e.preventDefault();
